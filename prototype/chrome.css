@@ -1,0 +1,134 @@
+/* Shared site header used by the homepage and all tracking states. */
+body > header {
+  position: fixed !important;
+  z-index: 50 !important;
+  inset: 0 0 auto !important;
+  width: 100% !important;
+  height: 74px !important;
+  min-height: 74px !important;
+  border-bottom: 1px solid #e5e7eb !important;
+  background: rgb(255 255 255 / 96%) !important;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 5%) !important;
+  backdrop-filter: blur(12px);
+}
+
+body > header > div:first-child,
+body > header .header-inner,
+body > header .not-found-header__inner {
+  display: flex !important;
+  width: min(calc(100% - 48px), 1320px) !important;
+  height: 74px !important;
+  min-height: 74px !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: clamp(12px, 3vw, 48px) !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+body > header a.brand {
+  display: inline-flex !important;
+  flex: none !important;
+  align-items: center !important;
+  gap: 0 !important;
+  width: auto !important;
+  height: 36px !important;
+  color: transparent !important;
+  font-size: 0 !important;
+  text-decoration: none !important;
+}
+
+body > header a.brand > *,
+body > header a.brand .brand-mark {
+  display: none !important;
+}
+
+body > header a.brand::before {
+  display: block;
+  width: 116px;
+  height: 36px;
+  background: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCe6Sd3grxrRWPcD50ZL9ML41Qgjht-JFyyH9oR_h216L-YuPxTnO476pV6oNgnxfW6GO3e69fnJ6zfE31GbHVruEB0qAqLhqyF4GzmBS6Uw8utcokB5ESQNjEUgBTQue2S_nmzjh85VMNah20d2omDqGQ8Z1easannyiXA-VC-6TascqvSc5Oq2eMij5tOvg1KKRukpf5TRfeUfqFgTRHTP1uW23cHVlgombuEI5jwo_4iEzCJmERdLH6uug9wp-LKkV8") center / contain no-repeat;
+  content: "";
+}
+
+body > header img[alt="Anteraja"] {
+  display: block !important;
+  width: 116px !important;
+  height: 36px !important;
+  object-fit: contain !important;
+}
+
+body > header nav {
+  display: flex !important;
+  height: auto !important;
+  align-items: center !important;
+  gap: 4px !important;
+  margin: 0 !important;
+}
+
+body > header nav a {
+  display: inline-flex !important;
+  min-height: 40px !important;
+  flex: none !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 16px !important;
+  border: 0 !important;
+  border-radius: 11px !important;
+  background: transparent !important;
+  color: #5a3f49 !important;
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  line-height: 1.2 !important;
+  text-decoration: none !important;
+  white-space: nowrap !important;
+}
+
+body > header nav a[aria-current="page"] {
+  background: #fce8f1 !important;
+  color: #b30069 !important;
+  font-weight: 700 !important;
+}
+
+body > header nav a:hover {
+  background: #f0eded !important;
+  color: #b30069 !important;
+}
+
+body > header.site-header + main.page-shell {
+  padding-top: 112px !important;
+}
+
+@media (max-width: 700px) {
+  body > header > div:first-child,
+  body > header .header-inner,
+  body > header .not-found-header__inner {
+    width: calc(100% - 24px) !important;
+    gap: 8px !important;
+  }
+
+  body > header a.brand {
+    height: 26px !important;
+  }
+
+  body > header a.brand::before {
+    width: 88px;
+    height: 26px;
+  }
+
+  body > header img[alt="Anteraja"] {
+    width: 88px !important;
+    height: 26px !important;
+  }
+
+  body > header nav {
+    gap: 0 !important;
+  }
+
+  body > header nav a {
+    min-height: 36px !important;
+    padding: 0 5px !important;
+    font-size: 10px !important;
+  }
+}

@@ -1,4 +1,6 @@
 /* Shared footer used by every page in the prototype. */
+@import url("chrome.css");
+
 .shared-footer {
   margin-top: 32px;
   background: #f3f1f1;
