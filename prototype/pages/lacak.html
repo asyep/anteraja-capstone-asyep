@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Lacak paket Anteraja dan lihat progres pengiriman, estimasi tiba, serta penjelasan status dalam bahasa yang mudah dipahami.">
+  <title>Lacak Kiriman · Anteraja</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../footer.css">
+</head>
+<body id="top" class="tracking-search-page">
+  <a class="skip-link" href="#main">Lewati ke konten utama</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="../index.html" aria-label="Anteraja, beranda"><span class="brand-mark" aria-hidden="true">a</span><span>anteraja</span></a>
+      <nav class="main-nav" aria-label="Navigasi utama"><a class="nav-link" href="../index.html">Beranda</a><a class="nav-link" href="lacak.html" aria-current="page">Lacak Kiriman</a><a class="nav-link" href="bantuan.html">Bantuan</a></nav>
+      
+    </div>
+  </header>
+  <main class="page-shell" id="main">
+    <section class="hero-intro" aria-labelledby="page-title"><p class="eyebrow eyebrow-brand"><span class="eyebrow-dot" aria-hidden="true"></span>SMART TRACKING ANTERAJA</p><h1 id="page-title">Lacak Pengiriman Smart AI</h1><p>Pantau status paket dengan penjelasan yang mudah dipahami, estimasi tiba, dan riwayat perjalanan.</p><ul class="hero-benefits" aria-label="Keunggulan pelacakan"><li><span aria-hidden="true">✓</span>Progres pengiriman yang jelas</li><li><span aria-hidden="true">✓</span>Estimasi tanggal dan waktu tiba</li><li><span aria-hidden="true">✓</span>Informasi kendala operasional</li></ul></section>
+    <section class="tracking-search panel" id="lacak" aria-labelledby="search-title"><h2 id="search-title">Masukkan nomor resi</h2><form class="search-form home-search-form" id="tracking-search-form" action="not-found.html" method="get"><label class="sr-only" for="waybill">Nomor resi Anteraja</label><div class="input-wrap"><span class="search-glyph" aria-hidden="true">#</span><input id="waybill" name="waybill_number" type="text" inputmode="numeric" autocomplete="off" minlength="13" maxlength="32" pattern="[0-9]{13}|[0-9]{32}" title="Masukkan resi demo 13 digit atau kode normal 32 digit." placeholder="Masukkan resi demo (13 atau 32 digit)" aria-describedby="waybill-help" required></div><button class="button-primary" type="submit"><span aria-hidden="true">⌕</span>Lacak Paket</button><p class="form-hint" id="waybill-help"><span>Masukkan resi demo 13 atau 32 digit.</span><span class="character-count">13 atau 32 digit</span></p></form><p class="prototype-note"><span aria-hidden="true">ⓘ</span>Untuk mencoba tiap status, pilih resi contoh di bawah. Tekan Lacak Paket untuk membuka kondisi yang sesuai dengan nomor resi.</p>
+      <div class="demo-resi" id="contoh" aria-labelledby="demo-title"><div class="section-heading"><div><p class="eyebrow">UJI COBA RESI</p><h2 id="demo-title">Pilih contoh pelacakan</h2></div><span class="helper-note">Klik contoh untuk langsung membuka kondisi paket</span></div><ul><li><a href="tracking-normal.html?waybill_number=1000849201994"><span class="demo-icon" aria-hidden="true">↗</span><span class="demo-copy"><strong>In-Transit</strong><code>1000849201994</code></span><span class="demo-arrow" aria-hidden="true">→</span></a></li><li><a href="tracking-live.html"><span class="demo-icon green-icon" aria-hidden="true">⌖</span><span class="demo-copy"><strong>Live Map</strong><code>1000921477821</code></span><span class="demo-arrow" aria-hidden="true">→</span></a></li><li><a href="tracking.html"><span class="demo-icon amber-icon" aria-hidden="true">!</span><span class="demo-copy"><strong>Peringatan Jalur</strong><code>1000781293812</code></span><span class="demo-arrow" aria-hidden="true">→</span></a></li></ul></div></section>
+
+    <section class="feature-strip" aria-label="Informasi yang tersedia">
+      <article><span class="feature-icon" aria-hidden="true">◎</span><div><h2>Tahapan pengiriman</h2><p>Lihat progres paket dari awal sampai tujuan.</p></div></article>
+      <article><span class="feature-icon purple-feature" aria-hidden="true">✦</span><div><h2>Penjelasan status</h2><p>Pahami pembaruan dengan bahasa yang sederhana.</p></div></article>
+      <article><span class="feature-icon green-feature" aria-hidden="true">◷</span><div><h2>Estimasi tiba</h2><p>Ketahui perkiraan tanggal dan waktunya.</p></div></article>
+    </section>
+
+    <section class="faq panel" aria-labelledby="faq-title">
+      <div class="section-heading"><div><p class="eyebrow">PUSAT INFORMASI</p><h2 id="faq-title">Pertanyaan seputar pelacakan</h2></div><a class="text-link" href="bantuan.html">Lihat semua bantuan →</a></div>
+      <details><summary>Berapa karakter nomor resi yang perlu saya masukkan?</summary><p>Resi demo yang tersedia terdiri dari 13 angka. Pilih salah satu contoh untuk melihat kondisi paket yang sesuai.</p></details>
+      <details><summary>Mengapa status paket belum berubah?</summary><p>Status mengikuti pemindaian paket di fasilitas pengiriman. Pembaruan mungkin memerlukan waktu setelah paket bergerak ke tahap berikutnya.</p></details>
+      <details><summary>Apakah saya bisa melihat posisi GPS kurir?</summary><p>Tampilan Live Map pada prototype ini bersifat ilustratif dan tidak menampilkan posisi GPS kurir secara langsung.</p></details>
+    </section>
+  </main>
+  <footer class="shared-footer">
+  <div class="shared-footer__main">
+    <section class="shared-footer__brand" aria-label="Tentang Anteraja">
+      <a class="shared-footer__brand-logo" href="../index.html" aria-label="Anteraja, Beranda"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMABhsDu5HOIuqDguWe-fju28hvaoafbHNpHtenGSA105xVoFrStsEqklirz8nzWTElw4qVHAl-r082x-oDw6FD5bpckW1kkUJMfWnATA_HZXrDVmFNl4C3h96S4EcrV1XdBZbbWzAqlXdpoK9UJA6Il-jTOrgjTFDdDr2FkhGrAPEHstGK3YLEyUQrZ96igIu1OYU0fcr7gD9K-AGP11A8czCJYzYKQDtcPvosS372YIfLG4ZT6-49kuP_7Y990iGoE0" alt="Anteraja"></a>
+      <p class="shared-footer__description">Solusi pengiriman logistik pintar berbasis teknologi dengan armada Satria terpercaya untuk kebutuhan perorangan maupun korporasi di seluruh Indonesia.</p>
+      <nav class="shared-footer__socials" aria-label="Tautan cepat">
+        <a href="../index.html" aria-label="Beranda"><span aria-hidden="true">⌂</span></a>
+        <a href="bantuan.html" aria-label="Pusat bantuan"><span aria-hidden="true">▤</span></a>
+        <a href="lacak.html#lacak" aria-label="Lacak kiriman"><span aria-hidden="true">↗</span></a>
+        <a href="pages/lacak.html#contoh" aria-label="Contoh resi"><span aria-hidden="true">◎</span></a>
+      </nav>
+    </section>
+    <nav class="shared-footer__column" aria-label="Layanan">
+      <h2>Layanan</h2>
+      <a href="lacak.html#lacak">Lacak Kiriman</a>
+      <a href="bantuan.html">Hitung Ongkos Kirim</a>
+      <a href="bantuan.html">Titik Drop Point</a>
+      <a href="bantuan.html">Anteraja Bisnis</a>
+      <a href="bantuan.html">API Integration</a>
+    </nav>
+    <section class="shared-footer__column" aria-label="Bantuan dan kontak">
+      <h2>Bantuan &amp; Hubungi</h2>
+      <div class="shared-footer__contact"><span aria-hidden="true">☎</span><div><small>Hotline Pelanggan</small><a href="tel:02150663333">021-50663333</a></div></div>
+      <div class="shared-footer__contact"><span aria-hidden="true">◉</span><div><small>Satria WhatsApp</small><a href="https://wa.me/6281119603333">+62 811-1960-3333</a></div></div>
+      <div class="shared-footer__contact"><span aria-hidden="true">✉</span><div><small>Email Support</small><a href="mailto:cs@anteraja.id">cs@anteraja.id</a></div></div>
+    </section>
+    <section class="shared-footer__column" aria-label="Sertifikasi dan keamanan">
+      <h2>Sertifikasi &amp; Keamanan</h2>
+      <p class="shared-footer__security-copy">Didukung standar mutu operasional berstandar internasional dan kepatuhan sistem keamanan data informasi.</p>
+      <div class="shared-footer__certificates">
+        <div class="shared-footer__certificate"><span aria-hidden="true">◈</span><div><strong>ISO 9001:2015</strong><small>Quality Standard</small></div></div>
+        <div class="shared-footer__certificate"><span aria-hidden="true">◈</span><div><strong>ISO 27001:2022</strong><small>Data Security</small></div></div>
+        <div class="shared-footer__certificate"><span aria-hidden="true">◈</span><div><strong>Kominfo Terdaftar</strong><small>PSE Terverifikasi</small></div></div>
+      </div>
+    </section>
+  </div>
+  <div class="shared-footer__bottom">
+    <p>© 2025 PT Tri Adi Bersama (Anteraja). Seluruh Hak Cipta Dilindungi Undang-Undang.</p>
+    <nav aria-label="Informasi hukum"><a href="bantuan.html">Kebijakan Privasi</a><span aria-hidden="true">•</span><a href="bantuan.html">Syarat &amp; Ketentuan</a><span aria-hidden="true">•</span><a href="../index.html">Peta Situs</a></nav>
+  </div>
+</footer>
+
+  <script>
+    (() => {
+      const form = document.getElementById("tracking-search-form");
+      const input = document.getElementById("waybill");
+      const routes = {
+        "1000849201994": "tracking-normal.html",
+        "10008492019948271039485729103948": "tracking-normal.html",
+        "1000921477821": "tracking-live.html",
+        "1000781293812": "tracking.html",
+      };
+      form.addEventListener("submit", (event) => {
+        event.preventDefault();
+        const waybill = input.value.trim();
+        const target = routes[waybill] || "not-found.html";
+        window.location.href = `${target}?waybill_number=${encodeURIComponent(waybill)}`;
+      });
+    })();
+  </script>
+</body>
+</html>
