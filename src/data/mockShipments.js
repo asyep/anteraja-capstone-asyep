@@ -44,9 +44,9 @@ const shipments = [
     item_description: 'Paket pilihan', weight_kg: 0.8, service_name: 'Anteraja NextDay',
     logistics_delay_reason: 'None', traffic_status: 'Clear', waiting_time_minutes: 0, has_delay: false,
     estimated_delivery_date: '2017-09-28', estimated_delivery_time: '18:00',
-    delivered_at: '2017-09-25T14:20:00-03:00', is_free_shipping: false, insurance_active: true,
+    delivered_at: '2017-09-25T14:20:00+07:00', is_free_shipping: false, insurance_active: true,
     ai_narrative: { text: 'Paket Kakak sudah diterima di Sao Paulo pada 25 September pukul 14.20 WIB. Perjalanan dari Volta Redonda selesai dengan aman. Terima kasih telah mempercayakan kiriman kepada Anteraja.', is_fallback: false },
-    milestone_stages: milestones(3, false, '2017-09-25T14:20:00-03:00'),
+    milestone_stages: milestones(3, false, '2017-09-25T14:20:00+07:00'),
   },
   {
     waybill_number: '22222222222222222222222222222222',
