@@ -68,6 +68,7 @@ body > header nav {
 
 body > header nav a {
   display: inline-flex !important;
+  height: auto !important;
   min-height: 40px !important;
   flex: none !important;
   align-items: center !important;
@@ -127,6 +128,7 @@ body > header.site-header + main.page-shell {
   }
 
   body > header nav a {
+    height: auto !important;
     min-height: 36px !important;
     padding: 0 5px !important;
     font-size: 10px !important;
