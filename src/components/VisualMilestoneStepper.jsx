@@ -87,7 +87,7 @@ export default function VisualMilestoneStepper({ shipment }) {
             else if (stageName === 'Delivered') stageName = 'Tiba di Tujuan';
 
             return (
-              <div key={index} className="flex sm:flex-col items-start sm:items-center relative w-full group">
+              <div key={stageItem.stage} className="flex sm:flex-col items-start sm:items-center relative w-full group">
                 {/* Horizontal line for desktop (hidden on last item) */}
                 {index < milestone_stages.length - 1 && (
                   <div className={`hidden sm:block absolute top-4 left-1/2 w-full h-[2px] -translate-y-1/2 z-0 ${styles.line}`}></div>

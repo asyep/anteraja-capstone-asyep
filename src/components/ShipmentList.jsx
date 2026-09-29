@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import EmptyState from './EmptyState.jsx';
 import ShipmentCard from './ShipmentCard.jsx';
 
@@ -9,16 +9,15 @@ const FILTERS = [
   ['Delayed', 'delayed'],
 ];
 
-export default function ShipmentList({ shipments, activeWaybill, onSelect }) {
-  const [activeFilter, setActiveFilter] = useState('all');
+export default function ShipmentList({ shipments, activeWaybill, statusFilter, onStatusFilterChange, onSelect }) {
   const filteredShipments = useMemo(() => shipments.filter((shipment) => {
-    if (activeFilter === 'all') return true;
-    if (activeFilter === 'delayed') return shipment.has_delay;
-    if (activeFilter === 'in_transit') {
+    if (statusFilter === 'all') return true;
+    if (statusFilter === 'delayed') return shipment.has_delay;
+    if (statusFilter === 'in_transit') {
       return shipment.order_status === 'in_transit' && !shipment.has_delay;
     }
-    return shipment.order_status === activeFilter;
-  }), [activeFilter, shipments]);
+    return shipment.order_status === statusFilter;
+  }), [statusFilter, shipments]);
 
   return (
     <section
@@ -38,9 +37,9 @@ export default function ShipmentList({ shipments, activeWaybill, onSelect }) {
           <button
             type="button"
             key={value}
-            aria-pressed={activeFilter === value}
-            onClick={() => setActiveFilter(value)}
-            className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${activeFilter === value ? 'bg-brand text-white shadow-sm' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'}`}
+            aria-pressed={statusFilter === value}
+            onClick={() => onStatusFilterChange(value)}
+            className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${statusFilter === value ? 'bg-brand text-white shadow-sm' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'}`}
           >
             {label}
           </button>

@@ -1,6 +1,6 @@
 # Smart AI Shipment Tracking Widget Anteraja
 
-Frontend React untuk prototype pelacakan pengiriman Anteraja. Aplikasi ini memindahkan interaksi dari manipulasi DOM langsung ke komponen React dengan aliran props satu arah. Data yang digunakan adalah mock lokal; integrasi Laravel, PostgreSQL, Redis, dan Gemini belum termasuk implementasi frontend ini.
+Prototype antarmuka React untuk pencarian dan pemantauan pengiriman. UI membaca data simulasi lokal dari `src/data/mockShipments.js`; layanan backend, database, dan integrasi AI eksternal belum terhubung.
 
 ## Menjalankan aplikasi
 
@@ -9,14 +9,33 @@ npm install
 npm run dev
 ```
 
-Build production lokal:
+Vite akan menampilkan URL lokal di terminal. Untuk membuat build production dan menjalankannya secara lokal:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Tree of Components
+## Susunan komponen
+
+```text
+App
+├── TrackingHeader
+├── ShipmentForm
+└── Hasil pelacakan (activeShipment)
+    ├── DynamicETABadge
+    ├── OperationalWarningBanner
+    ├── AINarrativeBox
+    ├── VisualMilestoneStepper
+    ├── ShipmentList
+    │   ├── ShipmentCard (satu untuk setiap paket)
+    │   └── EmptyState (ketika hasil filter kosong)
+    └── Panel informasi
+        ├── ShipmentSummary
+        └── ShippingCalculator
+```
+
+Struktur file utama:
 
 ```text
 src/
@@ -26,43 +45,46 @@ src/
 ├── data/
 │   └── mockShipments.js
 └── components/
-    ├── TrackingHeader.jsx
-    ├── ShipmentForm.jsx
-    ├── DynamicETABadge.jsx
-    ├── OperationalWarningBanner.jsx
     ├── AINarrativeBox.jsx
-    ├── VisualMilestoneStepper.jsx
+    ├── DynamicETABadge.jsx
+    ├── EmptyState.jsx
+    ├── OperationalWarningBanner.jsx
     ├── ShipmentCard.jsx
+    ├── ShipmentForm.jsx
     ├── ShipmentList.jsx
     ├── ShipmentSummary.jsx
-    └── ShippingCalculator.jsx
+    ├── ShippingCalculator.jsx
+    ├── TrackingHeader.jsx
+    └── VisualMilestoneStepper.jsx
 ```
 
-`index.html` adalah entry point Vite. Halaman prototype HTML/CSS lama tetap berada di `prototype/`.
+## Alur state dan props
 
-## Alur props dan state
+`App.jsx` menjadi pemilik state halaman dan sumber data bersama. Data paket diperlakukan sebagai immutable: pencarian dan pemilihan paket mencari objek dari dataset, lalu menyimpan referensi objek terpilih tanpa mengubah properti dataset.
 
-`App.jsx` menyimpan daftar shipment mock, resi aktif, status loading/error, jenis pengguna, dan filter riwayat. `ShipmentForm` mengelola input resi terkontrol lalu memanggil `onSearch` saat submit. `App` mencari kecocokan resi dan mengirim objek shipment terpilih sebagai props ke badge ETA, warning, AI narrative, stepper, ringkasan, dan kartu detail. `ShipmentList` menerima daftar serta filter, lalu mengirim callback pilihan kartu ke `App`. Kalkulator mengelola berat dan layanan lokal melalui state komponen.
+| State di `App` | Fungsi | Props/callback terkait |
+| --- | --- | --- |
+| `activeShipment` | Paket yang sedang ditampilkan | Objek `shipment` diteruskan ke ETA, warning, narasi AI, stepper, dan ringkasan. |
+| `searchQuery` | Isi input resi yang sedang diketik | `ShipmentForm` menerima `searchQuery` dan `onSearchQueryChange`; submit memanggil `onSearch`. |
+| `statusFilter` | Filter daftar paket aktif | `ShipmentList` menerima `statusFilter` dan `onStatusFilterChange`. |
+| `loading`, `errorMessage` | Status proses pencarian dan pesan validasi | Diteruskan ke `ShipmentForm` untuk feedback dan pencegahan submit berulang. |
+| `audience`, `activeUser` | Preferensi header dan pengguna sesi | Diteruskan ke `TrackingHeader`; pilihan audiens memakai callback parent. |
 
-### Hubungan dengan DIKW
+Alur interaksi: `ShipmentForm` mengirim query ke `App` saat submit. `App` mencari kecocokan pada dataset, memperbarui `activeShipment`, lalu komponen tampilan menerima paket baru melalui props. `ShipmentList` merender hasil filter dan mengirim nomor resi terpilih melalui callback; `App` yang memperbarui paket aktif dan query. Tidak ada child yang mengubah props secara langsung. Kalkulator mengelola input berat dan layanan sebagai state lokal karena nilainya tidak dibutuhkan komponen lain.
 
-- **Data:** atribut order, kota pengirim/penerima, event milestone, dan konteks kendala dari mock dataset yang mengikuti tabel `orders`, `order_items`, `sellers`, `customers`, dan `smart_logistics_context`.
-- **Information:** status, progres milestone, estimasi tiba, dan sinyal kendala yang diturunkan dari data.
-- **Knowledge:** narasi status Satria yang menerjemahkan status teknis menjadi bahasa pengguna; flag fallback ditampilkan untuk membedakan narasi simulasi cadangan.
-- **Wisdom:** arahan sederhana di UI seperti memeriksa kembali resi, melihat estimasi baru, atau menghubungi bantuan saat ada kendala.
+Daftar paket dirender dengan `.map()` dan setiap `ShipmentCard` memakai `key={shipment.waybill_number}`. Tab filter juga memakai key tetap dari nilai status. Jika tidak ada paket yang cocok, `EmptyState` ditampilkan.
 
-## Pemetaan FRD
+## Pemetaan ke FRD
 
 | FRD | Komponen |
 | --- | --- |
-| F-01 Resi Search Bar & Validation | `ShipmentForm.jsx` |
-| F-02 Visual Milestone Stepper | `VisualMilestoneStepper.jsx` |
-| F-03 AI Status Narrative Box | `AINarrativeBox.jsx` |
-| F-04 Operational Warning Banner | `OperationalWarningBanner.jsx` |
-| F-05 Dynamic ETA Badge | `DynamicETABadge.jsx` |
+| F-01 Pencarian dan validasi resi | `ShipmentForm.jsx` dan handler pencarian di `App.jsx` |
+| F-02 Visualisasi milestone | `VisualMilestoneStepper.jsx` |
+| F-03 Narasi status AI | `AINarrativeBox.jsx` |
+| F-04 Peringatan operasional | `OperationalWarningBanner.jsx` |
+| F-05 Estimasi waktu tiba dinamis | `DynamicETABadge.jsx` |
+| Daftar/filter paket dan kalkulator ongkir | `ShipmentList.jsx`, `ShipmentCard.jsx`, `EmptyState.jsx`, `ShippingCalculator.jsx` |
 
-Komponen pendukung: `TrackingHeader.jsx`, `ShipmentCard.jsx`, `ShipmentList.jsx`, dan `ShippingCalculator.jsx`.
+## Batasan data demo
 
-## Catatan data demo
-
-Empat resi pada `database/sample_data.sql` digunakan apa adanya. Dua variasi tambahan di `src/data/mockShipments.js` hanya untuk memvisualisasikan status awal dan kendala cuaca; keduanya bukan baris yang sudah dimasukkan ke database SQL. Jam dan kalkulator merupakan simulasi frontend.
+Semua kiriman dan aktivitas pelacakan berasal dari mock lokal. Estimasi, kalkulasi ongkir, dan narasi merupakan simulasi frontend, bukan hasil telemetri atau layanan pengiriman real-time.

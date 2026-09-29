@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AINarrativeBox from './components/AINarrativeBox.jsx';
 import DynamicETABadge from './components/DynamicETABadge.jsx';
 import OperationalWarningBanner from './components/OperationalWarningBanner.jsx';
@@ -8,16 +8,17 @@ import ShipmentSummary from './components/ShipmentSummary.jsx';
 import ShippingCalculator from './components/ShippingCalculator.jsx';
 import TrackingHeader from './components/TrackingHeader.jsx';
 import VisualMilestoneStepper from './components/VisualMilestoneStepper.jsx';
-import shipments from './data/mockShipments.js';
+import { mockShipments as shipments } from './data/mockShipments.js';
 
 export default function App() {
   const [shipmentData] = useState(() => shipments);
-  const [activeWaybill, setActiveWaybill] = useState(shipments[0].waybill_number);
+  const [activeShipment, setActiveShipment] = useState(() => shipments[0]);
+  const [searchQuery, setSearchQuery] = useState(() => shipments[0].waybill_number);
+  const [statusFilter, setStatusFilter] = useState('all');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [audience, setAudience] = useState('B2C');
   const [activeUser, setActiveUser] = useState('Asep');
-  const activeShipment = useMemo(() => shipmentData.find((item) => item.waybill_number === activeWaybill) ?? shipmentData[0], [activeWaybill, shipmentData]);
 
   useEffect(() => {
     const storedUser = window.sessionStorage.getItem('activeUser');
@@ -26,12 +27,15 @@ export default function App() {
   }, []);
 
   const handleSearch = (waybill) => {
+    const query = waybill.trim();
+    setSearchQuery(query);
     setLoading(true);
     setErrorMessage('');
     window.setTimeout(() => {
-      const result = shipmentData.find((item) => item.waybill_number.toLowerCase() === waybill.toLowerCase());
+      const result = shipmentData.find((item) => item.waybill_number.toLowerCase() === query.toLowerCase());
       if (result) {
-        setActiveWaybill(result.waybill_number);
+        setActiveShipment(result);
+        setStatusFilter('all');
         document.getElementById('hasil-pelacakan')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         setErrorMessage('Nomor resi belum ditemukan. Periksa kembali nomor yang dimasukkan.');
@@ -41,7 +45,10 @@ export default function App() {
   };
 
   const handleSelectShipment = (waybill) => {
-    setActiveWaybill(waybill);
+    const selectedShipment = shipmentData.find((item) => item.waybill_number === waybill);
+    if (!selectedShipment) return;
+    setActiveShipment(selectedShipment);
+    setSearchQuery(selectedShipment.waybill_number);
     setErrorMessage('');
   };
 
@@ -58,7 +65,13 @@ export default function App() {
           <div className="flex items-center gap-2 self-start rounded-2xl border border-emerald-100 bg-white px-3 py-2 text-xs font-semibold text-emerald-800 sm:self-auto"><span className="size-2 rounded-full bg-success" aria-hidden="true" />Demo pelacakan siap</div>
         </section>
 
-        <ShipmentForm onSearch={handleSearch} loading={loading} initialValue={activeWaybill} errorMessage={errorMessage} />
+        <ShipmentForm
+          searchQuery={searchQuery}
+          onSearchQueryChange={setSearchQuery}
+          onSearch={handleSearch}
+          loading={loading}
+          errorMessage={errorMessage}
+        />
 
         <section id="hasil-pelacakan" aria-label="Hasil pelacakan terpilih" className="mt-5 scroll-mt-24 space-y-4">
           <DynamicETABadge shipment={activeShipment} />
@@ -67,7 +80,13 @@ export default function App() {
               <OperationalWarningBanner shipment={activeShipment} />
               <AINarrativeBox shipment={activeShipment} />
               <VisualMilestoneStepper shipment={activeShipment} />
-              <ShipmentList shipments={shipmentData} activeWaybill={activeWaybill} onSelect={handleSelectShipment} />
+              <ShipmentList
+                shipments={shipmentData}
+                activeWaybill={activeShipment.waybill_number}
+                statusFilter={statusFilter}
+                onStatusFilterChange={setStatusFilter}
+                onSelect={handleSelectShipment}
+              />
             </div>
             <aside className="space-y-4" aria-label="Informasi tambahan pengiriman">
               <ShipmentSummary shipment={activeShipment} />

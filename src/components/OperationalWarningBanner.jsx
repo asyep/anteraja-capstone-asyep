@@ -3,7 +3,7 @@ import React from 'react';
 export default function OperationalWarningBanner({ shipment }) {
   // Guard clause
   if (!shipment) return null;
-  
+
   const { has_delay, logistics_delay_reason, traffic_status } = shipment;
 
   // Jika tidak ada delay (has_delay === false), komponen tidak dirender (return null)

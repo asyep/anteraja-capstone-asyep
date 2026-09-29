@@ -1,24 +1,14 @@
-import React, { useState, useEffect } from 'react';
-
-export default function ShipmentForm({ onSearch, loading, initialValue, errorMessage }) {
-  const [waybill, setWaybill] = useState(initialValue || '');
-
-  // Update internal state if parent changes initialValue
-  useEffect(() => {
-    if (initialValue) {
-      setWaybill(initialValue);
-    }
-  }, [initialValue]);
+export default function ShipmentForm({ searchQuery, onSearchQueryChange, onSearch, loading, errorMessage }) {
 
   // Real-time validation
-  const isValid = waybill.length === 32;
-  const isError = waybill.length > 0 && !isValid;
+  const isValid = /^[a-z0-9]{32}$/i.test(searchQuery.trim());
+  const isError = searchQuery.length > 0 && !isValid;
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!isValid || loading) return;
 
-    onSearch(waybill);
+    onSearch(searchQuery);
   };
 
   return (
@@ -36,8 +26,8 @@ export default function ShipmentForm({ onSearch, loading, initialValue, errorMes
               <div className="relative flex-1">
                 <input
                   type="text"
-                  value={waybill}
-                  onChange={(e) => setWaybill(e.target.value)}
+                  value={searchQuery}
+                  onChange={(e) => onSearchQueryChange(e.target.value)}
                   placeholder="Masukkan 32 karakter nomor resi"
                   disabled={loading}
                   className={`w-full px-5 py-3.5 rounded-2xl border bg-canvas focus:bg-white transition-all duration-200 outline-none font-mono text-sm
