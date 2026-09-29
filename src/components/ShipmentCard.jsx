@@ -1,12 +1,42 @@
-const statusLabels = { in_transit: 'Dalam perjalanan', processing: 'Diproses', approved: 'Pesanan dibuat', delivered: 'Telah tiba', canceled: 'Dibatalkan' };
+import React from 'react';
 
-export default function ShipmentCard({ shipment, active, onSelect }) {
-  const tone = shipment.order_status === 'delivered' ? 'bg-emerald-50 text-emerald-700' : shipment.order_status === 'canceled' ? 'bg-red-50 text-red-700' : shipment.has_delay ? 'bg-amber-50 text-amber-800' : 'bg-pink-50 text-brand';
+export default function ShipmentCard({ shipment, isActive, onSelect }) {
+  const { waybill_number, order_status, seller_city, customer_city, has_delay } = shipment;
+
+  const getStatusDisplay = () => {
+    if (order_status === 'canceled') return { label: 'Dibatalkan', color: 'bg-stone-100 text-stone-600' };
+    if (order_status === 'delivered') return { label: 'Telah Tiba', color: 'bg-success/10 text-success-800' };
+    if (has_delay) return { label: 'Terkendala', color: 'bg-amber-100 text-amber-800' };
+    return { label: 'Dalam Perjalanan', color: 'bg-magenta/10 text-magenta' };
+  };
+
+  const statusInfo = getStatusDisplay();
+
   return (
-    <button type="button" onClick={() => onSelect(shipment.waybill_number)} aria-pressed={active} className={`w-full rounded-2xl border p-4 text-left transition hover:-translate-y-0.5 hover:shadow-md ${active ? 'border-brand bg-pink-50/40 ring-2 ring-pink-100' : 'border-stone-200 bg-white'}`}>
-      <div className="flex items-start justify-between gap-3"><span className="max-w-[70%] truncate font-mono text-xs font-bold text-ink">{shipment.waybill_number}</span><span className={`shrink-0 rounded-full px-2.5 py-1 text-[10px] font-bold ${tone}`}>{shipment.has_delay ? 'Ada kendala' : statusLabels[shipment.order_status]}</span></div>
-      <p className="mt-3 text-sm font-bold text-stone-700">{shipment.seller_city} <span className="px-1 text-brand" aria-hidden="true">→</span> {shipment.customer_city}</p>
-      <div className="mt-2 flex items-center justify-between gap-3 text-[11px] text-muted"><span className="truncate">{shipment.item_description}</span><span className="shrink-0">{shipment.weight_kg.toLocaleString('id-ID')} kg</span></div>
+    <button
+      onClick={() => onSelect(waybill_number)}
+      className={`w-full text-left p-4 sm:p-5 rounded-2xl border transition-all duration-200 ${
+        isActive 
+          ? 'border-magenta bg-magenta/5 ring-1 ring-magenta shadow-sm' 
+          : 'border-stone-200 bg-white hover:border-magenta/40 hover:shadow-sm'
+      }`}
+    >
+      <div className="flex justify-between items-start mb-3">
+        <p className="font-mono text-sm font-bold text-ink break-all mr-3 leading-none">
+          {waybill_number}
+        </p>
+        <span className={`text-[10px] font-bold px-2 py-1 rounded-md whitespace-nowrap uppercase tracking-wide ${statusInfo.color}`}>
+          {statusInfo.label}
+        </span>
+      </div>
+      
+      <div className="flex items-center gap-2 text-xs text-muted font-medium">
+        <span className="truncate max-w-[120px]">{seller_city}</span>
+        <svg className="w-3.5 h-3.5 text-stone-300 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+        </svg>
+        <span className="truncate max-w-[120px]">{customer_city}</span>
+      </div>
     </button>
   );
 }
