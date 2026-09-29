@@ -1,19 +1,81 @@
-const formatDate = (value) => new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(`${value}T00:00:00Z`));
-const formatDelivered = (value) => new Intl.DateTimeFormat('id-ID', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Jakarta', timeZoneName: 'short' }).format(new Date(value)).replace('GMT+7', 'WIB');
+import React from 'react';
 
 export default function DynamicETABadge({ shipment }) {
-  const delivered = shipment.order_status === 'delivered' && shipment.delivered_at;
-  const canceled = shipment.order_status === 'canceled';
-  return (
-    <section aria-live="polite" aria-label="Estimasi pengiriman" className={`flex flex-col gap-4 rounded-3xl border px-5 py-4 sm:flex-row sm:items-center sm:justify-between sm:px-6 ${delivered ? 'border-emerald-200 bg-emerald-50' : canceled ? 'border-stone-200 bg-stone-100' : 'border-pink-100 bg-[#fff0f5]'}`}>
-      <div className="flex min-w-0 items-center gap-4">
-        <span className={`grid size-12 shrink-0 place-items-center rounded-2xl text-2xl text-white shadow-sm ${delivered ? 'bg-success' : canceled ? 'bg-stone-500' : 'bg-brand'}`} aria-hidden="true">{delivered ? '✓' : canceled ? '×' : '◷'}</span>
-        <div className="min-w-0">
-          <p className={`text-[10px] font-extrabold uppercase tracking-[.16em] ${delivered ? 'text-emerald-700' : 'text-brand'}`}>{delivered ? 'Pengiriman selesai' : canceled ? 'Status pengiriman' : shipment.has_delay ? 'Estimasi diperbarui' : 'Status pengantaran aktif'}</p>
-          <p className="mt-1 text-base font-extrabold leading-snug text-ink sm:text-lg">{delivered ? `Paket telah tiba · ${formatDelivered(shipment.delivered_at)}` : canceled ? 'Pengiriman dibatalkan' : `Estimasi tiba: ${formatDate(shipment.estimated_delivery_date)}, ${shipment.estimated_delivery_time} WIB`}</p>
+  if (!shipment) return null;
+
+  const { order_status, order_estimated_delivery_date, order_delivered_customer_date } = shipment;
+
+  // Fungsi utilitas format tanggal ke Bahasa Indonesia (WIB)
+  const formatEstimatedDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const datePart = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const timePart = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+    return `${datePart}, Est. ${timePart} WIB`;
+  };
+
+  const formatDeliveredDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    const datePart = date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    const timePart = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+    return `${datePart} - ${timePart} WIB`;
+  };
+
+  const isDelivered = order_status === 'delivered';
+  const isCanceled = order_status === 'canceled';
+
+  if (isDelivered) {
+    return (
+      <div className="bg-success/10 border border-success/20 rounded-2xl p-4 sm:p-5 flex items-center gap-4 transition-all shadow-sm">
+        <div className="bg-success text-white rounded-full p-2 shadow-sm shadow-success/30 shrink-0">
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <div>
+          <p className="text-sm font-semibold text-success/80 mb-0.5">Berhasil Terkirim</p>
+          <p className="text-base sm:text-lg font-bold text-success-800">
+            Paket Telah Tiba pada {formatDeliveredDate(order_delivered_customer_date)}
+          </p>
         </div>
       </div>
-      {!delivered && !canceled && <div className="flex flex-wrap gap-2 sm:justify-end"><span className="rounded-full border border-emerald-200 bg-emerald-50 px-3 py-2 text-xs font-bold text-emerald-700">✓ {shipment.is_free_shipping ? 'Gratis Ongkir' : 'Asuransi Aktif'}</span><span className={`rounded-full px-3 py-2 text-xs font-bold ${shipment.has_delay ? 'bg-amber-100 text-amber-800' : 'bg-white/75 text-stone-700'}`}><span aria-hidden="true" className="mr-1">●</span>{shipment.has_delay ? 'Dalam Penyesuaian' : 'Dalam Pengantaran Kurir'}</span></div>}
-    </section>
+    );
+  }
+  
+  if (isCanceled) {
+    return (
+       <div className="bg-stone-100 border border-stone-200 rounded-2xl p-4 sm:p-5 flex items-center gap-4 transition-all shadow-sm">
+        <div className="bg-stone-400 text-white rounded-full p-2 shrink-0">
+          <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
+        <div>
+          <p className="text-base sm:text-lg font-bold text-stone-700">
+            Pengiriman Dibatalkan
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // Tampilan Default (Sedang Diproses/Transit/Pickup)
+  return (
+    <div className="bg-white border border-stone-200/70 rounded-2xl p-4 sm:p-5 flex items-center justify-between shadow-sm shadow-stone-100">
+      <div className="flex items-center gap-4">
+         <div className="bg-magenta/10 text-magenta rounded-full p-2 shrink-0">
+           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+           </svg>
+         </div>
+         <div>
+           <p className="text-xs font-semibold uppercase tracking-wider text-muted mb-0.5">Estimasi Waktu Tiba</p>
+           <p className="text-base sm:text-lg font-black text-ink">
+             {formatEstimatedDate(order_estimated_delivery_date)}
+           </p>
+         </div>
+      </div>
+    </div>
   );
 }
