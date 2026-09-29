@@ -2,8 +2,11 @@
 
 @theme {
   --color-brand: #e20074;
-  --color-brand-dark: #bd0066;
+  --color-magenta: #ec008c;
+  --color-magenta-alt: #e20074;
   --color-success: #10b981;
+  --color-green: #10b981;
+  --color-brand-dark: #bd0066;
   --color-warning: #f59e0b;
   --color-ink: #29232a;
   --color-muted: #777079;

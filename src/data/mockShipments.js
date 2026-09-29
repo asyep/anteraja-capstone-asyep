@@ -1,86 +1,128 @@
-const milestones = (currentIndex, canceled = false, deliveredAt = null) => {
-  const stages = [
-    ['ORDER_CREATED', 'Pesanan dibuat', '2017-09-20T09:00:00-03:00'],
-    ['PICKUP_READY', 'Diproses kurir', '2017-09-21T08:00:00-03:00'],
-    ['IN_TRANSIT', 'Dalam perjalanan', '2017-09-23T16:30:00-03:00'],
-    ['DELIVERED', 'Tiba di tujuan', deliveredAt],
-  ];
-  return stages.map(([code, label, timestamp], index) => ({
-    code,
-    label,
-    timestamp: timestamp && index <= currentIndex ? timestamp : null,
-    completed: !canceled && index < currentIndex,
-    current: !canceled && index === currentIndex,
-  }));
-};
-
-const shipments = [
+export const mockShipments = [
   {
-    waybill_number: '00010242fe8c5a6d1ba2dd792cb16214',
-    order_status: 'in_transit', seller_city: 'Volta Redonda', customer_city: 'Campos dos Goytacazes',
-    seller_name: 'Loja Centro Volta Redonda', customer_name: 'Marina Oliveira',
-    item_description: 'Perlengkapan rumah', weight_kg: 1.2, service_name: 'Anteraja Reguler',
-    logistics_delay_reason: 'None', traffic_status: 'Clear', waiting_time_minutes: 0, has_delay: false,
-    estimated_delivery_date: '2017-09-28', estimated_delivery_time: '18:30',
-    delivered_at: null, is_free_shipping: false, insurance_active: true,
-    ai_narrative: { text: 'Paket Kakak sedang bergerak dari Volta Redonda menuju Campos dos Goytacazes. Perjalanan saat ini berjalan lancar dan kurir memperbarui setiap titik transit agar paket tiba sesuai perkiraan.', is_fallback: false },
-    milestone_stages: milestones(2),
+    waybill_number: "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6",
+    order_status: "in_transit",
+    seller_city: "Jakarta Pusat",
+    customer_city: "Bandung",
+    logistics_delay_reason: "None",
+    traffic_status: "Clear",
+    has_delay: false,
+    order_estimated_delivery_date: "2026-10-02T10:00:00Z",
+    order_delivered_customer_date: null,
+    ai_narrative: {
+      text: "Paket Anda sedang dalam perjalanan menuju Bandung. Cuaca cerah dan lalu lintas lancar, estimasi tiba tepat waktu pada tanggal 2 Oktober 2026. Terima kasih telah menggunakan Anteraja.",
+      is_fallback: false
+    },
+    milestone_stages: [
+      { stage: "Order Created", status: "completed", timestamp: "2026-09-28T08:00:00Z" },
+      { stage: "Pickup Ready", status: "completed", timestamp: "2026-09-28T14:30:00Z" },
+      { stage: "In Transit", status: "current", timestamp: "2026-09-29T09:15:00Z" },
+      { stage: "Delivered", status: "pending", timestamp: null }
+    ]
   },
   {
-    waybill_number: '0008288aa423d2a3f00fcb17cd7d8719',
-    order_status: 'in_transit', seller_city: 'Rio de Janeiro', customer_city: 'Niteroi',
-    seller_name: 'Toko Elektronik Carioca', customer_name: 'Budi Santoso',
-    item_description: 'Aksesori elektronik', weight_kg: 1.8, service_name: 'Anteraja Reguler',
-    logistics_delay_reason: 'Traffic Jam', traffic_status: 'Heavy', waiting_time_minutes: 45, has_delay: true,
-    estimated_delivery_date: '2017-09-29', estimated_delivery_time: '12:00',
-    delivered_at: null, is_free_shipping: true, insurance_active: true,
-    ai_narrative: { text: 'Paket Kakak sedang menuju Niteroi dari Rio de Janeiro. Lalu lintas padat menambah waktu perjalanan, jadi estimasi kami sesuaikan. Kurir terus memantau rute dan mengupayakan kiriman tiba dengan aman.', is_fallback: true },
-    milestone_stages: milestones(2),
+    waybill_number: "b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7",
+    order_status: "delivered",
+    seller_city: "Surabaya",
+    customer_city: "Semarang",
+    logistics_delay_reason: "None",
+    traffic_status: "Clear",
+    has_delay: false,
+    order_estimated_delivery_date: "2026-09-28T15:00:00Z",
+    order_delivered_customer_date: "2026-09-28T14:45:00Z",
+    ai_narrative: {
+      text: "Hore! Paket Anda telah berhasil dikirim dan diterima di Semarang lebih awal dari perkiraan. Kami harap Anda puas dengan layanan pengiriman cerdas Anteraja.",
+      is_fallback: false
+    },
+    milestone_stages: [
+      { stage: "Order Created", status: "completed", timestamp: "2026-09-26T10:00:00Z" },
+      { stage: "Pickup Ready", status: "completed", timestamp: "2026-09-26T16:00:00Z" },
+      { stage: "In Transit", status: "completed", timestamp: "2026-09-27T08:30:00Z" },
+      { stage: "Delivered", status: "completed", timestamp: "2026-09-28T14:45:00Z" }
+    ]
   },
   {
-    waybill_number: '11111111111111111111111111111111',
-    order_status: 'delivered', seller_city: 'Volta Redonda', customer_city: 'Sao Paulo',
-    seller_name: 'Toko Serba Ada', customer_name: 'Dewi Lestari',
-    item_description: 'Paket pilihan', weight_kg: 0.8, service_name: 'Anteraja NextDay',
-    logistics_delay_reason: 'None', traffic_status: 'Clear', waiting_time_minutes: 0, has_delay: false,
-    estimated_delivery_date: '2017-09-28', estimated_delivery_time: '18:00',
-    delivered_at: '2017-09-25T14:20:00+07:00', is_free_shipping: false, insurance_active: true,
-    ai_narrative: { text: 'Paket Kakak sudah diterima di Sao Paulo pada 25 September pukul 14.20 WIB. Perjalanan dari Volta Redonda selesai dengan aman. Terima kasih telah mempercayakan kiriman kepada Anteraja.', is_fallback: false },
-    milestone_stages: milestones(3, false, '2017-09-25T14:20:00+07:00'),
+    waybill_number: "c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8",
+    order_status: "in_transit",
+    seller_city: "Medan",
+    customer_city: "Palembang",
+    logistics_delay_reason: "Weather",
+    traffic_status: "Heavy",
+    has_delay: true,
+    order_estimated_delivery_date: "2026-10-04T12:00:00Z",
+    order_delivered_customer_date: null,
+    ai_narrative: {
+      text: "Mohon maaf, terdapat sedikit keterlambatan karena kondisi cuaca buruk di area transit. Kami terus memantau situasi untuk memastikan paket Anda tiba dengan aman secepat mungkin.",
+      is_fallback: false
+    },
+    milestone_stages: [
+      { stage: "Order Created", status: "completed", timestamp: "2026-09-29T07:00:00Z" },
+      { stage: "Pickup Ready", status: "completed", timestamp: "2026-09-29T11:00:00Z" },
+      { stage: "In Transit", status: "current", timestamp: "2026-09-29T18:00:00Z" },
+      { stage: "Delivered", status: "pending", timestamp: null }
+    ]
   },
   {
-    waybill_number: '22222222222222222222222222222222',
-    order_status: 'canceled', seller_city: 'Rio de Janeiro', customer_city: 'Niteroi',
-    seller_name: 'Toko Carioca', customer_name: 'Rizky Pratama',
-    item_description: 'Barang pesanan', weight_kg: 1, service_name: 'Anteraja Reguler',
-    logistics_delay_reason: 'None', traffic_status: 'Unknown', waiting_time_minutes: 0, has_delay: false,
-    estimated_delivery_date: '2017-09-29', estimated_delivery_time: null,
-    delivered_at: null, is_free_shipping: false, insurance_active: false,
-    ai_narrative: { text: 'Pengiriman ini dibatalkan sebelum perjalanan dimulai. Jika pembatalan tidak sesuai dengan permintaan Kakak, hubungi penjual untuk memastikan tindak lanjut pesanan dan pengembalian dana.', is_fallback: true },
-    milestone_stages: milestones(-1, true),
+    waybill_number: "d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9",
+    order_status: "pickup_ready",
+    seller_city: "Yogyakarta",
+    customer_city: "Malang",
+    logistics_delay_reason: "None",
+    traffic_status: "Clear",
+    has_delay: false,
+    order_estimated_delivery_date: "2026-10-03T18:00:00Z",
+    order_delivered_customer_date: null,
+    ai_narrative: {
+      text: "Paket Anda sudah disiapkan oleh pengirim dan sedang menunggu penjemputan oleh kurir SATRIA kami. Estimasi pengiriman berjalan sesuai jadwal yang ditentukan.",
+      is_fallback: false
+    },
+    milestone_stages: [
+      { stage: "Order Created", status: "completed", timestamp: "2026-09-29T10:00:00Z" },
+      { stage: "Pickup Ready", status: "current", timestamp: "2026-09-29T11:15:00Z" },
+      { stage: "In Transit", status: "pending", timestamp: null },
+      { stage: "Delivered", status: "pending", timestamp: null }
+    ]
   },
   {
-    waybill_number: '33333333333333333333333333333333',
-    order_status: 'processing', seller_city: 'Jakarta Selatan', customer_city: 'Bandung',
-    seller_name: 'Kreasi Nusantara', customer_name: 'Nadia Putri',
-    item_description: 'Busana', weight_kg: 0.6, service_name: 'Anteraja Reguler',
-    logistics_delay_reason: 'None', traffic_status: 'Clear', waiting_time_minutes: 0, has_delay: false,
-    estimated_delivery_date: '2026-09-30', estimated_delivery_time: '18:00',
-    delivered_at: null, is_free_shipping: false, insurance_active: false,
-    ai_narrative: { text: 'Pesanan Kakak sedang disiapkan di hub pengiriman Jakarta Selatan. Setelah proses sortir selesai, paket akan diteruskan ke Bandung. Kami akan memperbarui informasi begitu paket mulai bergerak.', is_fallback: true },
-    milestone_stages: milestones(1),
+    waybill_number: "e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+    order_status: "in_transit",
+    seller_city: "Denpasar",
+    customer_city: "Jakarta Selatan",
+    logistics_delay_reason: "Traffic Jam",
+    traffic_status: "Detour",
+    has_delay: true,
+    order_estimated_delivery_date: "2026-10-05T14:00:00Z",
+    order_delivered_customer_date: null,
+    ai_narrative: {
+      text: "Terdapat pengalihan rute akibat kemacetan lalu lintas yang parah di jalur utama. Sistem AI kami telah memilih rute alternatif terbaik agar paket Anda tetap aman dan segera sampai.",
+      is_fallback: false
+    },
+    milestone_stages: [
+      { stage: "Order Created", status: "completed", timestamp: "2026-09-28T09:00:00Z" },
+      { stage: "Pickup Ready", status: "completed", timestamp: "2026-09-28T13:00:00Z" },
+      { stage: "In Transit", status: "current", timestamp: "2026-09-29T08:00:00Z" },
+      { stage: "Delivered", status: "pending", timestamp: null }
+    ]
   },
   {
-    waybill_number: '44444444444444444444444444444444',
-    order_status: 'in_transit', seller_city: 'Surabaya', customer_city: 'Yogyakarta',
-    seller_name: 'Surya Gadget', customer_name: 'Andi Saputra',
-    item_description: 'Perangkat elektronik', weight_kg: 2.4, service_name: 'Anteraja Reguler',
-    logistics_delay_reason: 'Weather', traffic_status: 'Moderate', waiting_time_minutes: 75, has_delay: true,
-    estimated_delivery_date: '2026-10-01', estimated_delivery_time: '16:30',
-    delivered_at: null, is_free_shipping: false, insurance_active: true,
-    ai_narrative: { text: 'Paket Kakak tetap bergerak menuju Yogyakarta, tetapi cuaca di jalur transit membuat perjalanan perlu lebih berhati-hati. Estimasi telah diperbarui dan kurir memprioritaskan keselamatan paket selama pengantaran.', is_fallback: true },
-    milestone_stages: milestones(2),
-  },
+    waybill_number: "f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1",
+    order_status: "canceled",
+    seller_city: "Makassar",
+    customer_city: "Balikpapan",
+    logistics_delay_reason: "None",
+    traffic_status: "Clear",
+    has_delay: false,
+    order_estimated_delivery_date: "2026-10-01T10:00:00Z",
+    order_delivered_customer_date: null,
+    ai_narrative: {
+      text: "Pengiriman paket ini telah dibatalkan atas permintaan pengirim atau masalah teknis operasional. Silakan hubungi layanan pelanggan kami untuk informasi lebih lanjut mengenai pengembalian.",
+      is_fallback: true
+    },
+    milestone_stages: [
+      { stage: "Order Created", status: "completed", timestamp: "2026-09-27T10:00:00Z" },
+      { stage: "Pickup Ready", status: "completed", timestamp: "2026-09-27T14:00:00Z" },
+      { stage: "In Transit", status: "canceled", timestamp: null },
+      { stage: "Delivered", status: "canceled", timestamp: null }
+    ]
+  }
 ];
-
-export default shipments;
