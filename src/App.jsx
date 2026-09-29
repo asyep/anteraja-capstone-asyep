@@ -13,7 +13,6 @@ import shipments from './data/mockShipments.js';
 export default function App() {
   const [shipmentData] = useState(() => shipments);
   const [activeWaybill, setActiveWaybill] = useState(shipments[0].waybill_number);
-  const [filter, setFilter] = useState('all');
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [audience, setAudience] = useState('B2C');
@@ -33,7 +32,6 @@ export default function App() {
       const result = shipmentData.find((item) => item.waybill_number.toLowerCase() === waybill.toLowerCase());
       if (result) {
         setActiveWaybill(result.waybill_number);
-        setFilter('all');
         document.getElementById('hasil-pelacakan')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       } else {
         setErrorMessage('Nomor resi belum ditemukan. Periksa kembali nomor yang dimasukkan.');
@@ -69,7 +67,7 @@ export default function App() {
               <OperationalWarningBanner shipment={activeShipment} />
               <AINarrativeBox shipment={activeShipment} />
               <VisualMilestoneStepper shipment={activeShipment} />
-              <ShipmentList shipments={shipmentData} activeWaybill={activeWaybill} onSelect={handleSelectShipment} filter={filter} onFilterChange={setFilter} />
+              <ShipmentList shipments={shipmentData} activeWaybill={activeWaybill} onSelect={handleSelectShipment} />
             </div>
             <aside className="space-y-4" aria-label="Informasi tambahan pengiriman">
               <ShipmentSummary shipment={activeShipment} />
