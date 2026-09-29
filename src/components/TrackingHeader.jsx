@@ -1,28 +1,52 @@
-export default function TrackingHeader({ audience, onAudienceChange, activeUser = 'Asep' }) {
-  const greeting = audience === 'B2B' ? `Halo Mitra ${activeUser}` : `Halo Kak ${activeUser}`;
+import React from 'react';
+
+export default function TrackingHeader({ audience, onAudienceChange, activeUser }) {
   return (
-    <header className="sticky top-0 z-30 border-b border-stone-200/80 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex h-[72px] max-w-[1240px] items-center justify-between gap-5 px-5 sm:px-8">
-        <a href="#beranda" className="flex shrink-0 items-center gap-2 text-brand" aria-label="Anteraja, beranda">
-          <span className="grid size-9 place-items-center rounded-xl bg-brand text-xl font-black italic text-white">a</span>
-          <span className="text-xl font-extrabold tracking-tight">anteraja</span>
-        </a>
-        <nav className="hidden items-center gap-2 sm:flex" aria-label="Navigasi utama">
-          <a href="#beranda" className="rounded-full bg-pink-50 px-4 py-2 text-sm font-semibold text-brand">Beranda</a>
-          <a href="#pelacakan" className="rounded-full px-4 py-2 text-sm font-medium text-stone-600 transition hover:bg-stone-100">Lacak Kiriman</a>
-          <a href="#bantuan" className="rounded-full px-4 py-2 text-sm font-medium text-stone-600 transition hover:bg-stone-100">Bantuan</a>
-        </nav>
-        <div className="flex items-center gap-2">
-          <label className="sr-only" htmlFor="audience">Jenis pengguna</label>
-          <select id="audience" value={audience} onChange={(event) => onAudienceChange(event.target.value)} className="max-w-[100px] rounded-full border border-stone-200 bg-white px-3 py-2 text-xs font-semibold text-stone-600">
-            <option value="B2C">Pelanggan</option>
-            <option value="B2B">Merchant</option>
-          </select>
-          <span className="hidden rounded-full bg-brand px-4 py-2 text-sm font-semibold text-white md:inline">{greeting}</span>
+    <header className="bg-white border-b border-stone-200/60 shadow-sm sticky top-0 z-50">
+      <div className="max-w-[1240px] mx-auto px-4 sm:px-8 py-3 sm:py-4 flex flex-wrap items-center justify-between gap-4">
+        
+        {/* Logo & Assistant Greeting */}
+        <div className="flex items-center gap-3 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 bg-magenta rounded-xl flex items-center justify-center text-white font-black text-xl sm:text-2xl shadow-md shadow-magenta/20 transform transition hover:scale-105 cursor-default">
+            A
+          </div>
+          <div>
+            <h1 className="text-lg sm:text-xl font-extrabold text-ink leading-tight tracking-tight">Anteraja</h1>
+            <p className="text-xs sm:text-sm font-medium text-muted flex items-center gap-1.5 mt-0.5">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75"></span>
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-success"></span>
+              </span>
+              Satria Assistant siap membantu, {activeUser}!
+            </p>
+          </div>
         </div>
-      </div>
-      <div className="border-t border-pink-100 bg-pink-50/70 px-5 py-2 text-center text-xs font-medium text-brand sm:hidden">
-        Satria Assistant siap membantu, {greeting}.
+
+        {/* View Toggle (B2C / B2B) */}
+        {onAudienceChange && (
+          <div className="flex items-center bg-canvas p-1 rounded-xl border border-stone-200">
+            <button
+              onClick={() => onAudienceChange('B2C')}
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                audience === 'B2C' 
+                  ? 'bg-white text-magenta shadow-sm border border-stone-200/50' 
+                  : 'text-muted hover:text-ink hover:bg-stone-100/50'
+              }`}
+            >
+              Personal (B2C)
+            </button>
+            <button
+              onClick={() => onAudienceChange('B2B')}
+              className={`px-4 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                audience === 'B2B' 
+                  ? 'bg-white text-magenta shadow-sm border border-stone-200/50' 
+                  : 'text-muted hover:text-ink hover:bg-stone-100/50'
+              }`}
+            >
+              Bisnis (B2B)
+            </button>
+          </div>
+        )}
       </div>
     </header>
   );
