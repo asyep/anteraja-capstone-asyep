@@ -1,258 +1,664 @@
-<!doctype html>
-<html lang="id">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Lacak paket Anteraja dan lihat progres pengiriman, estimasi tiba, serta penjelasan status dalam bahasa yang mudah dipahami.">
-  <title>Lacak Kiriman · Anteraja</title>
-  <link rel="stylesheet" href="../styles.css">
+<!DOCTYPE html>
 
-    <link href="https://fonts.googleapis.com" rel="preconnect" />
-    <link crossorigin="" href="https://fonts.googleapis.com" rel="preconnect" />
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
-    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script>tailwind.config = {theme:{extend:{colors:{primary:'#E4007D','primary-hover':'#c9006e','surface':'#fcf9f8','surface-container-low':'#f8f6f5','surface-container-lowest':'#ffffff','on-surface':'#1c1b1b','on-surface-variant':'#5a3f49','border-subtle':'#E5E7EB','text-muted':'#6B7280','success-base':'#10B981','ai-accent':'#8B5CF6'},fontFamily:{sans:['Plus Jakarta Sans','sans-serif'],body-md:['Plus Jakarta Sans','sans-serif']}}}};</script>
-</head>
-<body id="top" class="tracking-search-page bg-surface font-sans text-on-surface min-h-screen antialiased flex flex-col justify-between">
-  <a class="skip-link" href="#main">Lewati ke konten utama</a>
-  <header
-      class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-border-subtle shadow-sm transition-all"
-    >
-      <div
-        class="h-[74px] max-w-[1320px] mx-auto px-2 sm:px-6 lg:px-10 flex items-center justify-between gap-1 sm:gap-8"
-      >
-        <div class="flex items-center gap-1 sm:gap-10">
-          <a
-            class="flex items-center gap-3 transition-transform hover:opacity-95"
-            data-path="beranda"
-            href="../index.html"
-            ><img
-              alt="Anteraja"
-              class="h-6 sm:h-9 w-auto object-contain"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe6Sd3grxrRWPcD50ZL9ML41Qgjht-JFyyH9oR_h216L-YuPxTnO476pV6oNgnxfW6GO3e69fnJ6zfE31GbHVruEB0qAqLhqyF4GzmBS6Uw8utcokB5ESQNjEUgBTQue2S_nmzjh85VMNah20d2omDqGQ8Z1easannyiXA-VC-6TascqvSc5Oq2eMij5tOvg1KKRukpf5TRfeUfqFgTRHTP1uW23cHVlgombuEI5jwo_4iEzCJmERdLH6uug9wp-LKkV8"
-          /></a>
-          <nav
-            class="flex items-center gap-0 sm:gap-2"
-            aria-label="Navigasi utama"
-          >
-            <a
-              
-              class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl px-1 sm:px-5 text-[10px] sm:text-sm font-semibold text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary"
-              href="../index.html"
-              >Beranda</a
-            ><a
-              class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl bg-primary/10 px-1 sm:px-5 text-[10px] sm:text-sm font-bold text-primary transition-colors"
-              href="lacak.html"
-              >Lacak Kiriman</a
-            >
-          </nav>
-        </div>
-      </div>
-    </header>
-  <main class="page-shell lacak-page-main" id="main">
-    <section class="hero-intro" aria-labelledby="page-title"><p class="eyebrow eyebrow-brand"><span class="eyebrow-dot" aria-hidden="true"></span>SMART TRACKING ANTERAJA</p><h1 id="page-title">Lacak Pengiriman Smart AI</h1><p>Pantau status paket dengan penjelasan yang mudah dipahami, estimasi tiba, dan riwayat perjalanan.</p><ul class="hero-benefits" aria-label="Keunggulan pelacakan"><li><span aria-hidden="true">✓</span>Progres pengiriman yang jelas</li><li><span aria-hidden="true">✓</span>Estimasi tanggal dan waktu tiba</li><li><span aria-hidden="true">✓</span>Informasi kendala operasional</li></ul></section>
-    <section class="tracking-search panel" id="lacak" aria-labelledby="search-title"><h2 id="search-title">Masukkan nomor resi</h2><form class="search-form home-search-form" id="tracking-search-form" action="not-found.html" method="get"><label class="sr-only" for="waybill">Nomor resi Anteraja</label><div class="input-wrap"><span class="search-glyph" aria-hidden="true">#</span><input id="waybill" name="waybill_number" type="text" inputmode="numeric" autocomplete="off" minlength="13" maxlength="32" pattern="[0-9]{13}|[0-9]{32}" title="Masukkan resi demo 13 digit atau kode normal 32 digit." placeholder="Masukkan resi demo (13 atau 32 digit)" aria-describedby="waybill-help" required></div><button class="button-primary" type="submit"><span aria-hidden="true">⌕</span>Lacak Paket</button><p class="form-hint" id="waybill-help"><span>Masukkan resi demo 13 atau 32 digit.</span><span class="character-count">13 atau 32 digit</span></p></form><p class="prototype-note"><span aria-hidden="true">ⓘ</span>Untuk mencoba tiap status, pilih resi contoh di bawah. Tekan Lacak Paket untuk membuka kondisi yang sesuai dengan nomor resi.</p>
-      <div class="demo-resi" id="contoh" aria-labelledby="demo-title"><div class="section-heading"><div><p class="eyebrow">UJI COBA RESI</p><h2 id="demo-title">Pilih contoh pelacakan</h2></div><span class="helper-note">Klik contoh untuk langsung membuka kondisi paket</span></div><ul><li><a href="tracking-normal.html?waybill_number=1000849201994"><span class="demo-icon" aria-hidden="true">↗</span><span class="demo-copy"><strong>In-Transit</strong><code>1000849201994</code></span><span class="demo-arrow" aria-hidden="true">→</span></a></li><li><a href="tracking-live.html"><span class="demo-icon green-icon" aria-hidden="true">⌖</span><span class="demo-copy"><strong>Live Map</strong><code>1000921477821</code></span><span class="demo-arrow" aria-hidden="true">→</span></a></li><li><a href="tracking.html"><span class="demo-icon amber-icon" aria-hidden="true">!</span><span class="demo-copy"><strong>Peringatan Jalur</strong><code>1000781293812</code></span><span class="demo-arrow" aria-hidden="true">→</span></a></li></ul></div></section>
-
-    <section class="feature-strip" aria-label="Informasi yang tersedia">
-      <article><span class="feature-icon" aria-hidden="true">◎</span><div><h2>Tahapan pengiriman</h2><p>Lihat progres paket dari awal sampai tujuan.</p></div></article>
-      <article><span class="feature-icon purple-feature" aria-hidden="true">✦</span><div><h2>Penjelasan status</h2><p>Pahami pembaruan dengan bahasa yang sederhana.</p></div></article>
-      <article><span class="feature-icon green-feature" aria-hidden="true">◷</span><div><h2>Estimasi tiba</h2><p>Ketahui perkiraan tanggal dan waktunya.</p></div></article>
-    </section>
-
-    <section class="faq panel" aria-labelledby="faq-title">
-      <div class="section-heading"><div><p class="eyebrow">PUSAT INFORMASI</p><h2 id="faq-title">Pertanyaan seputar pelacakan</h2></div><a class="text-link" href="bantuan.html">Lihat semua bantuan →</a></div>
-      <details><summary>Berapa karakter nomor resi yang perlu saya masukkan?</summary><p>Resi demo yang tersedia terdiri dari 13 angka. Pilih salah satu contoh untuk melihat kondisi paket yang sesuai.</p></details>
-      <details><summary>Mengapa status paket belum berubah?</summary><p>Status mengikuti pemindaian paket di fasilitas pengiriman. Pembaruan mungkin memerlukan waktu setelah paket bergerak ke tahap berikutnya.</p></details>
-      <details><summary>Apakah saya bisa melihat posisi GPS kurir?</summary><p>Tampilan Live Map pada prototype ini bersifat ilustratif dan tidak menampilkan posisi GPS kurir secara langsung.</p></details>
-    </section>
-  </main>
-  <footer
-      class="w-full bg-white border-t border-border-subtle text-on-surface-variant"
-    >
-      <div class="max-w-7xl mx-auto px-6 lg:px-12 py-14">
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12"
-        >
-          <div class="lg:col-span-2 flex flex-col gap-4">
-            <div class="flex items-center gap-3">
-              <a data-path="beranda" href="../index.html"
-                ><img
-                  alt="Anteraja"
-                  class="h-8 w-auto object-contain"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPPf6qGq-Zr5MtoSPI_IjEAsNa8dHslQycOXhNyUdWu-LvXw3V2gpmL5im-tGSWWGJai3NTCIeElX87nSwEa9c9z8sr22zJX2OWWris4_f2wpmtu_Dkb2EJQsN7qnn26WQqfM79RAFggsIEx_Js8CXBpkEh7bcsA_tLZ72TZltAYFOkFG4R3fRvxR_bHXd4DI30bERH9hbIuRjD1gVUQyx0Ya9v1VRwozrSFfnbg7ixWSpS5DfTZMFLsCnvGjalb_nSmE"
-              /></a>
-            </div>
-            <p class="text-xs text-on-surface-variant leading-relaxed max-w-sm">
-              Solusi pengiriman logistik kilat terpercaya berbasis ekosistem
-              cerdas dan AI terintegrasi untuk kenyamanan jutaan pelanggan di
-              seluruh Indonesia.
-            </p>
-            <div
-              class="flex flex-col gap-1 text-xs text-on-surface-variant mt-2"
-            >
-              <span class="font-bold text-on-surface"
-                >PT Tri Adi Bersama (Anteraja)</span
-              ><span
-                >Gedung Tri Adi Bersama, Jl. Terusan Rasuna Said No. 12,
-                Kuningan Barat, Jakarta Selatan 12710</span
-              ><span>Call Center Resmi: (021) 5060 3333 | cs@anteraja.id</span>
-            </div>
-          </div>
-          <div class="flex flex-col gap-3">
-            <h4
-              class="text-xs font-bold text-on-surface uppercase tracking-wider"
-            >
-              Layanan
-            </h4>
-            <div class="flex flex-col gap-2 text-xs">
-              <a
-                class="hover:text-primary transition-colors"
-                href="bantuan.html"
-                >Bantuan</a
-              ><a
-                class="hover:text-primary transition-colors"
-                href="lacak.html#lacak"
-                >Lacak Kiriman</a
-              >
-            </div>
-          </div>
-          <div class="flex flex-col gap-3">
-            <h4
-              class="text-xs font-bold text-on-surface uppercase tracking-wider"
-            >
-              Kemitraan &amp; Karir
-            </h4>
-            <div class="flex flex-col gap-2 text-xs">
-              <a
-                class="hover:text-primary transition-colors"
-                data-path="mitra-satria"
-                href="#"
-                >Pendaftaran Mitra Satria</a
-              ><a
-                class="hover:text-primary transition-colors"
-                data-path="agen-pos"
-                href="#"
-                >Mitra Loket Drop Point</a
-              ><a
-                class="hover:text-primary transition-colors"
-                data-path="karir"
-                href="#"
-                >Peluang Karir Satria &amp; IT</a
-              ><a
-                class="hover:text-primary transition-colors"
-                data-path="tentang-kami"
-                href="#"
-                >Tentang PT Tri Adi Bersama</a
-              >
-            </div>
-          </div>
-          <div class="flex flex-col gap-3">
-            <h4
-              class="text-xs font-bold text-on-surface uppercase tracking-wider"
-            >
-              Sertifikasi &amp; Keamanan
-            </h4>
-            <div class="flex flex-col gap-2.5">
-              <div
-                class="p-3 bg-surface-container rounded-xl flex items-center gap-3 border border-border-subtle"
-              >
-                <span class="material-symbols-outlined text-primary text-[20px]"
-                  >verified</span
-                >
-                <div>
-                  <div class="text-xs font-bold text-on-surface">
-                    ISO 9001:2015
-                  </div>
-                  <div class="text-[11px] text-on-surface-variant">
-                    Sistem Manajemen Mutu
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-3 bg-surface-container rounded-xl flex items-center gap-3 border border-border-subtle"
-              >
-                <span
-                  class="material-symbols-outlined text-secondary text-[20px]"
-                  >shield</span
-                >
-                <div>
-                  <div class="text-xs font-bold text-on-surface">
-                    ISO 27001:2013
-                  </div>
-                  <div class="text-[11px] text-on-surface-variant">
-                    Keamanan Informasi &amp; Data
-                  </div>
-                </div>
-              </div>
-              <div
-                class="p-2.5 bg-surface-container rounded-xl flex items-center gap-2 border border-border-subtle"
-              >
-                <span
-                  class="material-symbols-outlined text-tertiary text-[18px]"
-                  >verified_user</span
-                >
-                <div class="text-[11px] font-semibold text-on-surface">
-                  Izin Resmi Penyelenggaraan Pos &amp; PSE Kominfo RI
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          class="pt-8 border-t border-border-subtle flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant"
-        >
-          <div class="flex flex-wrap items-center gap-6">
-            <a
-              class="hover:text-primary transition-colors"
-              data-path="syarat-dan-ketentuan"
-              href="#"
-              >Syarat &amp; Ketentuan</a
-            ><a
-              class="hover:text-primary transition-colors"
-              data-path="kebijakan-privasi"
-              href="#"
-              >Kebijakan Privasi</a
-            ><a
-              class="hover:text-primary transition-colors"
-              data-path="faq"
-              href="#"
-              >Pusat Bantuan (FAQ)</a
-            ><a
-              class="hover:text-primary transition-colors"
-              data-path="panduan-keamanan"
-              href="#"
-              >Panduan Keamanan</a
-            >
-          </div>
-          <div class="text-center md:text-right">
-            © 2025 PT Tri Adi Bersama (Anteraja). Hak Cipta Dilindungi
-            Undang-Undang.
-          </div>
-        </div>
-      </div>
-    </footer>
-
-  <script>
-    (() => {
-      const form = document.getElementById("tracking-search-form");
-      const input = document.getElementById("waybill");
-      const routes = {
-        "1000849201994": "tracking-normal.html",
-        "10008492019948271039485729103948": "tracking-normal.html",
-        "1000921477821": "tracking-live.html",
-        "1000781293812": "tracking.html",
-      };
-      form.addEventListener("submit", (event) => {
-        event.preventDefault();
-        const waybill = input.value.trim();
-        const target = routes[waybill] || "not-found.html";
-        window.location.href = `${target}?waybill_number=${encodeURIComponent(waybill)}`;
+<html lang="id" style=""><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "outline": "#8e6f79",
+          "inverse-on-surface": "#f3f0ef",
+          "secondary-container": "#fdc40f",
+          "on-secondary-fixed-variant": "#5a4300",
+          "background": "#fcf9f8",
+          "on-secondary": "#ffffff",
+          "tertiary-container": "#1b8700",
+          "surface": "#fcf9f8",
+          "surface-container": "#f0eded",
+          "primary-container": "#e00085",
+          "surface-variant": "#e5e2e1",
+          "on-secondary-fixed": "#251a00",
+          "surface-dim": "#dcd9d9",
+          "error-surface": "#FEF2F2",
+          "on-primary-fixed": "#3e0021",
+          "on-primary-container": "#fffbff",
+          "surface-container-high": "eae7e7",
+          "on-tertiary": "#ffffff",
+          "inverse-primary": "#ffb0cc",
+          "surface-page": "#FFFFFF",
+          "primary-fixed": "#ffd9e4",
+          "on-surface-variant": "#5a3f49",
+          "warning-surface": "#FFFBEB",
+          "on-background": "#1c1b1b",
+          "warning-base": "#F59E0B",
+          "text-primary": "#1A1A1A",
+          "tertiary-fixed-dim": "#72de55",
+          "surface-tint": "#b8006c",
+          "primary": "#b30069",
+          "secondary-fixed-dim": "#f7be00",
+          "surface-container-lowest": "#ffffff",
+          "error-base": "#EF4444",
+          "ai-accent": "#8B5CF6",
+          "on-primary-fixed-variant": "#8d0051",
+          "border-strong": "#D1D5DB",
+          "surface-subtle": "#F6F6F6",
+          "on-tertiary-fixed-variant": "#0d5300",
+          "on-tertiary-container": "#f8ffef",
+          "secondary-fixed": "#ffdf98",
+          "on-secondary-container": "#6d5200",
+          "on-error": "#ffffff",
+          "error-container": "#ffdad6",
+          "surface-card": "#FAFAFA",
+          "border-subtle": "#E5E7EB",
+          "surface-container-highest": "#e5e2e1",
+          "inverse-surface": "#313030",
+          "surface-bright": "#fcf9f8",
+          "secondary": "#775a00",
+          "on-surface": "#1c1b1b",
+          "primary-fixed-dim": "#ffb0cc",
+          "on-tertiary-fixed": "#022100",
+          "tertiary": "#146b00",
+          "tertiary-fixed": "#8dfc6e",
+          "on-error-container": "#93000a",
+          "ai-surface": "#F5F3FF",
+          "success-base": "#10B981",
+          "text-placeholder": "#9CA3AF",
+          "success-surface": "#ECFDF5",
+          "outline-variant": "#e2bdc8",
+          "error": "#ba1a1a",
+          "surface-container-low": "#f6f3f2",
+          "on-primary": "#ffffff",
+          "text-muted": "#6B7280"
+        },
+        "borderRadius": {
+          "DEFAULT": "0.25rem",
+          "lg": "0.5rem",
+          "xl": "0.75rem",
+          "full": "9999px"
+        },
+        "spacing": {
+          "space-xl": "2rem",
+          "space-md": "1rem",
+          "margin-tablet": "1.5rem",
+          "space-lg": "1.5rem",
+          "margin": "1rem",
+          "space-sm": "0.5rem",
+          "gutter": "1rem",
+          "gutter-desktop": "1.5rem",
+          "margin-desktop": "2.5rem",
+          "space-xs": "0.25rem"
+        },
+        "fontFamily": {
+          "label-md": ["Plus Jakarta Sans"],
+          "label-lg": ["Plus Jakarta Sans"],
+          "headline-xl-mobile": ["Plus Jakarta Sans"],
+          "headline-sm": ["Plus Jakarta Sans"],
+          "body-sm": ["Plus Jakarta Sans"],
+          "body-md": ["Plus Jakarta Sans"],
+          "headline-xl": ["Plus Jakarta Sans"],
+          "body-lg": ["Plus Jakarta Sans"],
+          "headline-lg": ["Plus Jakarta Sans"],
+          "mono-code": ["Plus Jakarta Sans"],
+          "headline-lg-mobile": ["Plus Jakarta Sans"],
+          "headline-md": ["Plus Jakarta Sans"],
+          "label-sm": ["Plus Jakarta Sans"]
+        },
+        "fontSize": {
+          "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+          "label-lg": ["14px", {"lineHeight": "20px", "fontWeight": "600"}],
+          "headline-xl-mobile": ["28px", {"lineHeight": "36px", "fontWeight": "800"}],
+          "headline-sm": ["18px", {"lineHeight": "26px", "fontWeight": "600"}],
+          "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}],
+          "body-md": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+          "headline-xl": ["36px", {"lineHeight": "44px", "fontWeight": "800"}],
+          "body-lg": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+          "headline-lg": ["28px", {"lineHeight": "36px", "fontWeight": "700"}],
+          "mono-code": ["14px", {"lineHeight": "20px", "fontWeight": "700"}],
+          "headline-lg-mobile": ["22px", {"lineHeight": "30px", "fontWeight": "700"}],
+          "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "700"}],
+          "label-sm": ["11px", {"lineHeight": "14px", "fontWeight": "700"}]
+        }
+      }
+    }
+  }</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-20 max-w-[1200px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-xl"><a class="flex items-center gap-space-xs focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg" data-path="beranda" href="../index.html"><img alt="Anteraja" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiT53RFiIiCw1MofEHaBvYval4HR3Hswil-mAqRBbeIBl-iu-t19MWCrsnM-KLgckmDGGnZNIFznWChBRkuHIvmZTLtiXiSZ_YXQrpsTr_e8clMkUILADS0TGrgpx-Caou6d8LsysgW2yihvxK9r62ZvNRonfoOvVgEYtaaYFS7MUtyJKrFd9ahUvc8YXnyDqV7pbg3Y5h4rPZPsApSG87GDtrYNLta2A0jH9IZ1WGGykyOgEdy-hiJ0Ph9i0c_j8RDrg"/></a><nav class="hidden xl:flex items-center gap-space-md"><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3" data-path="beranda" href="../index.html">Beranda</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3" data-path="lacak-kiriman" href="lacak.html">Lacak Kiriman</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3" data-path="cek-tarif" href="bantuan.html">Cek Tarif</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3" data-path="lokasi-drop-point" href="bantuan.html">Titik Drop Point</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3" data-path="layanan-bisnis" href="bantuan.html">Layanan Bisnis</a><a class="font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors py-2 px-3" data-path="mitra-satria" href="#">Mitra Satria</a></nav></div><div class="flex items-center gap-space-md"><div class="hidden sm:flex items-center bg-surface-container-low rounded-full p-0.5 text-on-surface-variant"><button class="px-2.5 py-1 rounded-full font-label-sm text-label-sm bg-surface-container-lowest text-on-surface shadow-[0_1px_4px_rgba(0,0,0,0.04)] font-bold" type="button">ID</button><button class="px-2.5 py-1 rounded-full font-label-sm text-label-sm text-on-surface-variant hover:text-on-surface transition-colors" type="button">EN</button></div><div class="flex items-center gap-space-sm"><a class="hidden md:inline-flex items-center justify-center min-h-[44px] px-space-md rounded-full bg-surface-container-lowest text-on-surface font-label-lg text-label-lg shadow-[0_1px_8px_rgba(0,0,0,0.04)] hover:bg-surface-subtle hover:text-on-surface transition-all" data-path="masuk" href="#">Masuk / Daftar</a><a class="inline-flex items-center justify-center min-h-[44px] px-space-lg rounded-full bg-primary text-on-primary font-label-lg text-label-lg font-bold shadow-[0_4px_16px_-2px_rgba(26,26,26,0.06)] hover:bg-primary-container hover:text-on-primary-container active:scale-[0.98] transition-all gap-1.5" data-path="kirim-paket" href="#"><span class="material-symbols-outlined text-[18px]">local_shipping</span><span>Kirim Paket</span></a></div></div></div></header><main class="w-full pt-20 bg-surface min-h-[calc(100vh-20rem)]"><div class="flex flex-col w-full">
+<!-- Active Navigation State Synchronization -->
+<script>
+    (function() {
+      const navLinks = document.querySelectorAll('header nav a[data-path="lacak-kiriman"]');
+      navLinks.forEach(link => {
+        link.classList.remove('text-on-surface-variant');
+        link.classList.add('text-primary', 'font-bold', 'border-b-2', 'border-primary');
       });
     })();
   </script>
-</body>
-</html>
+<!-- Ambient Glow & Pattern Underlay -->
+<div class="relative w-full overflow-hidden">
+<div class="absolute -top-36 left-1/2 -translate-x-1/2 w-[900px] h-[360px] bg-gradient-to-r from-primary/10 via-secondary-container/15 to-ai-accent/10 blur-3xl pointer-events-none rounded-full"></div>
+<div class="absolute top-20 right-10 w-72 h-72 bg-primary/5 rounded-full blur-2xl pointer-events-none"></div>
+<div class="max-w-[1200px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop pt-8 pb-16 relative z-10">
+<!-- Breadcrumb & Portal Identifier -->
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-md text-label-md mb-6">
+<a class="hover:text-primary transition-colors flex items-center gap-1" data-path="beranda" href="../index.html">
+<span class="material-symbols-outlined text-[16px]">home</span>
+          Beranda
+        </a>
+<span class="text-text-placeholder">/</span>
+<span class="text-primary font-bold">Lacak Kiriman Real-Time</span>
+<span class="hidden sm:inline-flex items-center gap-1 ml-3 px-2 py-0.5 rounded-full bg-ai-surface text-ai-accent font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+          Satria AI Telemetry 4.2
+        </span>
+</div>
+<!-- Main Tracking Hero Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-xl p-6 md:p-10 mb-12">
+<div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
+<div class="max-w-2xl">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-warning-surface text-secondary font-label-sm text-label-sm mb-3">
+<span class="material-symbols-outlined text-[15px]" style="font-variation-settings: 'FILL' 1;">speed</span>
+              Pelacakan Instan Satria Multi-Armada
+            </span>
+<h1 class="font-headline-xl text-headline-xl text-on-surface mb-3 tracking-tight">
+              Lacak Kiriman Satria AI Lebih Cepat &amp; Akurat
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant">
+              Pantau posisi paket, estimasi kedatangan dinamis bertenaga telemetri AI, dan terhubung langsung dengan Satria pengantar di seluruh Indonesia.
+            </p>
+</div>
+<!-- Mode Segmented Control -->
+<div class="flex items-center bg-surface-container-low p-1 rounded-full self-start lg:self-auto shadow-sm">
+<button class="px-5 py-2 rounded-full font-label-md text-label-md font-bold transition-all bg-surface-container-lowest text-on-surface shadow-sm flex items-center gap-1.5" id="tab-single" onclick="switchTrackingMode('single')">
+<span class="material-symbols-outlined text-[18px]">pin_drop</span>
+              Lacak Satuan
+            </button>
+<button class="px-5 py-2 rounded-full font-label-md text-label-md font-semibold text-on-surface-variant hover:text-on-surface transition-all flex items-center gap-1.5" id="tab-multi" onclick="switchTrackingMode('multi')">
+<span class="material-symbols-outlined text-[18px]">stacks</span>
+              Lacak Massal (Multi-AWB)
+            </button>
+</div>
+</div>
+<!-- Tracking Input Form Wrapper -->
+<div class="space-y-4">
+<!-- Single Mode Form -->
+<div class="block" id="panel-single">
+<div class="relative flex flex-col md:flex-row items-stretch md:items-center gap-3 p-2 bg-surface-subtle rounded-xl focus-within:bg-surface-container-lowest focus-within:shadow-md transition-all">
+<div class="flex items-center flex-1 pl-3 gap-3 min-h-[52px]">
+<span class="material-symbols-outlined text-primary text-[24px]">search</span>
+<input autocomplete="off" class="w-full bg-transparent font-body-lg text-body-lg text-on-surface placeholder:text-text-placeholder focus:outline-none min-h-[44px]" id="single-awb-input" placeholder="Contoh: 1000849201994827 atau nomor pesanan e-commerce..." type="text"/>
+<button class="h-10 px-3 flex items-center gap-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-label-sm text-label-sm transition-all shrink-0" onclick="pasteClipboard()" title="Tempel dari Clipboard" type="button">
+<span class="material-symbols-outlined text-[18px]">content_paste</span>
+<span class="hidden sm:inline">Tempel</span>
+</button>
+<button class="h-10 px-3 flex items-center gap-1.5 rounded-lg text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-label-sm text-label-sm transition-all shrink-0" onclick="triggerScannerModal()" title="Pindai QR / Barcode" type="button">
+<span class="material-symbols-outlined text-[18px]">qr_code_scanner</span>
+<span class="hidden sm:inline">Scan Barcode</span>
+</button>
+</div>
+<button class="min-h-[48px] px-8 rounded-full bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2" onclick="submitTracking()" type="button">
+<span class="material-symbols-outlined text-[20px]">local_shipping</span>
+<span>Lacak Paket Sekarang</span>
+</button>
+</div>
+</div>
+<!-- Multi-AWB Mode Form -->
+<div class="hidden" id="panel-multi">
+<div class="flex flex-col gap-3 p-3 bg-surface-subtle rounded-xl focus-within:bg-surface-container-lowest focus-within:shadow-md transition-all">
+<label class="flex items-center justify-between px-2 pt-1 font-label-sm text-label-sm text-on-surface-variant" for="multi-awb-input">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">info</span>
+                  Masukkan hingga 10 nomor resi (pisahkan dengan koma atau baris baru)
+                </span>
+<span class="font-bold text-primary" id="awb-counter">0/10 Resi</span>
+</label>
+<textarea class="w-full bg-transparent p-3 font-mono-code text-mono-code text-on-surface placeholder:text-text-placeholder focus:outline-none resize-none" id="multi-awb-input" oninput="countAwbs(this)" placeholder="1000849201994827
+1000849201994828
+1000849201994829" rows="4"></textarea>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+<div class="flex items-center gap-2 self-start">
+<button class="h-9 px-3 rounded-full bg-surface-container-low hover:bg-surface-container-high text-on-surface font-label-sm text-label-sm transition-colors flex items-center gap-1" onclick="insertSampleBatch()" type="button">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+                    Isi Contoh Batch
+                  </button>
+<button class="h-9 px-3 rounded-full hover:bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm transition-colors" onclick="clearMultiAwb()" type="button">
+                    Bersihkan
+                  </button>
+</div>
+<button class="w-full sm:w-auto min-h-[48px] px-8 rounded-full bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-bold shadow-md hover:shadow-lg active:scale-[0.98] transition-all flex items-center justify-center gap-2" onclick="submitTracking()" type="button">
+<span class="material-symbols-outlined text-[20px]">manage_search</span>
+<span>Lacak Sekaligus</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Bottom Microcopy & Service Badges -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pt-3 px-1 text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-success-base text-[18px]">verified</span>
+<span>Mendukung nomor resi Anteraja Reguler, Next Day, Same Day, Cargo, dan Bisnis.</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-text-placeholder font-mono-code">SLA Akurasi AI: 98.4%</span>
+<span class="w-1.5 h-1.5 rounded-full bg-success-base"></span>
+<span class="text-on-surface font-label-sm text-label-sm uppercase font-bold tracking-wide">Live GPS Active</span>
+</div>
+</div>
+</div>
+<!-- Recent Searches / Quick Demo Tracking Chips -->
+<div class="mt-8 pt-6 bg-surface-container-low/50 -mx-6 -mb-6 md:-mx-10 md:-mb-10 p-6 md:p-8 rounded-b-xl flex flex-col md:flex-row md:items-center gap-4">
+<div class="flex items-center gap-2 shrink-0 font-label-md text-label-md text-on-surface">
+<span class="material-symbols-outlined text-secondary text-[20px]" style="font-variation-settings: 'FILL' 1;">history</span>
+<span>Pencarian Terkini:</span>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<button class="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest hover:bg-primary-fixed hover:text-on-primary-fixed text-on-surface font-mono-code text-mono-code shadow-sm transition-all" onclick="fillAwb('10009281720491')">
+<span>10009281720491</span>
+<span class="px-1.5 py-0.5 rounded-full bg-success-surface text-tertiary font-label-sm text-[10px]">Dalam Perjalanan</span>
+</button>
+<button class="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest hover:bg-primary-fixed hover:text-on-primary-fixed text-on-surface font-mono-code text-mono-code shadow-sm transition-all" onclick="fillAwb('10007812994012')">
+<span>10007812994012</span>
+<span class="px-1.5 py-0.5 rounded-full bg-warning-surface text-secondary font-label-sm text-[10px]">Menuju Alamat</span>
+</button>
+<button class="group flex items-center gap-2 px-3 py-1.5 rounded-full bg-surface-container-lowest hover:bg-primary-fixed hover:text-on-primary-fixed text-on-surface font-mono-code text-mono-code shadow-sm transition-all" onclick="fillAwb('10006540192837')">
+<span>10006540192837</span>
+<span class="px-1.5 py-0.5 rounded-full bg-surface-container-high text-on-surface-variant font-label-sm text-[10px]">Tiba di Hub</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Live Telemetry Status Banner Visual -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mb-16 items-center bg-gradient-to-br from-surface-container-low via-surface-container-lowest to-surface-container-low p-6 md:p-8 rounded-xl shadow-sm">
+<div class="lg:col-span-8 flex flex-col sm:flex-row items-start sm:items-center gap-6">
+<div class="w-16 h-16 rounded-xl bg-primary-fixed flex items-center justify-center text-primary shrink-0 shadow-inner">
+<span class="material-symbols-outlined text-[36px]">radar</span>
+</div>
+<div>
+<div class="flex items-center gap-2 mb-1">
+<span class="font-headline-sm text-headline-sm text-on-surface">Jaringan Satria AI Telemetry Aktif</span>
+<span class="flex h-2.5 w-2.5 relative">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-success-base opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-success-base"></span>
+</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+              Lebih dari 45.000 armada Satria terhubung real-time dengan pemantauan algoritma rute dinamis, menjamin kepastian status pengiriman tanpa tebak-tebakan.
+            </p>
+</div>
+</div>
+<div class="lg:col-span-4 flex items-center justify-start lg:justify-end gap-6 bg-surface-container-lowest/80 p-4 rounded-lg shadow-sm">
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-primary font-extrabold">99.2%</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Ketepatan Waktu</span>
+</div>
+<div class="h-8 w-[1px] bg-surface-container-high"></div>
+<div class="flex flex-col">
+<span class="font-headline-md text-headline-md text-secondary font-extrabold">&lt; 15 dtk</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase">Sinkronisasi GPS</span>
+</div>
+</div>
+</div>
+<!-- Feature Highlights: Why Anteraja Tracking is Smart -->
+<div class="mb-16">
+<div class="text-center max-w-2xl mx-auto mb-10">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">Kecerdasan Logistik</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">
+            Fitur Pelacakan Pintar Generasi Baru
+          </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+            Dirancang khusus untuk menghapus kekhawatiran paket Anda melalui integrasi teknologi GPS armada dan kecerdasan buatan.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-warning-surface flex items-center justify-center text-secondary mb-4 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">explore</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Radar Telemetri Satria Live GPS</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Pantau koordinat riil kurir Satria saat pengantaran menuju alamat tujuan dengan estimasi sisa jarak presisi per 100 meter.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t-0 flex items-center text-primary font-label-md text-label-md font-bold gap-1">
+<span>Presisi GPS Armada</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-ai-surface flex items-center justify-center text-ai-accent mb-4 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">smart_toy</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Satria AI Assistant &amp; Updates</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Status manifest teknis seperti 'Sortation Hub Transit' diterjemahkan ke bahasa yang ramah, santun, dan mudah dicerna secara manusiawi.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t-0 flex items-center text-ai-accent font-label-md text-label-md font-bold gap-1">
+<span>Natural Language Status</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-primary-fixed flex items-center justify-center text-primary mb-4 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">schedule</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Estimasi Kedatangan Dinamis (ETA)</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Didukung prediksi kecerdasan buatan dengan akurasi 98.4% yang terus beradaptasi terhadap kepadatan lalu lintas dan cuaca terkini.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t-0 flex items-center text-primary font-label-md text-label-md font-bold gap-1">
+<span>Algoritma Cuaca &amp; Rute</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm hover:shadow-md transition-all flex flex-col justify-between group">
+<div>
+<div class="w-12 h-12 rounded-xl bg-success-surface flex items-center justify-center text-tertiary mb-4 group-hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">chat</span>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Notifikasi Otomatis WhatsApp</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+                Dapatkan pembaruan langsung di ponsel Anda begitu paket tiba di titik transit terdekat atau saat kurir bergerak menuju pintu rumah.
+              </p>
+</div>
+<div class="mt-6 pt-4 border-t-0 flex items-center text-tertiary font-label-md text-label-md font-bold gap-1">
+<span>Siaga 24 Jam Bebas Pulsa</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</div>
+</div>
+</div>
+</div>
+<!-- 3-Step Quick Guide Section with Visual Graphic -->
+<div class="mb-16 bg-surface-container-low rounded-xl p-8 md:p-12 relative overflow-hidden">
+<div class="max-w-xl mb-10">
+<span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold">Panduan Kilat</span>
+<h2 class="font-headline-lg text-headline-lg text-on-surface mt-1">Cara Mudah Melacak Paket</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2">
+            Hanya butuh tiga langkah simpel untuk mengetahui keberadaan barang Anda sampai ke tangan penerima.
+          </p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative z-10">
+<!-- Step 1 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="font-headline-xl text-headline-xl font-extrabold text-primary/20">01</span>
+<div class="w-10 h-10 rounded-full bg-primary-fixed text-primary flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[20px]">pin</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Masukkan Nomor Resi</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Salin nomor resi (AWB) dari aplikasi e-commerce Anda, resi fisik, atau SMS notifikasi pengiriman pesanan.
+            </p>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="font-headline-xl text-headline-xl font-extrabold text-secondary/20">02</span>
+<div class="w-10 h-10 rounded-full bg-warning-surface text-secondary flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[20px]">cognition</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Analisis Telemetri Satria AI</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Sistem secara instan menganalisis manifest gudang, memvalidasi rute aktif, dan mengunci posisi mutakhir paket.
+            </p>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container-lowest p-6 rounded-xl shadow-sm flex flex-col">
+<div class="flex items-center justify-between mb-4">
+<span class="font-headline-xl text-headline-xl font-extrabold text-tertiary/20">03</span>
+<div class="w-10 h-10 rounded-full bg-success-surface text-tertiary flex items-center justify-center font-bold">
+<span class="material-symbols-outlined text-[20px]">person_pin_circle</span>
+</div>
+</div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Pantau Rute &amp; Hubungi Kurir</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+              Lihat jam tiba dinamis dan lakukan panggilan langsung atau WhatsApp dengan Satria saat paket berstatus 'Out for Delivery'.
+            </p>
+</div>
+</div>
+<!-- Inline Visual Demonstration Graphic -->
+<div class="mt-10 pt-8 border-t-0 flex flex-col md:flex-row items-center justify-between gap-6 bg-surface-container-lowest/60 p-6 rounded-lg">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-surface-container-lowest shadow-md flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[24px]">verified_user</span>
+</div>
+<div>
+<p class="font-label-lg text-label-lg font-bold text-on-surface">Jaminan Paket Aman Bersama Satria</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Foto bukti serah terima digital otomatis tersimpan dalam histori pelacakan Anda.</p>
+</div>
+</div>
+<a class="inline-flex items-center gap-2 font-label-md text-label-md text-primary font-bold hover:underline" data-path="mitra-satria" href="#">
+<span>Kenali Profil Satria Kami</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</a>
+</div>
+</div>
+<!-- Quick Help & FAQ Mini Section -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start mb-8">
+<div class="lg:col-span-5 bg-gradient-to-br from-primary to-primary-container text-on-primary p-8 rounded-xl shadow-lg relative overflow-hidden">
+<div class="relative z-10">
+<span class="px-3 py-1 rounded-full bg-on-primary/10 text-on-primary font-label-sm text-label-sm uppercase font-bold inline-block mb-4">
+              Bantuan Langsung
+            </span>
+<h3 class="font-headline-lg text-headline-lg text-on-primary mb-3">Butuh Bantuan Pelacakan Khusus?</h3>
+<p class="font-body-md text-body-md text-on-primary/90 mb-6">
+              Tim Satria Care beroperasi 24 jam sehari untuk membantu kendala nomor resi tidak ditemukan, salah alamat, atau perubahan instruksi pengantaran.
+            </p>
+<div class="flex flex-col sm:flex-row gap-3">
+<a class="min-h-[44px] px-5 rounded-full bg-secondary-container text-on-secondary-fixed font-label-md text-label-md font-bold flex items-center justify-center gap-2 hover:bg-secondary-fixed-dim transition-all shadow-md" href="https://wa.me/6281119603333" target="_blank">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+                WhatsApp Satria Care
+              </a>
+<a class="min-h-[44px] px-5 rounded-full bg-surface-container-lowest text-primary font-label-md text-label-md font-bold flex items-center justify-center gap-2 hover:bg-surface-subtle transition-all" href="tel:02150663333">
+<span class="material-symbols-outlined text-[18px]">call</span>
+                Hotline 24 Jam
+              </a>
+</div>
+</div>
+<!-- Decorative Glow -->
+<div class="absolute -bottom-10 -right-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+</div>
+<div class="lg:col-span-7 space-y-4">
+<h3 class="font-headline-sm text-headline-sm text-on-surface mb-2">Pertanyaan Populer Seputar Resi</h3>
+<!-- FAQ Item 1 -->
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm p-4 cursor-pointer">
+<summary class="flex items-center justify-between font-label-lg text-label-lg font-bold text-on-surface list-none">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">help</span>
+                Resi belum terupdate atau masih 'Manifest Created' dalam 24 jam?
+              </span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-on-surface-variant">expand_more</span>
+</summary>
+<div class="mt-3 text-on-surface-variant font-body-sm text-body-sm leading-relaxed pl-7">
+              Hal ini umum terjadi jika paket baru diserahkan oleh penjual/merchant dan sedang dalam antrean pemindaian di Hub Pertama Anteraja. Status akan otomatis aktif begitu paket melewati pemindai conveyor kami.
+            </div>
+</details>
+<!-- FAQ Item 2 -->
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm p-4 cursor-pointer">
+<summary class="flex items-center justify-between font-label-lg text-label-lg font-bold text-on-surface list-none">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">help</span>
+                Bagaimana jika kurir belum tiba melewati jam estimasi kedatangan?
+              </span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-on-surface-variant">expand_more</span>
+</summary>
+<div class="mt-3 text-on-surface-variant font-body-sm text-body-sm leading-relaxed pl-7">
+              Satria kami mungkin menghadapi kendala cuaca ekstrem atau lonjakan rute. Anda dapat mengklik tombol "Hubungi Satria" yang muncul pada rincian resi untuk menanyakan perkiraan tiba langsung ke nomor kurir aktif.
+            </div>
+</details>
+<!-- FAQ Item 3 -->
+<details class="group bg-surface-container-lowest rounded-xl shadow-sm p-4 cursor-pointer">
+<summary class="flex items-center justify-between font-label-lg text-label-lg font-bold text-on-surface list-none">
+<span class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">help</span>
+                Apakah bisa mengubah alamat pengantaran saat paket sudah jalan?
+              </span>
+<span class="material-symbols-outlined group-open:rotate-180 transition-transform text-on-surface-variant">expand_more</span>
+</summary>
+<div class="mt-3 text-on-surface-variant font-body-sm text-body-sm leading-relaxed pl-7">
+              Perubahan alamat dapat diajukan selama paket belum berstatus 'Satria Mengantar'. Silakan hubungi CS Satria WhatsApp kami dengan melampirkan foto KTP dan bukti transaksi resmi.
+            </div>
+</details>
+</div>
+</div>
+</div>
+</div>
+<!-- QR/Barcode Scanner Modal Simulation -->
+<div class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4" id="scanner-modal">
+<div class="bg-surface-container-lowest rounded-2xl max-w-md w-full p-6 shadow-2xl relative">
+<button class="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface" onclick="closeScannerModal()">
+<span class="material-symbols-outlined text-[24px]">close</span>
+</button>
+<div class="flex flex-col items-center text-center">
+<div class="w-16 h-16 rounded-full bg-primary-fixed text-primary flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-[32px]">qr_code_scanner</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm text-on-surface mb-1">Pindai Resi Paket</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant mb-6">Arahkan kamera ke kode QR atau barcode pada label resi pengiriman Anteraja.</p>
+<!-- Scanner Viewport Graphic -->
+<div class="w-full h-48 bg-surface-subtle rounded-xl flex flex-col items-center justify-center relative overflow-hidden mb-6">
+<div class="w-40 h-28 border-2 border-primary border-dashed rounded-lg flex items-center justify-center bg-primary/5 relative">
+<div class="absolute top-0 left-0 w-3 h-3 border-t-2 border-l-2 border-primary"></div>
+<div class="absolute top-0 right-0 w-3 h-3 border-t-2 border-r-2 border-primary"></div>
+<div class="absolute bottom-0 left-0 w-3 h-3 border-b-2 border-l-2 border-primary"></div>
+<div class="absolute bottom-0 right-0 w-3 h-3 border-b-2 border-r-2 border-primary"></div>
+<span class="material-symbols-outlined text-primary text-[28px] animate-pulse">camera_alt</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-2">Mendeteksi barcode...</span>
+</div>
+<button class="w-full min-h-[44px] rounded-full bg-primary text-on-primary font-label-md text-label-md font-bold shadow-md hover:bg-primary-container transition-all" onclick="simulateScanSuccess()">
+          Gunakan Resi Contoh Hasil Scan
+        </button>
+</div>
+</div>
+</div>
+<!-- Interactive Logic for Input, Multi-Mode, Scanner, and Validation -->
+<script>
+    function switchTrackingMode(mode) {
+      const tabSingle = document.getElementById('tab-single');
+      const tabMulti = document.getElementById('tab-multi');
+      const panelSingle = document.getElementById('panel-single');
+      const panelMulti = document.getElementById('panel-multi');
+
+      if (mode === 'single') {
+        tabSingle.classList.add('bg-surface-container-lowest', 'text-on-surface', 'font-bold', 'shadow-sm');
+        tabSingle.classList.remove('text-on-surface-variant', 'font-semibold');
+        tabMulti.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-bold', 'shadow-sm');
+        tabMulti.classList.add('text-on-surface-variant', 'font-semibold');
+        panelSingle.classList.remove('hidden');
+        panelMulti.classList.add('hidden');
+      } else {
+        tabMulti.classList.add('bg-surface-container-lowest', 'text-on-surface', 'font-bold', 'shadow-sm');
+        tabMulti.classList.remove('text-on-surface-variant', 'font-semibold');
+        tabSingle.classList.remove('bg-surface-container-lowest', 'text-on-surface', 'font-bold', 'shadow-sm');
+        tabSingle.classList.add('text-on-surface-variant', 'font-semibold');
+        panelMulti.classList.remove('hidden');
+        panelSingle.classList.add('hidden');
+      }
+    }
+
+    function fillAwb(code) {
+      const singleInput = document.getElementById('single-awb-input');
+      switchTrackingMode('single');
+      singleInput.value = code;
+      singleInput.focus();
+    }
+
+    async function pasteClipboard() {
+      const input = document.getElementById('single-awb-input');
+      try {
+        if (navigator.clipboard) {
+          const text = await navigator.clipboard.readText();
+          if (text) {
+            input.value = text.trim();
+            input.focus();
+          }
+        } else {
+          alert('Fitur clipboard memerlukan izin browser.');
+        }
+      } catch (err) {
+        input.value = '10009281720491';
+      }
+    }
+
+    function countAwbs(textarea) {
+      const text = textarea.value.trim();
+      const lines = text ? text.split(/[\n,]+/).map(s => s.trim()).filter(Boolean) : [];
+      const count = Math.min(lines.length, 10);
+      const counterEl = document.getElementById('awb-counter');
+      counterEl.textContent = count + '/10 Resi';
+      
+      if (lines.length > 10) {
+        counterEl.classList.add('text-error-base');
+      } else {
+        counterEl.classList.remove('text-error-base');
+      }
+    }
+
+    function insertSampleBatch() {
+      const textarea = document.getElementById('multi-awb-input');
+      textarea.value = "10009281720491\n10007812994012\n10006540192837";
+      countAwbs(textarea);
+    }
+
+    function clearMultiAwb() {
+      const textarea = document.getElementById('multi-awb-input');
+      textarea.value = '';
+      countAwbs(textarea);
+    }
+
+    function triggerScannerModal() {
+      const modal = document.getElementById('scanner-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeScannerModal() {
+      const modal = document.getElementById('scanner-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function simulateScanSuccess() {
+      fillAwb('10009823471029');
+      closeScannerModal();
+    }
+
+    function submitTracking() {
+      const isSingle = !document.getElementById('panel-single').classList.contains('hidden');
+      let val = '';
+      if (isSingle) {
+        val = document.getElementById('single-awb-input').value.trim();
+      } else {
+        val = document.getElementById('multi-awb-input').value.trim();
+      }
+
+      if (!val) {
+        alert('Silakan masukkan nomor resi pengiriman terlebih dahulu.');
+        return;
+      }
+      
+      // Feedback button state
+      const btns = document.querySelectorAll('button[onclick="submitTracking()"]');
+      btns.forEach(btn => {
+        const original = btn.innerHTML;
+        btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[20px]">sync</span><span>Mencari Satria...</span>`;
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.innerHTML = original;
+          btn.disabled = false;
+          alert('Memverifikasi data pelacakan Satria AI untuk nomor resi: ' + (val.length > 30 ? val.substring(0, 30) + '...' : val));
+        }, 800);
+      });
+    }
+  </script>
+</div></main><footer class="w-full bg-surface-container-low shadow-[0_1px_8px_rgba(0,0,0,0.04)] mt-space-xl"><div class="max-w-[1200px] mx-auto px-margin md:px-margin-tablet lg:px-margin-desktop pt-space-xl pb-space-lg"><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-space-xl pb-space-xl"><div class="lg:col-span-4 flex flex-col items-start gap-space-md"><div class="flex items-center gap-space-xs"><img alt="Anteraja" class="h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMABhsDu5HOIuqDguWe-fju28hvaoafbHNpHtenGSA105xVoFrStsEqklirz8nzWTElw4qVHAl-r082x-oDw6FD5bpckW1kkUJMfWnATA_HZXrDVmFNl4C3h96S4EcrV1XdBZbbWzAqlXdpoK9UJA6Il-jTOrgjTFDdDr2FkhGrAPEHstGK3YLEyUQrZ96igIu1OYU0fcr7gD9K-AGP11A8czCJYzYKQDtcPvosS372YIfLG4ZT6-49kuP_7Y990iGoE0"/></div><p class="font-body-md text-body-md text-on-surface-variant max-w-sm">Solusi pengiriman logistik pintar berbasis teknologi dengan armada Satria terpercaya untuk kebutuhan perorangan maupun korporasi di seluruh Indonesia.</p><div class="flex items-center gap-space-sm pt-space-xs"><a aria-label="Official Portal Channel" class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">public</span></a><a aria-label="Official Chat" class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">chat</span></a><a aria-label="Official Share Community" class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">share</span></a><a aria-label="Official Feed News" class="w-9 h-9 rounded-full bg-surface-container-lowest flex items-center justify-center text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-colors" href="#"><span class="material-symbols-outlined text-[18px]">rss_feed</span></a></div></div><div class="lg:col-span-2 flex flex-col gap-space-md"><span class="font-headline-sm text-headline-sm text-on-surface">Layanan</span><nav class="flex flex-col gap-space-sm font-body-md text-body-md text-on-surface-variant"><a href="bantuan.html">Bantuan</a><a href="lacak.html#lacak">Lacak Kiriman</a></nav></div><div class="lg:col-span-3 flex flex-col gap-space-md"><span class="font-headline-sm text-headline-sm text-on-surface">Bantuan &amp; Hubungi</span><div class="flex flex-col gap-space-sm font-body-md text-body-md text-on-surface-variant"><div class="flex items-start gap-space-xs"><span class="material-symbols-outlined text-primary text-[20px] mt-0.5">call</span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Hotline Pelanggan</span><span class="font-headline-sm text-headline-sm text-on-surface font-bold">021-50663333</span></div></div><div class="flex items-start gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px] mt-0.5">support_agent</span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Satria WhatsApp</span><span class="font-body-md text-body-md text-on-surface font-bold">+62 811-1960-3333</span></div></div><div class="flex items-start gap-space-xs"><span class="material-symbols-outlined text-on-surface-variant text-[20px] mt-0.5">mail</span><div class="flex flex-col"><span class="font-label-sm text-label-sm text-on-surface-variant uppercase font-bold">Email Support</span><span class="font-body-md text-body-md text-on-surface">cs@anteraja.id</span></div></div></div></div><div class="lg:col-span-3 flex flex-col gap-space-md"><span class="font-headline-sm text-headline-sm text-on-surface">Sertifikasi &amp; Keamanan</span><p class="font-body-sm text-body-sm text-on-surface-variant">Didukung standar mutu operasional berstandar internasional dan kepatuhan sistem keamanan data informasi.</p><div class="flex flex-wrap gap-space-xs pt-space-xs"><div class="px-3 py-2 rounded-lg bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex items-center gap-space-xs"><span class="material-symbols-outlined text-tertiary text-[20px]">verified_user</span><div class="flex flex-col"><span class="font-label-sm text-label-sm font-bold text-on-surface">ISO 9001:2015</span><span class="font-body-sm text-body-sm text-on-surface-variant text-[10px] leading-tight">Quality Standard</span></div></div><div class="px-3 py-2 rounded-lg bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex items-center gap-space-xs"><span class="material-symbols-outlined text-primary text-[20px]">security</span><div class="flex flex-col"><span class="font-label-sm text-label-sm font-bold text-on-surface">ISO 27001:2022</span><span class="font-body-sm text-body-sm text-on-surface-variant text-[10px] leading-tight">Data Security</span></div></div><div class="px-3 py-2 rounded-lg bg-surface-container-lowest shadow-[0_1px_4px_rgba(0,0,0,0.04)] flex items-center gap-space-xs"><span class="material-symbols-outlined text-secondary text-[20px]">shield</span><div class="flex flex-col"><span class="font-label-sm text-label-sm font-bold text-on-surface">Kominfo Terdaftar</span><span class="font-body-sm text-body-sm text-on-surface-variant text-[10px] leading-tight">PSE Terverifikasi</span></div></div></div></div></div><div class="pt-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md bg-surface-container-high/40 px-space-md py-space-sm rounded-xl"><p class="font-body-sm text-body-sm text-on-surface-variant text-center md:text-left">© 2025 PT Tri Adi Bersama (Anteraja). Seluruh Hak Cipta Dilindungi Undang-Undang.</p><div class="flex items-center gap-space-md font-label-md text-label-md text-on-surface-variant"><a class="hover:text-primary transition-colors" href="#">Kebijakan Privasi</a><span class="text-border-strong">•</span><a class="hover:text-primary transition-colors" href="#">Syarat &amp; Ketentuan</a><span class="text-border-strong">•</span><a class="hover:text-primary transition-colors" href="#">Peta Situs</a></div></div></div></footer>
+</body></html>
