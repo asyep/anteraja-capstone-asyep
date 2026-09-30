@@ -51,12 +51,3 @@ Setiap halaman memiliki navigasi kembali ke pencarian, bantuan, atau halaman sta
 ## Batas prototype
 
 Semua data pada halaman status adalah contoh statis dari fixture database. Pemetaan nomor resi demo berlangsung sepenuhnya di browser dan tidak membuktikan status dari record database. Prototype tidak menjalankan request tracking, memperbarui status dari server, menonaktifkan tombol selama request, melakukan retry otomatis, atau memanggil Gemini/Redis. Layar UI untuk state tersebut tersedia sebagai halaman prototype; fungsi integrasi dan transisi state otomatis memerlukan JavaScript dan backend. Prototype ini berfokus pada hierarki visual dan alur navigasi pelanggan, bukan pelacakan live.
-
-## Dokumen pengumpulan
-
-- [Dokumentasi halaman dan pemetaan FRD](DOKUMENTASI.md)
-- [Flow prototype](FLOW.md)
-- [PDF untuk LMS](pengumpulan/7-prototype-pengumpulan.pdf)
-- [Screenshot halaman FRD F-04](pengumpulan/screenshot/frd-f04-warning.png)
-
-Catatan format: FRD F-01 menetapkan format 32 karakter, sedangkan flow map dan fixture demo proyek memakai nomor 13 digit. Prototype mempertahankan tiga nomor demo 13 digit yang menjadi rute lokal, dan halaman hasil tertentu menyediakan input resi contoh 32 karakter. Validasi/lookup produksi tetap memerlukan kesepakatan format serta backend.
