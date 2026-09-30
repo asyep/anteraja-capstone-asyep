@@ -1,23 +1,33 @@
-import { useMemo } from 'react';
-import EmptyState from './EmptyState.jsx';
-import ShipmentCard from './ShipmentCard.jsx';
+import { useMemo } from "react";
+import EmptyState from "./EmptyState.jsx";
+import ShipmentCard from "./ShipmentCard.jsx";
 
 const FILTERS = [
-  ['Semua', 'all'],
-  ['In Transit', 'in_transit'],
-  ['Delivered', 'delivered'],
-  ['Delayed', 'delayed'],
+  ["Semua", "all"],
+  ["In Transit", "in_transit"],
+  ["Delivered", "delivered"],
+  ["Delayed", "delayed"],
 ];
 
-export default function ShipmentList({ shipments, activeWaybill, statusFilter, onStatusFilterChange, onSelect }) {
-  const filteredShipments = useMemo(() => shipments.filter((shipment) => {
-    if (statusFilter === 'all') return true;
-    if (statusFilter === 'delayed') return shipment.has_delay;
-    if (statusFilter === 'in_transit') {
-      return shipment.order_status === 'in_transit' && !shipment.has_delay;
-    }
-    return shipment.order_status === statusFilter;
-  }), [statusFilter, shipments]);
+export default function ShipmentList({
+  shipments,
+  activeWaybill,
+  statusFilter,
+  onStatusFilterChange,
+  onSelect,
+}) {
+  const filteredShipments = useMemo(
+    () =>
+      shipments.filter((shipment) => {
+        if (statusFilter === "all") return true;
+        if (statusFilter === "delayed") return shipment.has_delay;
+        if (statusFilter === "in_transit") {
+          return shipment.order_status === "in_transit" && !shipment.has_delay;
+        }
+        return shipment.order_status === statusFilter;
+      }),
+    [statusFilter, shipments],
+  );
 
   return (
     <section
@@ -26,20 +36,33 @@ export default function ShipmentList({ shipments, activeWaybill, statusFilter, o
     >
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-[10px] font-bold uppercase tracking-[.17em] text-brand">Data demo</p>
-          <h2 id="shipment-list-title" className="mt-1 text-lg font-extrabold text-ink">Riwayat pengiriman</h2>
+          <p className="text-[10px] font-bold uppercase tracking-[.17em] text-brand">
+            Data demo
+          </p>
+          <h2
+            id="shipment-list-title"
+            className="mt-1 text-lg font-extrabold text-ink"
+          >
+            Riwayat pengiriman
+          </h2>
         </div>
-        <span className="text-xs text-muted" aria-live="polite">{filteredShipments.length} kiriman</span>
+        <span className="text-xs text-muted" aria-live="polite">
+          {filteredShipments.length} kiriman
+        </span>
       </div>
 
-      <div className="mt-4 flex flex-wrap gap-2" role="group" aria-label="Filter status kiriman">
+      <div
+        className="mt-4 flex flex-wrap gap-2"
+        role="group"
+        aria-label="Filter status kiriman"
+      >
         {FILTERS.map(([label, value]) => (
           <button
             type="button"
             key={value}
             aria-pressed={statusFilter === value}
             onClick={() => onStatusFilterChange(value)}
-            className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${statusFilter === value ? 'bg-brand text-white shadow-sm' : 'bg-stone-100 text-stone-600 hover:bg-stone-200'}`}
+            className={`rounded-full px-3 py-1.5 text-xs font-bold transition ${statusFilter === value ? "bg-brand text-white shadow-sm" : "bg-stone-100 text-stone-600 hover:bg-stone-200"}`}
           >
             {label}
           </button>
@@ -49,7 +72,10 @@ export default function ShipmentList({ shipments, activeWaybill, statusFilter, o
       {filteredShipments.length === 0 ? (
         <EmptyState />
       ) : (
-        <ul className="mt-4 grid gap-3 md:grid-cols-2" aria-label="Daftar paket">
+        <ul
+          className="mt-4 grid gap-3 md:grid-cols-2"
+          aria-label="Daftar paket"
+        >
           {filteredShipments.map((shipment) => (
             <ShipmentCard
               key={shipment.waybill_number}

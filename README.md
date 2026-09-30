@@ -1,90 +1,95 @@
 # Smart AI Shipment Tracking Widget Anteraja
 
-Prototype antarmuka React untuk pencarian dan pemantauan pengiriman. UI membaca data simulasi lokal dari `src/data/mockShipments.js`; layanan backend, database, dan integrasi AI eksternal belum terhubung.
+React migration of the Anteraja shipment tracking prototype. The interface is built with React, React Router, Vite, and Tailwind CSS. Tracking and service information currently uses local demo data; it is not connected to a live shipping API.
 
-## Menjalankan aplikasi
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-Vite akan menampilkan URL lokal di terminal. Untuk membuat build production dan menjalankannya secara lokal:
+Create and preview a production build:
 
 ```bash
 npm run build
 npm run preview
 ```
 
-## Susunan komponen
+## Project structure
+
+```text
+.
+├── index.html                 # Vite document shell; mounts the React app
+├── src/
+│   ├── main.jsx                # React entry point
+│   ├── App.jsx                 # Shared layout and route table
+│   ├── index.css               # Tailwind import, theme tokens, and browser defaults
+│   ├── components/             # Reusable React UI and tracking components
+│   ├── data/                   # Local demo shipment data and route lookup
+│   └── pages/                  # React page for each user-facing route
+├── prototype/                  # Preserved HTML/CSS archive; not loaded by the React app
+├── database/                   # Database schema and sample data documentation
+└── docs/                       # PRD, FRD, UI references, and project documents
+```
+
+`prototype/` is retained as a design and implementation archive outside `src/`. The React app does not import its HTML, CSS, or JavaScript. Vite starts at the root `index.html` and loads only `src/main.jsx`; the archive is not included in the React runtime.
+
+## Routes
+
+| Route | React page | Purpose |
+| --- | --- | --- |
+| `/` | `HomePage` | Landing page and shipment lookup entry point |
+| `/lacak` | `LacakPage` | Single or batch shipment lookup |
+| `/tracking-normal` | `TrackingNormalPage` | In-transit shipment status |
+| `/tracking-live` | `TrackingLivePage` | Live telemetry shipment status |
+| `/tracking` | `TrackingWarningPage` | Operational warning and rerouted shipment status |
+| `/bantuan` | `BantuanPage` | Help search, topics, FAQs, and contact options |
+| `/delivered` | `DeliveredPage` | Delivered shipment status |
+| `/canceled` | `CanceledPage` | Canceled shipment status |
+| `/ai-fallback` | `AiFallbackPage` | Fallback shipment explanation |
+| `/not-found` | `NotFoundPage` | Unknown shipment result |
+| `/validation-error` | `ValidationErrorPage` | Invalid shipment number |
+| `/service-error` | `ServiceErrorPage` | Temporary tracking service error |
+| `/loading` | `LoadingPage` | Search progress state |
+| `/smart-widget` | `SmartWidgetPage` | Interactive tracking widget and demo controls |
+
+Shipment search and demo links use `src/data/shipmentsData.js` to select the matching status route. The five demo chips open their matching status pages. Valid resi numbers with no matching demo record open the AI fallback page; invalid formats open the validation error page. Header and footer are shared by `App` across routes.
+
+## Component layout
 
 ```text
 App
-├── TrackingHeader
+├── Header
+├── Route page
+│   ├── HomePage / LacakPage / BantuanPage
+│   ├── TrackingNormalPage / TrackingLivePage / TrackingWarningPage
+│   └── DeliveredPage / CanceledPage / error and loading pages
+└── Footer
+
+SmartWidgetPage
 ├── ShipmentForm
-└── Hasil pelacakan (activeShipment)
-    ├── DynamicETABadge
-    ├── OperationalWarningBanner
-    ├── AINarrativeBox
-    ├── VisualMilestoneStepper
-    ├── ShipmentList
-    │   ├── ShipmentCard (satu untuk setiap paket)
-    │   └── EmptyState (ketika hasil filter kosong)
-    └── Panel informasi
-        ├── ShipmentSummary
-        └── ShippingCalculator
+├── DynamicETABadge
+├── OperationalWarningBanner
+├── AINarrativeBox
+├── VisualMilestoneStepper
+├── ShipmentList
+│   ├── ShipmentCard
+│   └── EmptyState
+├── ShipmentSummary
+└── ShippingCalculator
 ```
 
-Struktur file utama:
+Pages and components are JSX. Visual styling uses Tailwind utility classes; `src/index.css` only loads Tailwind, defines theme tokens, and sets small document-wide defaults. There are no page-specific CSS files in the React runtime. The CSS files under `prototype/` remain archived and are not imported.
 
-```text
-src/
-├── App.jsx
-├── main.jsx
-├── index.css
-├── data/
-│   └── mockShipments.js
-└── components/
-    ├── AINarrativeBox.jsx
-    ├── DynamicETABadge.jsx
-    ├── EmptyState.jsx
-    ├── OperationalWarningBanner.jsx
-    ├── ShipmentCard.jsx
-    ├── ShipmentForm.jsx
-    ├── ShipmentList.jsx
-    ├── ShipmentSummary.jsx
-    ├── ShippingCalculator.jsx
-    ├── TrackingHeader.jsx
-    └── VisualMilestoneStepper.jsx
-```
+## State and data
 
-## Alur state dan props
+- `App.jsx` owns the shared header, footer, and route configuration.
+- Each route page owns its local form and interaction state.
+- Tracking and lookup pages own their local input state and use the shared `getRouteForResi` lookup before navigation.
+- `SmartWidgetPage` owns the selected shipment, search state, loading feedback, and shipment status filter; it passes data to child components using props.
+- `ShippingCalculator` owns its weight and service inputs locally and calculates a demo cost and ETA.
+- `src/data/shipmentsData.js` maps demo waybills to routes and validates supported formats: 13–14 numeric digits or 32 alphanumeric characters. Other valid-format resi numbers are handled by AI fallback.
+- `src/data/mockShipments.js` provides the separate detailed records used by the widget demo.
 
-`App.jsx` menjadi pemilik state halaman dan sumber data bersama. Data paket diperlakukan sebagai immutable: pencarian dan pemilihan paket mencari objek dari dataset, lalu menyimpan referensi objek terpilih tanpa mengubah properti dataset.
-
-| State di `App` | Fungsi | Props/callback terkait |
-| --- | --- | --- |
-| `activeShipment` | Paket yang sedang ditampilkan | Objek `shipment` diteruskan ke ETA, warning, narasi AI, stepper, dan ringkasan. |
-| `searchQuery` | Isi input resi yang sedang diketik | `ShipmentForm` menerima `searchQuery` dan `onSearchQueryChange`; submit memanggil `onSearch`. |
-| `statusFilter` | Filter daftar paket aktif | `ShipmentList` menerima `statusFilter` dan `onStatusFilterChange`. |
-| `loading`, `errorMessage` | Status proses pencarian dan pesan validasi | Diteruskan ke `ShipmentForm` untuk feedback dan pencegahan submit berulang. |
-| `audience`, `activeUser` | Preferensi header dan pengguna sesi | Diteruskan ke `TrackingHeader`; pilihan audiens memakai callback parent. |
-
-Alur interaksi: `ShipmentForm` mengirim query ke `App` saat submit. `App` mencari kecocokan pada dataset, memperbarui `activeShipment`, lalu komponen tampilan menerima paket baru melalui props. `ShipmentList` merender hasil filter dan mengirim nomor resi terpilih melalui callback; `App` yang memperbarui paket aktif dan query. Tidak ada child yang mengubah props secara langsung. Kalkulator mengelola input berat dan layanan sebagai state lokal karena nilainya tidak dibutuhkan komponen lain.
-
-Daftar paket dirender dengan `.map()` dan setiap `ShipmentCard` memakai `key={shipment.waybill_number}`. Tab filter juga memakai key tetap dari nilai status. Jika tidak ada paket yang cocok, `EmptyState` ditampilkan.
-
-## Pemetaan ke FRD
-
-| FRD | Komponen |
-| --- | --- |
-| F-01 Pencarian dan validasi resi | `ShipmentForm.jsx` dan handler pencarian di `App.jsx` |
-| F-02 Visualisasi milestone | `VisualMilestoneStepper.jsx` |
-| F-03 Narasi status AI | `AINarrativeBox.jsx` |
-| F-04 Peringatan operasional | `OperationalWarningBanner.jsx` |
-| F-05 Estimasi waktu tiba dinamis | `DynamicETABadge.jsx` |
-| Daftar/filter paket dan kalkulator ongkir | `ShipmentList.jsx`, `ShipmentCard.jsx`, `EmptyState.jsx`, `ShippingCalculator.jsx` |
-
-## Batasan data demo
-
-Semua kiriman dan aktivitas pelacakan berasal dari mock lokal. Estimasi, kalkulasi ongkir, dan narasi merupakan simulasi frontend, bukan hasil telemetri atau layanan pengiriman real-time.
+All shipment information, ETA calculations, and telemetry messages are simulations for the frontend prototype.
