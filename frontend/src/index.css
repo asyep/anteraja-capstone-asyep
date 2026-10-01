@@ -1,0 +1,193 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #b30069;
+  --color-primary-hover: #c9006e;
+  --color-primary-container: #e00085;
+  --color-on-primary: #ffffff;
+  --color-primary-fixed: #ffd9e4;
+  --color-primary-fixed-dim: #ffb0cc;
+  --color-secondary: #775a00;
+  --color-secondary-container: #fdc40f;
+  --color-secondary-fixed: #ffdf98;
+  --color-secondary-fixed-dim: #f7be00;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #6d5200;
+  --color-tertiary: #146b00;
+  --color-tertiary-container: #1b8700;
+  --color-tertiary-fixed: #8dfc6e;
+  --color-tertiary-fixed-dim: #72de55;
+  --color-on-tertiary: #ffffff;
+  --color-surface: #fcf9f8;
+  --color-surface-subtle: #f6f6f6;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #f6f3f2;
+  --color-surface-container: #f0eded;
+  --color-surface-container-high: #eae7e7;
+  --color-surface-container-highest: #e5e2e1;
+  --color-on-surface: #1c1b1b;
+  --color-on-surface-variant: #5a3f49;
+  --color-text-primary: #1a1a1a;
+  --color-text-muted: #6b7280;
+  --color-text-placeholder: #9ca3af;
+  --color-border-subtle: #e5e7eb;
+  --color-border-strong: #d1d5db;
+  --color-ai-accent: #8b5cf6;
+  --color-ai-surface: #f5f3ff;
+  --color-error: #ba1a1a;
+  --color-success-base: #10b981;
+  --color-success-surface: #ecfdf5;
+  --color-success-800: #166534;
+  --color-warning-base: #f59e0b;
+  --color-warning-surface: #fffbeb;
+  --color-error-base: #ef4444;
+  --color-surface-card: #fafafa;
+  --color-brand: #e20074;
+  --color-magenta: #ec008c;
+  --color-magenta-alt: #e20074;
+  --color-success: #10b981;
+  --color-green: #10b981;
+  --color-brand-dark: #bd0066;
+  --color-warning: #f59e0b;
+  --color-ink: #29232a;
+  --color-muted: #777079;
+  --color-canvas: #fbf8fa;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --radius-3xl: 1.5rem;
+
+  /* Tailwind tokens used by the original prototype utility classes. */
+  --color-outline: #8e6f79;
+  --color-inverse-on-surface: #f3f0ef;
+  --color-on-secondary-fixed-variant: #5a4300;
+  --color-background: #fcf9f8;
+  --color-surface-variant: #e5e2e1;
+  --color-on-secondary-fixed: #251a00;
+  --color-surface-dim: #dcd9d9;
+  --color-error-surface: #fef2f2;
+  --color-on-primary-fixed: #3e0021;
+  --color-on-primary-container: #fffbff;
+  --color-inverse-primary: #ffb0cc;
+  --color-surface-page: #ffffff;
+  --color-on-background: #1c1b1b;
+  --color-surface-tint: #b8006c;
+  --color-on-primary-fixed-variant: #8d0051;
+  --color-on-tertiary-fixed-variant: #0d5300;
+  --color-on-tertiary-container: #f8ffef;
+  --color-on-error: #ffffff;
+  --color-error-container: #ffdad6;
+  --color-inverse-surface: #313030;
+  --color-surface-bright: #fcf9f8;
+  --color-on-tertiary-fixed: #022100;
+  --color-outline-variant: #e2bdc8;
+  --color-on-error-container: #93000a;
+
+  --font-label-md: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-label-lg: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline-xl-mobile:
+    "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline-sm: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body-sm: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body-md: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline-xl: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-body-lg: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-code: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline-lg-mobile:
+    "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-headline-md: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-label-sm: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+
+  --text-label-md: 12px;
+  --text-label-md--line-height: 16px;
+  --text-label-md--font-weight: 600;
+  --text-label-lg: 14px;
+  --text-label-lg--line-height: 20px;
+  --text-label-lg--font-weight: 600;
+  --text-headline-xl-mobile: 28px;
+  --text-headline-xl-mobile--line-height: 36px;
+  --text-headline-xl-mobile--font-weight: 800;
+  --text-headline-sm: 18px;
+  --text-headline-sm--line-height: 26px;
+  --text-headline-sm--font-weight: 600;
+  --text-body-sm: 12px;
+  --text-body-sm--line-height: 18px;
+  --text-body-sm--font-weight: 400;
+  --text-body-md: 14px;
+  --text-body-md--line-height: 20px;
+  --text-body-md--font-weight: 400;
+  --text-headline-xl: 36px;
+  --text-headline-xl--line-height: 44px;
+  --text-headline-xl--font-weight: 800;
+  --text-body-lg: 16px;
+  --text-body-lg--line-height: 24px;
+  --text-body-lg--font-weight: 400;
+  --text-headline-lg: 28px;
+  --text-headline-lg--line-height: 36px;
+  --text-headline-lg--font-weight: 700;
+  --text-mono-code: 14px;
+  --text-mono-code--line-height: 20px;
+  --text-mono-code--font-weight: 700;
+  --text-headline-lg-mobile: 22px;
+  --text-headline-lg-mobile--line-height: 30px;
+  --text-headline-lg-mobile--font-weight: 700;
+  --text-headline-md: 20px;
+  --text-headline-md--line-height: 28px;
+  --text-headline-md--font-weight: 700;
+  --text-label-sm: 11px;
+  --text-label-sm--line-height: 14px;
+  --text-label-sm--font-weight: 700;
+
+  --spacing-space-xl: 2rem;
+  --spacing-space-md: 1rem;
+  --spacing-margin-tablet: 1.5rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-margin: 1rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-gutter: 1rem;
+  --spacing-gutter-desktop: 1.5rem;
+  --spacing-margin-desktop: 2.5rem;
+  --spacing-space-xs: 0.25rem;
+}
+
+@layer base {
+  html,
+  body {
+    min-width: 320px;
+    min-height: 100vh;
+    margin: 0;
+    background: #fcf9f8;
+    font-family: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+    text-rendering: optimizeLegibility;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  button,
+  input,
+  select,
+  textarea {
+    font: inherit;
+  }
+
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid #e2007480;
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: #f8c9e1;
+    color: #54223f;
+  }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+}
