@@ -48,3 +48,45 @@ class TrackingWidget
         ];
     }
 }
+
+class RekomendasiOngkir
+{
+    public function __construct(
+        private float $marginMinimum,
+        private ?float $batasOngkir = null,
+        private string $preferensi = 'tercepat',
+    )
+    {
+    }
+
+    /** @param array<int, array{nama: string, ongkir: int, margin: float, hari: int}> $daftarLayanan
+     *  @return array{nama: string, ongkir: int, margin: float, hari: int}|null
+     */
+    public function pilih(array $daftarLayanan): ?array
+    {
+        $terbaik = null;
+        foreach ($daftarLayanan as $layanan) {
+            if ($layanan['margin'] < $this->marginMinimum
+                || ($this->batasOngkir !== null && $layanan['ongkir'] > $this->batasOngkir)) {
+                continue;
+            }
+            if ($terbaik === null || $this->lebihBaik($layanan, $terbaik)) {
+                $terbaik = $layanan;
+            }
+        }
+
+        return $terbaik;
+    }
+
+    /** @param array{nama: string, ongkir: int, margin: float, hari: int} $calon
+     *  @param array{nama: string, ongkir: int, margin: float, hari: int} $terbaik
+     */
+    private function lebihBaik(array $calon, array $terbaik): bool
+    {
+        return match ($this->preferensi) {
+            'termurah' => $calon['ongkir'] < $terbaik['ongkir'],
+            'margin' => $calon['margin'] > $terbaik['margin'],
+            default => $calon['hari'] < $terbaik['hari'],
+        };
+    }
+}

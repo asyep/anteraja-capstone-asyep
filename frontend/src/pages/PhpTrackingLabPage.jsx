@@ -1,5 +1,6 @@
 import RiwayatTracking from "../components/lab/RiwayatTracking";
 import WidgetTracking from "../components/lab/WidgetTracking";
+import KalkulatorOngkirModul from "../components/lab/KalkulatorOngkirModul";
 
 export default function PhpTrackingLabPage() {
   return (
@@ -11,6 +12,12 @@ export default function PhpTrackingLabPage() {
           Latihan ini mengambil data dari endpoint PHP, menerjemahkan status teknis menjadi pesan pelanggan, lalu mengirim feedback tanpa mengubah tampilan tracking utama.
         </p>
       </div>
+
+      <section className="mt-7 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
+        <h2 className="text-lg font-bold text-slate-950">Project Asep · Kalkulator margin ongkir</h2>
+        <p className="mb-4 mt-1 text-sm text-slate-500">Hitung berat volumetrik, bandingkan margin layanan, dan pilih rekomendasi berdasarkan batas margin minimum.</p>
+        <KalkulatorOngkirModul />
+      </section>
 
       <div className="mt-7 grid gap-7 lg:grid-cols-2">
         <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
