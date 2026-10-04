@@ -34,6 +34,9 @@
         <h1 class="text-2xl font-extrabold text-gray-900">Satria Smart Widget</h1>
         <p class="text-sm text-gray-500">UX Eksploratif Anteraja Prototype · Laravel Edition</p>
       </div>
+      <a href="{{ route('shipments.index') }}" class="ml-auto rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white hover:bg-[#c9006e]">
+        Kelola Pengiriman
+      </a>
     </div>
 
     {{-- Interaksi 2: Dynamic Personalized Greeting Header --}}
