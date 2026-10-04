@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Permintaan Pengiriman Anteraja</title>
+    <style>
+      body { max-width: 680px; margin: 3rem auto; padding: 0 1rem; color: #29232a; font: 16px/1.5 system-ui, sans-serif; }
+      form { display: grid; gap: 1rem; padding: 1.5rem; border: 1px solid #eadde5; border-radius: 1rem; }
+      label { display: grid; gap: .35rem; font-weight: 600; }
+      input { box-sizing: border-box; width: 100%; padding: .7rem; border: 1px solid #cfc3ca; border-radius: .5rem; font: inherit; }
+      button { padding: .75rem 1rem; border: 0; border-radius: .5rem; background: #c80070; color: white; font: inherit; font-weight: 700; cursor: pointer; }
+      a { color: #a0005b; }
+      .note { color: #685d64; font-size: .9rem; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p><a href="request-history.php">Lihat riwayat permintaan</a></p>
+      <h1>Permintaan Pengiriman</h1>
+      <p>Masukkan resi, berat, dan jarak untuk menghitung estimasi biaya simulasi.</p>
+      <form action="submit-request.php" method="POST">
+        <label for="trackingNumber">Nomor resi
+          <input id="trackingNumber" name="trackingNumber" type="text" required minlength="13" maxlength="32" pattern="(?:[0-9]{13,14}|[A-Za-z0-9]{32})" autocomplete="off" placeholder="13–14 digit atau 32 karakter alfanumerik">
+        </label>
+        <label for="weightKg">Berat (kg)
+          <input id="weightKg" name="weightKg" type="number" required min="0.01" step="any" inputmode="decimal" placeholder="Contoh: 1.5">
+        </label>
+        <label for="distanceKm">Jarak (km)
+          <input id="distanceKm" name="distanceKm" type="number" required min="0.1" step="any" inputmode="decimal" placeholder="Contoh: 12">
+        </label>
+        <button type="submit">Simpan Permintaan</button>
+      </form>
+      <p class="note">Tarif dihitung dengan tier jarak untuk latihan. Tarif ini bukan tarif resmi Anteraja.</p>
+    </main>
+  </body>
+</html>
