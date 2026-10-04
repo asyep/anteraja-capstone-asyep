@@ -1,6 +1,7 @@
 import RiwayatTracking from "../components/lab/RiwayatTracking";
 import WidgetTracking from "../components/lab/WidgetTracking";
 import KalkulatorOngkirModul from "../components/lab/KalkulatorOngkirModul";
+import { API, isPhpApiConfigured } from "../services/phpApi";
 
 export default function PhpTrackingLabPage() {
   return (
@@ -11,6 +12,12 @@ export default function PhpTrackingLabPage() {
         <p className="mt-3 max-w-2xl text-slate-600">
           Latihan ini mengambil data dari endpoint PHP, menerjemahkan status teknis menjadi pesan pelanggan, lalu mengirim feedback tanpa mengubah tampilan tracking utama.
         </p>
+        {isPhpApiConfigured && (
+          <div className="mt-5 flex flex-wrap gap-3">
+            <a href={`${API}/shipment-form.html`} target="_blank" rel="noreferrer" className="rounded-xl bg-[#c80070] px-4 py-2 text-sm font-bold text-white">Day 12 · Buat permintaan</a>
+            <a href={`${API}/request-history.php`} target="_blank" rel="noreferrer" className="rounded-xl border border-pink-200 px-4 py-2 text-sm font-bold text-[#a0005b]">Riwayat permintaan</a>
+          </div>
+        )}
       </div>
 
       <section className="mt-7 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-7">
