@@ -11,12 +11,32 @@ use Illuminate\Validation\Rule;
 
 class ShipmentController extends Controller
 {
-    public function index(): View
+    public function index(Request $request): View
     {
-        $shipments = Shipment::query()
-            ->with('courier')
-            ->latest()
-            ->paginate(10);
+        $filters = $request->validate([
+            'q' => ['nullable', 'string', 'regex:/^[a-zA-Z0-9]{0,32}$/'],
+            'status' => ['nullable', Rule::in(array_keys(Shipment::STATUSES))],
+            'sort' => ['nullable', Rule::in(['tracking_number', 'weight_kg', 'status', 'created_at'])],
+            'direction' => ['nullable', Rule::in(['asc', 'desc'])],
+            'per_page' => ['nullable', Rule::in(['10', '25', '50'])],
+        ]);
+
+        $query = Shipment::query()
+            ->with(['courier', 'latestTrackingEvent'])
+            ->withCount('feedback');
+
+        if (! empty($filters['q'])) {
+            $query->whereRaw('LOWER(tracking_number) LIKE ?', ['%'.strtolower($filters['q']).'%']);
+        }
+
+        if (! empty($filters['status'])) {
+            $query->where('status', $filters['status']);
+        }
+
+        $shipments = $query
+            ->orderBy($filters['sort'] ?? 'created_at', $filters['direction'] ?? 'desc')
+            ->paginate((int) ($filters['per_page'] ?? 10))
+            ->withQueryString();
 
         return view('shipments.index', compact('shipments'));
     }

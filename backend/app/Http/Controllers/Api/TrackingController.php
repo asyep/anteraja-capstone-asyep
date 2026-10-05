@@ -9,8 +9,8 @@ use App\Http\Requests\TrackingFormRequest;
 use App\Services\GeminiAIService;
 use App\Services\MilestoneMapperService;
 use App\Services\TrackingWidget;
+use App\Support\CacheAman;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Cache;
 
 class TrackingController extends Controller
 {
@@ -24,11 +24,18 @@ class TrackingController extends Controller
     {
         $waybillNumber = $request->validated('waybill_number');
         $cacheKey = 'tracking:waybill:'.$waybillNumber;
+        $missingKey = 'tracking:waybill:not-found:'.$waybillNumber;
 
-        $shipment = Cache::remember($cacheKey, now()->addSeconds(300), function () use ($waybillNumber): ?array {
+        if (CacheAman::ada($missingKey)) {
+            return $this->notFoundResponse();
+        }
+
+        $shipment = CacheAman::ingat($cacheKey, 300, function () use ($waybillNumber, $missingKey): ?array {
             $shipment = $this->trackingWidget->dataWidget($waybillNumber);
 
             if ($shipment === null) {
+                CacheAman::ingat($missingKey, 30, fn (): bool => true);
+
                 return null;
             }
 
@@ -39,15 +46,20 @@ class TrackingController extends Controller
         });
 
         if ($shipment === null) {
-            return response()->json([
-                'ok' => false,
-                'message' => 'Nomor resi tidak ditemukan. Mohon periksa kembali nomor resi yang Anda masukkan.',
-            ], 404);
+            return $this->notFoundResponse();
         }
 
         return response()->json([
             'ok' => true,
             'data' => $shipment,
         ]);
+    }
+
+    private function notFoundResponse(): JsonResponse
+    {
+        return response()->json([
+            'ok' => false,
+            'message' => 'Nomor resi tidak ditemukan. Mohon periksa kembali nomor resi yang Anda masukkan.',
+        ], 404);
     }
 }
