@@ -16,6 +16,7 @@ class CourierSeeder extends Seeder
             ['name' => 'Satria Demo 01', 'rating' => 4.8],
             ['name' => 'Satria Demo 02', 'rating' => 4.6],
             ['name' => 'Satria Demo 03', 'rating' => 4.9],
+            ['name' => 'Satria Demo 04', 'rating' => 4.7],
         ] as $courierData) {
             Courier::updateOrCreate(
                 ['name' => $courierData['name']],
