@@ -8,7 +8,10 @@ Jalankan pada database PostgreSQL kosong dari root repository:
 createdb anteraja_tracking
 psql -d anteraja_tracking -f database/schema.sql
 psql -d anteraja_tracking -f database/sample_data.sql
+psql -d anteraja_tracking -f database/dataset.sql
 ```
+
+`database/dataset.sql` adalah dataset demo utama dengan minimal 25 baris per tabel: 26 `customers`, 26 `sellers`, 26 `orders`, 37 `order_items`, 26 `smart_logistics_context`, 80 `tracking_events`, dan 30 `ai_narratives`. Berkas ini idempoten (aman dijalankan berulang dan boleh dijalankan setelah `sample_data.sql`) serta mempertahankan empat resi warisan yang dipakai contoh uji FRD. Ekspor CSV per tabel tersedia di `database/dataset-csv/`.
 
 Lihat ringkasan satu resi dengan:
 

@@ -43,6 +43,8 @@ UI states tersedia di `docs/ui`: dashboard live tracking, status sukses in-trans
 
 - `database/schema.sql`: DDL PostgreSQL, FK, CHECK, indeks, dan view ringkasan.
 - `database/sample_data.sql`: data sintetis untuk in-transit normal, delay, delivered, canceled serta narasi fallback/AI.
+- `database/dataset.sql`: dataset demo minimal 25 baris per tabel (26 customers, 26 sellers, 26 orders, 37 order_items, 26 smart_logistics_context, 80 tracking_events, 30 ai_narratives); idempoten dan mempertahankan resi contoh FRD. Resi `3333...` sampai `8888...` sama dengan `ShipmentSeeder` Laravel.
+- `database/dataset-csv/`: ekspor CSV per tabel dari dataset demo.
 - `docs/database/erd-smart-tracking.webp`: diagram ERD.
 
 Jalankan pada database kosong dengan `psql -d anteraja_tracking -f database/schema.sql`, lalu `psql -d anteraja_tracking -f database/sample_data.sql`.

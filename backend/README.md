@@ -46,17 +46,18 @@ Gemini narratives use a 1.2-second timeout and fall back to local status-based t
 
 Modul latihan Day 13 berada di aplikasi Laravel yang sama, tanpa membuat project Laravel kedua. Buka `/shipments` untuk mengelola data pengiriman (daftar, detail, tambah, edit, dan hapus) dan `/couriers` untuk mengelola data kurir. Nomor resi mengikuti format 32 karakter alfanumerik pada FRD. Status menggunakan kamus status yang sudah dipakai oleh schema tracking project.
 
-Migration Day 13 menambahkan tabel `couriers` dan `shipments`; relasi `shipments.courier_id` wajib menunjuk ke kurir yang ada. Kedua migration ini bersifat tambahan dan tidak mengubah tabel `orders` maupun view `tracking_summary` yang digunakan API tracking. Data contoh memakai empat waybill sintetis yang sudah ada di `database/sample_data.sql`, dengan berat dan assignment kurir untuk kebutuhan CRUD latihan.
+Migration Day 13 menambahkan tabel `couriers` dan `shipments`; relasi `shipments.courier_id` wajib menunjuk ke kurir yang ada. Kedua migration ini bersifat tambahan dan tidak mengubah tabel `orders` maupun view `tracking_summary` yang digunakan API tracking. Data contoh berisi 25 kurir dan 26 shipment: sepuluh nomor resi pertama sama dengan `database/sample_data.sql`, dan 16 resi berikutnya memakai nomor resi yang sama dengan `database/dataset.sql` supaya halaman detail shipment dapat menampilkan tracking_events dari order terkait.
 
 Jalankan migration dan data contoh pada database yang dikonfigurasi untuk Laravel:
 
 ```bash
 cd backend
 php artisan migrate
-php artisan db:seed --class=CourierSeeder
-php artisan db:seed --class=ShipmentSeeder
+php artisan db:seed
 php artisan serve
 ```
+
+Seeder yang dijalankan: `CourierSeeder` (25 kurir), `ShipmentSeeder` (26 shipment), dan `FeedbackSeeder` (26 feedback, satu per nomor resi dataset). Ketiganya idempoten dan boleh dijalankan ulang.
 
 Untuk instalasi lokal baru, `.env.example` menggunakan SQLite. Project yang `.env`-nya sudah diarahkan ke Supabase tetap memakai koneksi itu. Perintah `migrate` menjalankan semua migration Laravel yang belum tercatat; migration Day 13 sendiri hanya menambah dua tabel latihan dan tidak memuat ulang `database/schema.sql`. Jangan menimpa `.env` yang sudah berisi konfigurasi koneksi lokal Anda.
 
