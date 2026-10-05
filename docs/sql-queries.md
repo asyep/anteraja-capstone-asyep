@@ -76,3 +76,73 @@ Hasil pada Oktober 2026:
 | Satria Demo 01 | 4 |
 | Satria Demo 02 | 3 |
 | Satria Demo 03 | 3 |
+
+## 4. Rata-rata berat per status
+
+Query ini menggunakan `AVG` dan `GROUP BY` untuk membandingkan berat rata-rata shipment pada setiap status.
+
+```sql
+SELECT status, ROUND(AVG(weight_kg), 2) AS avg_weight_kg
+FROM shipments
+GROUP BY status
+ORDER BY status;
+```
+
+Hasil:
+
+| status | avg_weight_kg |
+|---|---:|
+| canceled | 2.95 |
+| created | 0.30 |
+| delivered | 0.43 |
+| in_transit | 4.75 |
+| processing | 3.20 |
+| shipped | 6.75 |
+
+## 5. Courier dengan lebih dari dua shipment (`HAVING`)
+
+Query ini menyaring hasil agregasi setelah menghitung shipment, sehingga hanya courier dengan lebih dari dua shipment yang ditampilkan.
+
+```sql
+SELECT c.name AS courier, COUNT(s.id) AS shipment_count
+FROM couriers AS c
+JOIN shipments AS s ON s.courier_id = c.id
+GROUP BY c.id, c.name
+HAVING COUNT(s.id) > 2
+ORDER BY shipment_count DESC, c.name;
+```
+
+Hasil:
+
+| courier | shipment_count |
+|---|---:|
+| Satria Demo 01 | 4 |
+| Satria Demo 02 | 3 |
+| Satria Demo 03 | 3 |
+
+## 6. Semua courier, termasuk yang belum menerima shipment (`LEFT JOIN`)
+
+Query ini mempertahankan semua baris `couriers`; `COUNT(s.id)` menghasilkan nol untuk courier tanpa shipment.
+
+```sql
+SELECT c.name AS courier, COUNT(s.id) AS shipment_count
+FROM couriers AS c
+LEFT JOIN shipments AS s ON s.courier_id = c.id
+GROUP BY c.id, c.name
+ORDER BY c.id;
+```
+
+Hasil:
+
+| courier | shipment_count |
+|---|---:|
+| Satria Demo 01 | 4 |
+| Satria Demo 02 | 3 |
+| Satria Demo 03 | 3 |
+| Satria Demo 04 | 0 |
+
+## Ringkasan data dan perbandingan dengan Eloquent
+
+Pengecekan dataset menghasilkan 4 courier dan 10 shipment; status shipment tersebar pada `canceled` (2), `created` (1), `delivered` (2), `in_transit` (3), `processing` (1), dan `shipped` (1). Courier keempat sengaja tidak diberi shipment untuk membuktikan hasil `LEFT JOIN`.
+
+Query agregasi manual secara eksplisit menunjukkan `JOIN`, filter `created_at`, `GROUP BY`, dan `COUNT`. Eloquent dapat menyusun operasi yang sama, tetapi SQL manual memudahkan melihat urutan operasi database dan alasan `LEFT JOIN` tetap menampilkan courier dengan hitungan nol.
