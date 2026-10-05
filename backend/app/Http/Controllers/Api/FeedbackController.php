@@ -9,6 +9,8 @@ use App\Jobs\NotifikasiFeedbackKurang;
 use App\Models\Feedback;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Throwable;
 
 /**
  * Store feedback and dispatch a job for negative ratings.
@@ -31,7 +33,17 @@ class FeedbackController extends Controller
         $feedback = Feedback::create($validated);
 
         if ($feedback->membantu === false) {
-            NotifikasiFeedbackKurang::dispatch((int) $feedback->getKey());
+            $notificationKey = 'feedback:notification:'.$feedback->resi;
+
+            if (Cache::add($notificationKey, true, now()->addHour())) {
+                try {
+                    NotifikasiFeedbackKurang::dispatch((int) $feedback->getKey());
+                } catch (Throwable $exception) {
+                    Cache::forget($notificationKey);
+
+                    throw $exception;
+                }
+            }
         }
 
         return response()->json([

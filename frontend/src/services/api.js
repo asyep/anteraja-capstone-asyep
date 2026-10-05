@@ -18,6 +18,19 @@ function normalizeStageCode(value) {
     .toUpperCase();
 }
 
+function rateLimitMessage(response) {
+  const retryAfter = Number(response.headers.get("Retry-After"));
+  const retryMessage = Number.isFinite(retryAfter) && retryAfter > 0
+    ? ` Coba lagi dalam ${retryAfter} detik.`
+    : " Coba lagi sebentar lagi.";
+
+  return `Permintaan terlalu sering. Sistem sedang melindungi layanan tracking.${retryMessage}`;
+}
+
+async function readResponse(response) {
+  return response.json().catch(() => ({}));
+}
+
 function normalizeMilestones(source, shipment) {
   const suppliedStages = getField(source, "milestone_stages", "milestones");
   const timestamps = [
@@ -114,9 +127,13 @@ export async function fetchShipment(waybill, { signal } = {}) {
       signal,
     },
   );
-  const payload = await response.json().catch(() => ({}));
+  const payload = await readResponse(response);
 
   if (!response.ok || payload.ok === false) {
+    if (response.status === 429) {
+      throw new Error(rateLimitMessage(response));
+    }
+
     if (response.status === 404) {
       throw new Error(
         "Nomor resi tidak ditemukan, mohon periksa kembali input Anda.",
@@ -130,4 +147,32 @@ export async function fetchShipment(waybill, { signal } = {}) {
   }
 
   return normalizeShipment(payload);
+}
+
+export async function submitFeedback({ waybill, helpful }) {
+  const response = await fetch(`${API_BASE_URL}/feedback`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ resi: waybill, membantu: helpful }),
+  });
+  const payload = await readResponse(response);
+
+  if (!response.ok) {
+    if (response.status === 429) {
+      throw new Error(rateLimitMessage(response));
+    }
+
+    const validationMessage = Object.values(payload.errors ?? {})
+      .flat()
+      .find((message) => typeof message === "string");
+
+    throw new Error(
+      validationMessage ?? payload.message ?? "Feedback belum dapat dikirim. Silakan coba kembali.",
+    );
+  }
+
+  return payload;
 }

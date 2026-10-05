@@ -25,6 +25,10 @@ class NotifikasiFeedbackKurang implements ShouldQueue
             return;
         }
 
+        if (app()->isLocal()) {
+            sleep(2);
+        }
+
         Log::warning('Pengguna menilai narasi tracking kurang membantu.', [
             'feedback_id' => $feedback->id,
             'resi' => $feedback->resi,

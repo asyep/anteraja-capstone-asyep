@@ -1,9 +1,32 @@
-import React from "react";
+import { useState } from "react";
+import { submitFeedback } from "../../services/api";
 
 export default function AINarrativeBox({ shipment }) {
+  const [submitting, setSubmitting] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+
   if (!shipment || !shipment.ai_narrative) return null;
 
   const { ai_narrative } = shipment;
+
+  async function sendFeedback(helpful) {
+    if (submitting) return;
+
+    setSubmitting(true);
+    setFeedbackMessage("");
+
+    try {
+      const result = await submitFeedback({
+        waybill: shipment.waybill_number,
+        helpful,
+      });
+      setFeedbackMessage(result.message ?? "Terima kasih atas masukan Anda.");
+    } catch (error) {
+      setFeedbackMessage(error.message);
+    } finally {
+      setSubmitting(false);
+    }
+  }
 
   return (
     <div className="bg-gradient-to-br from-magenta/5 to-transparent border border-magenta/10 rounded-2xl p-5 sm:p-6 relative overflow-hidden group">
@@ -52,6 +75,33 @@ export default function AINarrativeBox({ shipment }) {
               Pesan sistem standar (Fallback Mode)
             </div>
           )}
+
+          <div className="mt-4 flex flex-wrap items-center gap-2 border-t border-magenta/10 pt-3">
+            <span className="mr-1 text-xs font-semibold text-ink/70">
+              Apakah penjelasan ini membantu?
+            </span>
+            <button
+              className="rounded-lg border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800 disabled:cursor-wait disabled:opacity-60"
+              disabled={submitting}
+              onClick={() => sendFeedback(true)}
+              type="button"
+            >
+              Membantu
+            </button>
+            <button
+              className="rounded-lg border border-stone-200 bg-white px-3 py-1.5 text-xs font-semibold text-ink/80 disabled:cursor-wait disabled:opacity-60"
+              disabled={submitting}
+              onClick={() => sendFeedback(false)}
+              type="button"
+            >
+              Kurang jelas
+            </button>
+            {feedbackMessage && (
+              <p aria-live="polite" className="w-full text-xs text-ink/70">
+                {feedbackMessage}
+              </p>
+            )}
+          </div>
         </div>
       </div>
     </div>

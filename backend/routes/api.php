@@ -11,7 +11,7 @@ Route::prefix('v1')->name('api.v1.')->middleware(CatatWaktu::class)->group(funct
     Route::get('/tracking/{waybill_number}', [TrackingController::class, 'show'])
         ->middleware([
             'throttle:tracking',
-            'cache.headers:public;max_age=30;etag',
+            'cache.headers:public;max_age=5;etag',
         ])
         ->name('tracking.show');
 

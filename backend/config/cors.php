@@ -11,7 +11,7 @@ return [
     ],
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
-    'exposed_headers' => ['X-Waktu-Ms', 'ETag'],
+    'exposed_headers' => ['X-Waktu-Ms', 'ETag', 'Retry-After'],
     'max_age' => 0,
     'supports_credentials' => false,
 ];

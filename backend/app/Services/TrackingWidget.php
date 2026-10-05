@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Models\TrackingEvent;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\DB;
 
@@ -19,10 +20,17 @@ class TrackingWidget
             return null;
         }
 
-        $events = DB::table('tracking_events')
+        $events = TrackingEvent::query()
             ->where('order_id', $waybillNumber)
             ->orderBy('event_at')
-            ->get();
+            ->get([
+                'event_id',
+                'event_code',
+                'milestone_stage',
+                'description',
+                'facility_name',
+                'event_at',
+            ]);
 
         $delayReason = $summary->logistics_delay_reason ?? 'None';
 
@@ -59,10 +67,17 @@ class TrackingWidget
 
     public function riwayatSingkat(string $waybillNumber): array
     {
-        $events = DB::table('tracking_events')
+        $events = TrackingEvent::query()
             ->where('order_id', $waybillNumber)
             ->orderBy('event_at')
-            ->get();
+            ->get([
+                'event_id',
+                'event_code',
+                'milestone_stage',
+                'description',
+                'facility_name',
+                'event_at',
+            ]);
 
         return $events->map(fn (object $event): array => [
             'kode' => $event->event_code,

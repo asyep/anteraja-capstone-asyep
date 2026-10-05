@@ -28,6 +28,17 @@ class TrackingApiTest extends TestCase
             ->assertHeader('X-Waktu-Ms');
     }
 
+    public function test_tracking_rate_limit_returns_retry_after_after_thirty_requests(): void
+    {
+        for ($requestNumber = 0; $requestNumber < 30; $requestNumber++) {
+            $this->getJson('/api/v1/tracking/12345')->assertUnprocessable();
+        }
+
+        $this->getJson('/api/v1/tracking/12345')
+            ->assertTooManyRequests()
+            ->assertHeader('Retry-After');
+    }
+
     public function test_missing_shipment_returns_the_frd_not_found_message(): void
     {
         $this->mock(TrackingWidget::class)
@@ -140,7 +151,7 @@ class TrackingApiTest extends TestCase
             ->assertHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
     }
 
-    public function test_feedback_is_saved_and_negative_feedback_dispatches_notification(): void
+    public function test_feedback_is_saved_and_negative_feedback_notifies_once_per_waybill(): void
     {
         Queue::fake();
         $waybill = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6';
@@ -150,19 +161,27 @@ class TrackingApiTest extends TestCase
             'membantu' => false,
             'catatan' => 'Informasi estimasi belum jelas.',
         ]);
+        $duplicateResponse = $this->postJson('/api/v1/feedback', [
+            'resi' => $waybill,
+            'membantu' => false,
+            'catatan' => 'Feedback kedua untuk resi yang sama.',
+        ]);
 
         $response->assertCreated()->assertJsonPath('ok', true);
+        $duplicateResponse->assertCreated()->assertJsonPath('ok', true);
         $this->assertDatabaseHas('feedback', [
             'resi' => $waybill,
             'membantu' => false,
             'catatan' => 'Informasi estimasi belum jelas.',
         ]);
+        $this->assertDatabaseCount('feedback', 2);
 
         $feedback = Feedback::query()->firstOrFail();
         Queue::assertPushed(NotifikasiFeedbackKurang::class, fn (NotifikasiFeedbackKurang $job): bool => $job->feedbackId === $feedback->id
             && $job->tries === 3
             && $job->backoff === [10, 60]
         );
+        Queue::assertPushed(NotifikasiFeedbackKurang::class, 1);
     }
 
     public function test_helpful_feedback_does_not_dispatch_notification(): void

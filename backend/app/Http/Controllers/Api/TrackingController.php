@@ -25,14 +25,18 @@ class TrackingController extends Controller
         $waybillNumber = $request->validated('waybill_number');
         $cacheKey = 'tracking:waybill:'.$waybillNumber;
 
-        if (Cache::has($cacheKey)) {
-            return response()->json([
-                'ok' => true,
-                'data' => Cache::get($cacheKey),
-            ]);
-        }
+        $shipment = Cache::remember($cacheKey, now()->addSeconds(300), function () use ($waybillNumber): ?array {
+            $shipment = $this->trackingWidget->dataWidget($waybillNumber);
 
-        $shipment = $this->trackingWidget->dataWidget($waybillNumber);
+            if ($shipment === null) {
+                return null;
+            }
+
+            $shipment = array_merge($shipment, $this->milestoneMapper->map($shipment));
+            $shipment['ai_narrative'] = $this->geminiAI->generate($shipment);
+
+            return $shipment;
+        });
 
         if ($shipment === null) {
             return response()->json([
@@ -40,11 +44,6 @@ class TrackingController extends Controller
                 'message' => 'Nomor resi tidak ditemukan. Mohon periksa kembali nomor resi yang Anda masukkan.',
             ], 404);
         }
-
-        $shipment = array_merge($shipment, $this->milestoneMapper->map($shipment));
-        $shipment['ai_narrative'] = $this->geminiAI->generate($shipment);
-
-        Cache::put($cacheKey, $shipment, now()->addMinutes(5));
 
         return response()->json([
             'ok' => true,
