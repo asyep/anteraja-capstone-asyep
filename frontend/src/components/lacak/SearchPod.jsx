@@ -70,7 +70,7 @@ export default function SearchPod() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl pb-8 pt-6 text-center">
+    <div className="mx-auto max-w-4xl pb-16 pt-6 text-center">
       <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-pink-100 bg-pink-50 px-4 py-1.5 text-[12px] font-bold uppercase leading-4 tracking-wider text-[#ec008c]">
         <span className="material-symbols-outlined text-[16px]">
           auto_awesome
