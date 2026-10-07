@@ -4,29 +4,8 @@ import { getRouteForResi } from "../../data/shipmentsData";
 import Toast from "../common/Toast";
 
 /**
- * Riwayat pencarian contoh. Data masih statis mengikuti prototype;
- * tinggal diganti sumber dinamis (localStorage/API) kalau sudah tersedia.
+ * Salin teks ke clipboard dengan fallback untuk konteks non-HTTPS.
  */
-const PENCARIAN_TERAKHIR = [
-  {
-    id: "awb-aktif",
-    label: "#100028471928...",
-    kode: "10002847192837",
-    status: "Aktif",
-    dotClassName: "bg-emerald-500 animate-pulse",
-    badgeClassName: "text-emerald-600 bg-emerald-50",
-  },
-  {
-    id: "awb-transit",
-    label: "#100039201948...",
-    kode: "10003920194812",
-    status: "Transit",
-    dotClassName: "bg-amber-500",
-    badgeClassName: "text-amber-600 bg-amber-50",
-  },
-];
-
-/** Salin teks ke clipboard dengan fallback untuk konteks non-HTTPS. */
 async function salinKeClipboard(teks) {
   if (!teks) return false;
 
@@ -58,8 +37,7 @@ async function salinKeClipboard(teks) {
 /**
  * Hero + kontrol pencarian halaman Lacak Kiriman.
  * Tampilan mengikuti desain referensi: satu input resi dengan ikon QR,
- * tombol Salin di dalam input, tombol "Lacak Paket" gradien magenta,
- * lalu deretan chip riwayat resi di bawahnya.
+ * tombol Salin di dalam input, dan tombol "Lacak Paket" gradien magenta.
  */
 export default function SearchPod() {
   const navigate = useNavigate();
@@ -92,7 +70,7 @@ export default function SearchPod() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl pt-6 text-center">
+    <div className="mx-auto max-w-4xl pb-8 pt-6 text-center">
       <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-pink-100 bg-pink-50 px-4 py-1.5 text-[12px] font-bold uppercase leading-4 tracking-wider text-[#ec008c]">
         <span className="material-symbols-outlined text-[16px]">
           auto_awesome
@@ -152,27 +130,6 @@ export default function SearchPod() {
           </button>
         </div>
       </form>
-
-      <div className="mb-16 mt-10 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-500">
-        {PENCARIAN_TERAKHIR.map((item) => (
-          <button
-            className="group inline-flex items-center gap-1.5 rounded-full border border-gray-200/90 bg-white px-3 py-1.5 text-gray-700 shadow-sm transition-all hover:border-[#ec008c] hover:text-[#ec008c]"
-            key={item.id}
-            onClick={() => lacak(item.kode)}
-            type="button"
-          >
-            <span className={`h-2 w-2 rounded-full ${item.dotClassName}`} />
-            <span className="font-mono-code text-label-sm font-medium">
-              {item.label}
-            </span>
-            <span
-              className={`rounded px-1 text-[10px] font-semibold ${item.badgeClassName}`}
-            >
-              {item.status}
-            </span>
-          </button>
-        ))}
-      </div>
 
       <Toast message={toast} onClose={() => setToast("")} open={Boolean(toast)} />
     </div>
