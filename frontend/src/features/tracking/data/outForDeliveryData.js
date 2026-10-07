@@ -227,7 +227,7 @@ export const OUT_FOR_DELIVERY_DATA = {
     active: true,
     idLabel: "Sedang Bertugas",
     name: "Agus Prasetyo",
-    avatar: "",
+    avatar: "/profil-satria.svg",
     rating: "4.98",
     totalKiriman: "2,410 Kiriman Sukses",
     armada: "Armada Satria Motor Tebet",
