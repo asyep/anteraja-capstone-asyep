@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 
+import DeliveryMap from "@/features/tracking/components/maps/DeliveryMap";
 import StagingMap from "@/features/tracking/components/maps/StagingMap";
 import StandbyMap from "@/features/tracking/components/maps/StandbyMap";
 import TransitMap from "@/features/tracking/components/maps/TransitMap";
+import { DELIVERY_ROUTES } from "@/features/tracking/data/deliveryRoutes";
 import { TRANSIT_ROUTES } from "@/features/tracking/data/transitRoutes";
 import useTransitAnimation from "@/features/tracking/hooks/useTransitAnimation";
 
@@ -40,17 +42,26 @@ function ZoomControls() {
 }
 
 /**
- * Kartu "Radar Posisi Paket" dengan tiga varian tampilan:
- * - "standby" : paket belum dijemput, GPS belum aktif
- * - "staging" : paket ada di Staging DC (peta kawasan statis)
- * - "transit" : paket sedang dalam perjalanan — penanda armada bergerak
- *               mengikuti waypoint rute secara real-time
+ * Kartu "Radar Posisi Paket" dengan empat varian tampilan:
+ * - "standby"  : paket belum dijemput, GPS belum aktif
+ * - "staging"  : paket ada di Staging DC (peta kawasan statis)
+ * - "transit"  : paket dalam perjalanan antarkota — penanda armada bergerak
+ *                mengikuti waypoint rute
+ * - "delivery" : kurir mengantar ke alamat penerima — penanda bergerak
+ *                mendekati tujuan, lengkap dengan sisa jarak
  */
 export default function LivePositionCard({ radar }) {
+  const isDelivery = radar.variant === "delivery";
   const isTransit = radar.variant === "transit";
-  const rute = isTransit ? TRANSIT_ROUTES[radar.routeId] : null;
+  // Varian transit & delivery sama-sama memakai animasi rute.
+  const berAnimasi = isTransit || isDelivery;
 
-  // Animasi hanya aktif untuk varian transit.
+  const rute = isTransit
+    ? TRANSIT_ROUTES[radar.routeId]
+    : isDelivery
+      ? DELIVERY_ROUTES[radar.routeId]
+      : null;
+
   const { index, waypoint, tibaDiTujuan } = useTransitAnimation(
     rute ?? { waypoints: [] },
     {
@@ -65,7 +76,7 @@ export default function LivePositionCard({ radar }) {
     if (waypoint) setLabelTerlihat(true);
   }, [waypoint]);
 
-  const petaKelas = isTransit
+  const petaKelas = berAnimasi
     ? "relative h-56 w-full overflow-hidden rounded-xl border border-border-subtle/50 bg-[#eef2f6] shadow-inner"
     : radar.variant === "staging"
       ? "relative h-56 w-full overflow-hidden rounded-xl border border-border-subtle/50 bg-[#eef2f6] shadow-inner"
@@ -81,21 +92,31 @@ export default function LivePositionCard({ radar }) {
           Radar Posisi Paket
         </span>
         <StatusPill strong={radar.variant !== "standby"}>
-          {isTransit ? radar.pillLabel : radar.statusLabel}
+          {isDelivery
+            ? waypoint?.sisaKm != null
+              ? `Satria Bergerak (${waypoint.sisaKm} km)`
+              : radar.pillLabel
+            : isTransit
+              ? radar.pillLabel
+              : radar.statusLabel}
         </StatusPill>
       </div>
 
       <div className={petaKelas}>
-        {isTransit ? (
+        {berAnimasi ? (
           <>
-            <TransitMap marker={waypoint?.svg} />
+            {isDelivery ? (
+              <DeliveryMap marker={waypoint?.svg} tujuan={rute?.tujuan} />
+            ) : (
+              <TransitMap marker={waypoint?.svg} />
+            )}
             <div className="absolute left-2.5 top-2.5 z-10 flex items-center gap-1.5 rounded-md border border-border-subtle/50 bg-white px-2.5 py-1 text-[11px] font-bold text-on-surface shadow-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success-base" />
               {radar.liveBadgeLabel}
             </div>
             <ZoomControls />
 
-            {/* Pin armada — peta yang menggeser, jadi pin tetap di tengah */}
+            {/* Pin — peta yang menggeser, jadi pin tetap di tengah */}
             <div
               className="pointer-events-none absolute left-1/2 top-1/2 z-20"
               style={{
@@ -112,10 +133,12 @@ export default function LivePositionCard({ radar }) {
                   </div>
                   <div className="flex flex-col text-left">
                     <span className="font-label-sm text-[11px] font-bold leading-tight text-primary">
-                      {waypoint?.label}
+                      {isDelivery ? rute?.kurir : waypoint?.label}
                     </span>
                     <span className="mt-0.5 font-body-sm text-[9px] leading-none text-text-muted">
-                      {waypoint?.detail}
+                      {isDelivery
+                        ? `${waypoint?.sisaKm ?? 0} km lagi • ${waypoint?.detail ?? ""}`
+                        : waypoint?.detail}
                     </span>
                   </div>
                   <span className="ml-0.5 h-1.5 w-1.5 animate-ping rounded-full bg-success-base" />
@@ -127,16 +150,20 @@ export default function LivePositionCard({ radar }) {
             <div className="absolute bottom-2 left-2 right-2 z-10 flex items-center justify-between rounded-lg border border-border-subtle/50 bg-white/95 px-3 py-1.5 text-[11px] shadow-sm">
               <span className="flex items-center gap-1.5 font-medium text-text-primary">
                 <span className="material-symbols-outlined text-[14px] text-primary">
-                  verified
+                  {isDelivery ? "navigation" : "verified"}
                 </span>
-                {isTransit
-                  ? `${radar.zoneLabel} — ${waypoint?.status ?? ""}`
-                  : radar.zone}
+                {isDelivery
+                  ? radar.zoneLabel
+                  : isTransit
+                    ? `${radar.zoneLabel} — ${waypoint?.status ?? ""}`
+                    : radar.zone}
               </span>
               <span className="font-mono-code text-[10px] font-bold text-primary">
-                {isTransit
-                  ? `LAT: ${waypoint?.geo?.lat ?? "-"}, LON: ${waypoint?.geo?.lon ?? "-"}`
-                  : radar.coordinates}
+                {isDelivery
+                  ? radar.coordinates
+                  : isTransit
+                    ? `LAT: ${waypoint?.geo?.lat ?? "-"}, LON: ${waypoint?.geo?.lon ?? "-"}`
+                    : radar.coordinates}
               </span>
             </div>
           </>
@@ -203,7 +230,7 @@ export default function LivePositionCard({ radar }) {
               <span className="material-symbols-outlined text-[18px] text-primary">
                 {radar.icon}
               </span>
-              {isTransit && tibaDiTujuan
+              {berAnimasi && tibaDiTujuan
                 ? radar.footerDoneLabel
                 : radar.footerLabel}
             </>
@@ -212,6 +239,12 @@ export default function LivePositionCard({ radar }) {
         {radar.variant === "standby" ? (
           <span className="flex items-center gap-0.5 font-label-sm text-label-sm text-text-muted">
             {radar.footerRight}
+          </span>
+        ) : isDelivery ? (
+          <span className="font-label-sm text-label-sm text-text-muted">
+            {tibaDiTujuan
+              ? "Tiba di alamat"
+              : `Sisa ${waypoint?.sisaKm ?? 0} km`}
           </span>
         ) : isTransit ? (
           <span className="font-label-sm text-label-sm text-text-muted">

@@ -5,6 +5,8 @@ export const demoResiRoutes = {
   "10003920194827103948572910394857": "/tracking/courier-processed",
   // Status "Dalam Perjalanan" — paket transit antarkota (radar bergerak).
   "10002847192847192837461928374620": "/tracking/in-transit",
+  // Status "Dalam Pengantaran" — kurir menuju alamat penerima (radar bergerak).
+  "10002847192847192837461928374621": "/tracking/out-for-delivery",
   1000849201994: "/tracking-normal",
   "10008492019948271039485729103948": "/tracking-normal",
   "00010242fe8c5a6d1ba2dd792cb16214": "/tracking-normal",

@@ -13,6 +13,7 @@ import TrackingWarningPage from "@/features/tracking/TrackingWarningView";
 import OrderCreatedPage from "@/features/tracking/OrderCreatedView";
 import CourierProcessedPage from "@/features/tracking/CourierProcessedView";
 import InTransitPage from "@/features/tracking/InTransitView";
+import OutForDeliveryPage from "@/features/tracking/OutForDeliveryView";
 import BantuanPage from "@/features/shipment-status/HelpPage";
 import DeliveredPage from "@/features/shipment-status/DeliveredPage";
 import CanceledPage from "@/features/shipment-status/CanceledPage";
@@ -43,6 +44,10 @@ export default function App() {
               element={<CourierProcessedPage />}
             />
             <Route path="/tracking/in-transit" element={<InTransitPage />} />
+            <Route
+              path="/tracking/out-for-delivery"
+              element={<OutForDeliveryPage />}
+            />
             <Route path="/bantuan" element={<BantuanPage />} />
             <Route path="/delivered" element={<DeliveredPage />} />
             <Route path="/canceled" element={<CanceledPage />} />

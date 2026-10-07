@@ -23,6 +23,17 @@ const BANNER_VARIANT = {
     padding: "p-space-md md:p-space-lg",
     titleClass: "text-[18px] md:text-[20px]",
   },
+  // Gradien magenta gelap untuk tahap pengantaran ("Dalam Pengantaran").
+  delivery: {
+    className: "text-white",
+    style: {
+      background: "linear-gradient(135deg, #9c0054 0%, #c2006a 100%)",
+    },
+    iconBox:
+      "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
+  },
   default: {
     className:
       "bg-gradient-to-r from-pink-500/80 to-rose-400/80 ring-4 ring-pink-300/30 backdrop-blur-md",
@@ -61,7 +72,8 @@ function Badge({ badge }) {
  */
 export default function StatusBanner({ status }) {
   const variant = BANNER_VARIANT[status.variant] ?? BANNER_VARIANT.default;
-  const transit = status.variant === "transit";
+  // Varian dengan judul lebih kecil & badge lebih ringkas.
+  const ringkas = status.variant === "transit" || status.variant === "delivery";
 
   return (
     <div
@@ -88,7 +100,7 @@ export default function StatusBanner({ status }) {
         <div className="flex flex-col gap-1">
           <span
             className={`flex items-center gap-1.5 font-label-sm text-label-sm font-bold uppercase tracking-wider text-white/90 ${
-              transit ? "gap-2 tracking-wider" : "font-extrabold tracking-widest"
+              ringkas ? "gap-2 tracking-wider" : "font-extrabold tracking-widest"
             }`}
           >
             <span className="h-2 w-2 animate-pulse rounded-full bg-white" />
@@ -106,7 +118,7 @@ export default function StatusBanner({ status }) {
 
       <div
         className={`relative z-10 flex flex-wrap items-center gap-space-xs self-end md:gap-space-sm md:self-center ${
-          transit ? "shrink-0" : "gap-space-sm"
+          ringkas ? "shrink-0" : "gap-space-sm"
         }`}
       >
         {status.badges.map((badge) => (
