@@ -1,8 +1,16 @@
 /** Warna titik dan teks per status catatan perjalanan. */
 const NOTE_STYLE = {
-  done: { dot: "bg-success-base", time: "font-bold text-success-base" },
-  active: { dot: "bg-primary", time: "font-bold text-primary" },
-  idle: { dot: "bg-border-strong", time: "text-text-muted" },
+  done: { dot: "bg-success-base", time: "font-bold text-success-base", card: "" },
+  active: { dot: "bg-primary", time: "font-bold text-primary", card: "" },
+  // Posisi terkini saat paket masih bergerak: titik berdenyut + ring magenta.
+  progress: {
+    dot: "bg-primary animate-ping",
+    dotWrap: "animate-pulse",
+    time: "font-bold text-primary",
+    card: "ring-1 ring-primary/20",
+    title: "font-bold text-primary",
+  },
+  idle: { dot: "bg-border-strong", time: "text-text-muted", card: "" },
 };
 
 /**
@@ -25,21 +33,24 @@ export default function JourneyNotes({ journey }) {
         {journey.notes.map((note) => {
           const style = NOTE_STYLE[note.state] ?? NOTE_STYLE.idle;
           const bold = note.state !== "idle";
+          const terkini = note.state === "progress";
 
           return (
             <div
-              className="flex items-start justify-between gap-space-sm rounded-xl bg-surface-card p-space-sm"
+              className={`flex items-start justify-between gap-space-sm rounded-xl bg-surface-card p-space-sm ${style.card}`}
               key={note.id}
             >
               <div className="flex items-start gap-space-sm">
                 <span
-                  className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${style.dot}`}
+                  className={`mt-1.5 shrink-0 rounded-full ${style.dot} ${
+                    terkini ? "h-2.5 w-2.5" : "h-2 w-2"
+                  }`}
                 />
                 <div>
                   <p
-                    className={`font-label-sm text-label-sm text-on-surface ${
-                      bold ? "font-bold" : "font-semibold"
-                    }`}
+                    className={`font-label-sm text-label-sm ${
+                      style.title ?? "text-on-surface"
+                    } ${bold ? "font-bold" : "font-semibold"}`}
                   >
                     {note.title}
                   </p>

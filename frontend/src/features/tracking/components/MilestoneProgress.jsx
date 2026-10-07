@@ -15,7 +15,7 @@ function MilestoneStep({ milestone }) {
       <div
         className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full ${
           done ? DONE_RING : PENDING_RING
-        }`}
+        } ${milestone.pulse ? "animate-pulse" : ""}`}
       >
         <span
           className={`material-symbols-outlined text-[20px] ${done ? "font-bold" : ""}`}
@@ -39,7 +39,11 @@ function MilestoneStep({ milestone }) {
         >
           {milestone.time}
         </span>
-        <span className="mt-0.5 font-body-sm text-body-sm text-on-surface-variant md:text-[11px] md:leading-4">
+        <span
+          className={`mt-0.5 font-body-sm text-body-sm md:text-[11px] md:leading-4 ${
+            milestone.placeClass ?? "text-on-surface-variant"
+          }`}
+        >
           {milestone.place}
         </span>
       </div>
