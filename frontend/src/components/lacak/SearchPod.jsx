@@ -153,7 +153,7 @@ export default function SearchPod() {
         </div>
       </form>
 
-      <div className="mb-6 mt-8 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-500">
+      <div className="mb-16 mt-10 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-500">
         {PENCARIAN_TERAKHIR.map((item) => (
           <button
             className="group inline-flex items-center gap-1.5 rounded-full border border-gray-200/90 bg-white px-3 py-1.5 text-gray-700 shadow-sm transition-all hover:border-[#ec008c] hover:text-[#ec008c]"
