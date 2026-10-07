@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Pusat bantuan dan FAQ Anteraja.">
+  <title>Pusat Bantuan · Anteraja</title>
+  <link rel="stylesheet" href="../styles.css">
+  <link rel="stylesheet" href="../footer.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script id="tailwind-config">tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        "colors": {
+          "outline": "#8e6f79",
+          "background": "#fcf9f8",
+          "surface": "#fcf9f8",
+          "surface-container": "#f0eded",
+          "primary-container": "#e00085",
+          "surface-variant": "#e5e2e1",
+          "primary": "#b30069",
+          "secondary": "#775a00",
+          "on-surface": "#1c1b1b",
+          "on-surface-variant": "#5a3f49",
+          "border-subtle": "#E5E7EB",
+          "tertiary": "#146b00"
+        }
+      }
+    }
+  }</script>
+  <style>
+    .help-page{background:#fcf9f8;font-family:"Plus Jakarta Sans",system-ui,sans-serif}
+    .help-main{width:100%;padding-top:74px;background:#fcf9f8}
+    .help-hero{padding:18px 24px 22px;text-align:center;background:linear-gradient(180deg,#fff 0%,#fff 68%,#fcf9f8 100%);border-bottom:1px solid #eee8eb}
+    .help-hero-inner{width:min(100%,760px);margin:0 auto}
+    .help-kicker{display:inline-flex;align-items:center;gap:5px;margin:0 0 8px;padding:5px 10px;border-radius:999px;background:#ffe0ec;color:#b60065;font-size:9px;font-weight:800}
+    .help-kicker .material-symbols-outlined{font-size:13px}
+    .help-hero h1{margin:0;color:#1c1b1b;font-size:clamp(25px,3vw,30px);font-weight:800;letter-spacing:-1px;line-height:1.2}
+    .help-hero-copy{max-width:500px;margin:5px auto 15px;color:#6b6870;font-size:11px;line-height:1.5}
+    .help-search{display:flex;align-items:center;gap:8px;max-width:500px;margin:0 auto;padding:4px 5px 4px 12px;border-radius:13px;background:#f4f1f2}
+    .help-search:focus-within{background:#fff;box-shadow:0 0 0 2px #e4007d}
+    .help-search>span{color:#c00070;font-size:17px}
+    .help-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:#353039;font:400 11px "Plus Jakarta Sans",sans-serif}
+    .help-search input::placeholder{color:#9ca3af}
+    .help-search button{min-height:33px;padding:0 18px;border:0;border-radius:10px;background:#c6006b;color:#fff;font:700 10px "Plus Jakarta Sans",sans-serif;cursor:pointer}
+    .popular{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:5px;margin-top:10px;color:#77717a;font-size:8px}
+    .popular strong{margin-right:2px}.topic{padding:5px 11px;border:0;border-radius:999px;background:#ece9e9;color:#302c32;font:600 8px "Plus Jakarta Sans",sans-serif;cursor:pointer}
+    .help-section{width:min(calc(100% - 48px),1200px);margin:0 auto;padding:26px 0}
+    .help-section-heading{margin-bottom:17px;text-align:center}.help-section-heading h2{margin:0 0 4px;color:#242126;font-size:21px;font-weight:800;letter-spacing:-.55px;line-height:1.3}.help-section-heading p{margin:0;color:#77717a;font-size:10px;line-height:1.5}
+    .topic-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.topic-card{display:flex;min-height:165px;flex-direction:column;justify-content:space-between;padding:17px;border:1px solid #eee8eb;border-radius:15px;background:#fff;box-shadow:0 5px 16px #2c202b08}.topic-card[hidden]{display:none}
+    .topic-icon{display:grid;width:36px;height:36px;place-items:center;margin-bottom:12px;border-radius:10px;background:#ffe0ec;color:#c00070}.topic-icon .material-symbols-outlined{font-size:20px}.topic-card:nth-child(2) .topic-icon{background:#ffe5a0;color:#715100}.topic-card:nth-child(3) .topic-icon{background:#eeeaef;color:#cf0074}.topic-card:nth-child(4) .topic-icon{background:#e8fbf2;color:#14733c}
+    .topic-card h3{margin:0 0 5px;color:#29262b;font-size:12px;font-weight:800;line-height:1.4}.topic-card p{margin:0;color:#77717a;font-size:9px;line-height:1.55}.topic-card>a{display:inline-flex;align-items:center;gap:3px;margin-top:13px;color:#c00070;font-size:8px;font-weight:800;text-decoration:none}.topic-card>a .material-symbols-outlined{font-size:12px;transition:transform .15s}.topic-card>a:hover .material-symbols-outlined{transform:translateX(3px)}
+    .help-faq,.help-contact{width:min(calc(100% - 48px),580px)}.help-faq{padding-top:10px;padding-bottom:24px}.help-faq .help-section-heading{margin-bottom:14px}.faq-list{display:grid;gap:6px}.faq-item{overflow:hidden;border:1px solid #f0edef;border-radius:11px;background:#fff;box-shadow:0 2px 7px #2c202b05}.faq-question{display:flex;width:100%;min-height:42px;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;border:0;background:#fff;color:#28252a;text-align:left;font:700 10px "Plus Jakarta Sans",sans-serif;cursor:pointer}.faq-question .material-symbols-outlined{flex:none;color:#687385;font-size:15px;transition:transform .18s}.faq-item.is-open .faq-question .material-symbols-outlined{transform:rotate(180deg)}.faq-answer{padding:0 34px 12px 12px;color:#77717a;font-size:9px;line-height:1.65}.faq-answer[hidden]{display:none}
+    .help-contact{padding-top:16px;padding-bottom:12px}.contact-panel{padding:20px 24px 24px;border-radius:15px;background:#fff;box-shadow:0 5px 16px #2c202b08;text-align:center}.contact-panel h2{margin:0 0 4px;color:#28252a;font-size:14px;font-weight:800}.contact-panel>p{max-width:390px;margin:0 auto 16px;color:#77717a;font-size:9px;line-height:1.5}.contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.contact-option{display:flex;min-width:0;flex-direction:column;align-items:center;padding:13px 10px 12px;border-radius:11px;background:#f5f3f3}.contact-icon{display:grid;width:36px;height:36px;place-items:center;margin-bottom:7px;border-radius:50%;background:#e8fbf2;color:#087b24}.contact-icon .material-symbols-outlined{font-size:18px}.contact-icon.hotline{background:#ffe0ec;color:#c00070}.contact-icon.email{background:#e9e7e7;color:#262329}.contact-option h3{margin:0;color:#29262b;font-size:9px;font-weight:800}.contact-option p{min-height:24px;margin:3px 0 8px;color:#77717a;font-size:8px;line-height:1.45}.contact-option>a{display:flex;width:100%;min-height:24px;align-items:center;justify-content:center;padding:0 5px;border-radius:99px;background:#087b16;color:#fff;font-size:8px;font-weight:800;text-decoration:none;white-space:nowrap}.contact-option:nth-child(2)>a,.contact-option:nth-child(3)>a{background:#e8e6e6;color:#29262b}
+    @media(max-width:760px){.topic-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.help-section{width:calc(100% - 36px)}}
+    @media(max-width:560px){.help-hero{padding:20px 16px}.help-hero h1{font-size:25px}.help-hero-copy{font-size:10px}.help-section{padding:22px 0}.help-section-heading h2{font-size:18px}.topic-grid{grid-template-columns:1fr}.topic-card{min-height:138px;padding:15px}.help-faq,.help-contact{width:calc(100% - 28px)}.faq-question{font-size:10px}.contact-panel{padding:18px 12px}.contact-grid{grid-template-columns:1fr;gap:8px}.contact-option{display:grid;grid-template-columns:38px minmax(0,1fr);grid-template-rows:auto auto auto;column-gap:9px;align-items:center;text-align:left;padding:10px}.contact-icon{grid-row:1/4;margin:0}.contact-option h3,.contact-option p,.contact-option>a{grid-column:2}.contact-option p{min-height:0;margin:2px 0 5px}.contact-option>a{min-height:26px}}
+  </style>
+</head>
+<body class="help-page bg-surface font-body-md text-body-md text-on-surface antialiased">
+  <header class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-border-subtle shadow-sm">
+      <div class="h-[74px] max-w-[1320px] mx-auto px-2 sm:px-6 lg:px-10 flex items-center justify-between gap-1 sm:gap-8">
+        <div class="flex items-center gap-1 sm:gap-10">
+          <a class="flex items-center gap-3 transition-transform hover:opacity-95" href="../index.html" aria-label="Anteraja, Beranda">
+            <img alt="Anteraja" class="h-6 sm:h-9 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe6Sd3grxrRWPcD50ZL9ML41Qgjht-JFyyH9oR_h216L-YuPxTnO476pV6oNgnxfW6GO3e69fnJ6zfE31GbHVruEB0qAqLhqyF4GzmBS6Uw8utcokB5ESQNjEUgBTQue2S_nmzjh85VMNah20d2omDqGQ8Z1easannyiXA-VC-6TascqvSc5Oq2eMij5tOvg1KKRukpf5TRfeUfqFgTRHTP1uW23cHVlgombuEI5jwo_4iEzCJmERdLH6uug9wp-LKkV8">
+          </a>
+          <nav class="flex items-center gap-0 sm:gap-2" aria-label="Navigasi utama">
+            <a class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl px-1 sm:px-5 text-[10px] sm:text-sm font-semibold text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary" href="../index.html">Beranda</a>
+            <a class="inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl px-1 sm:px-5 text-[10px] sm:text-sm font-semibold text-on-surface-variant transition-colors hover:bg-surface-container hover:text-primary" href="lacak.html#lacak">Lacak Kiriman</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+  <main id="main" class="help-main">
+    <section class="help-hero" aria-labelledby="help-title">
+      <div class="help-hero-inner">
+        <p class="help-kicker"><span class="material-symbols-outlined" aria-hidden="true">support_agent</span>Satria Care 24/7</p>
+        <h1 id="help-title">Pusat Bantuan Anteraja</h1>
+        <p class="help-hero-copy">Cari jawaban cepat atau hubungi tim Satria Care kami untuk solusi pengiriman Anda.</p>
+        <form class="help-search" id="help-search" role="search">
+          <span class="material-symbols-outlined" aria-hidden="true">search</span>
+          <label class="sr-only" for="help-search-input">Cari bantuan</label>
+          <input id="help-search-input" type="search" placeholder="Ketik kata kunci kendala atau nomor resi...">
+          <button type="submit">Cari</button>
+        </form>
+        <div class="popular" aria-label="Pencarian populer"><strong>Pencarian populer:</strong><button class="topic" type="button" data-topic="resi">Status Resi</button><button class="topic" type="button" data-topic="alamat">Ubah Alamat</button><button class="topic" type="button" data-topic="klaim">Klaim Paket</button><button class="topic" type="button" data-topic="kurir">Jadwal Kurir</button></div>
+      </div>
+    </section>
+
+    <section class="help-section help-categories" aria-labelledby="category-title">
+      <div class="help-section-heading"><h2 id="category-title">Kategori Bantuan Terpopuler</h2><p>Pilih topik di bawah untuk melihat petunjuk dan panduan penyelesaian masalah.</p></div>
+      <div class="topic-grid">
+        <article class="topic-card" data-keywords="resi status paket tracking pelacakan"><div><span class="topic-icon"><span class="material-symbols-outlined" aria-hidden="true">radar</span></span><h3>Lacak &amp; Status Paket</h3><p>Arti status resi, resi stuck manifest di hub, dan estimasi waktu tiba.</p></div><a href="#faq">Lihat Panduan <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a></article>
+        <article class="topic-card" data-keywords="kurir pengantaran jadwal satpam"><div><span class="topic-icon"><span class="material-symbols-outlined" aria-hidden="true">two_wheeler</span></span><h3>Pengantaran &amp; Kurir</h3><p>Kontak kurir aktif, instruksi titip satpam, atau jadwal ulang jam pengantaran.</p></div><a href="#faq">Lihat Panduan <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a></article>
+        <article class="topic-card" data-keywords="alamat data nomor hp kontak"><div><span class="topic-icon"><span class="material-symbols-outlined" aria-hidden="true">edit_location_alt</span></span><h3>Perubahan Alamat &amp; Data</h3><p>Koreksi alamat salah ketik, perbarui nomor HP, atau alihkan ke drop point.</p></div><a href="#faq">Lihat Panduan <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a></article>
+        <article class="topic-card" data-keywords="klaim kendala rusak hilang asuransi"><div><span class="topic-icon"><span class="material-symbols-outlined" aria-hidden="true">verified_user</span></span><h3>Klaim &amp; Kendala Paket</h3><p>Ganti rugi paket hilang/rusak, garansi SLA ongkir kembali, dan syarat asuransi.</p></div><a href="#faq">Lihat Panduan <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span></a></article>
+      </div>
+    </section>
+
+    <section class="help-section help-faq" id="faq" aria-labelledby="faq-title">
+      <div class="help-section-heading"><h2 id="faq-title">Pertanyaan yang Sering Diajukan</h2><p>Temukan jawaban langsung untuk pertanyaan yang paling sering ditanyakan pelanggan kami.</p></div>
+      <div class="faq-list" id="faq-list">
+        <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Kenapa status resi belum bergerak padahal sudah lebih dari 24 jam?</span><span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button><div class="faq-answer" hidden>Paket kemungkinan sedang dalam antrean transit jalur darat/laut antar kota atau Hub Staging. Resi akan diperbarui otomatis setelah paket tiba dan dipindai di hub transit berikutnya. Jika resi tidak berubah lebih dari 48 jam, hubungi Satria Care untuk pemeriksaan lebih lanjut.</div></article>
+        <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Bagaimana cara mengubah alamat atau nomor kontak pengantaran?</span><span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button><div class="faq-answer" hidden>Perubahan alamat dapat dilakukan selama paket masih berada di Hub Transit dan belum dibawa kurir untuk diantar. Siapkan nomor resi, identitas penerima, dan alamat baru yang lengkap, lalu hubungi WhatsApp Satria Care.</div></article>
+        <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Bagaimana alur dan syarat pengajuan klaim paket hilang atau rusak?</span><span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button><div class="faq-answer" hidden>Siapkan nomor resi, invoice pembelian, dan foto atau video kondisi paket. Tim klaim akan memeriksa dokumen serta status asuransi sebelum memberi kabar tentang proses klaim.</div></article>
+        <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Apakah saya bisa meminta Satria menitipkan paket ke tetangga atau pos satpam?</span><span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button><div class="faq-answer" hidden>Bisa. Berikan izin kepada kurir saat dihubungi dan sebutkan lokasi penitipan yang aman. Kurir akan mencatat bukti serah terima paket.</div></article>
+        <article class="faq-item"><button class="faq-question" type="button" aria-expanded="false"><span>Kapan batas waktu jam pengantaran harian kurir Satria?</span><span class="material-symbols-outlined" aria-hidden="true">expand_more</span></button><div class="faq-answer" hidden>Pengantaran umumnya berlangsung pukul 08.00–20.00 WIB. Jadwal bisa berbeda bergantung layanan dan area. Pantau status resi untuk melihat pembaruan paket Anda.</div></article>
+      </div>
+    </section>
+
+    <section class="help-section help-contact" aria-labelledby="contact-title">
+      <div class="contact-panel"><h2 id="contact-title">Masih Butuh Bantuan Lebih Lanjut?</h2><p>Tim layanan pelanggan Anteraja siap membantu menjawab kendala paket Anda setiap hari.</p>
+        <div class="contact-grid">
+          <article class="contact-option"><span class="contact-icon whatsapp"><span class="material-symbols-outlined" aria-hidden="true">chat</span></span><h3>WhatsApp Satria</h3><p>Respon cepat asisten interaktif</p><a href="https://wa.me/6281119603333" target="_blank" rel="noopener noreferrer">+62 811-1960-3333</a></article>
+          <article class="contact-option"><span class="contact-icon hotline"><span class="material-symbols-outlined" aria-hidden="true">call</span></span><h3>Hotline 24 Jam</h3><p>Panggilan langsung ke operator</p><a href="tel:02150663333">021-50663333</a></article>
+          <article class="contact-option"><span class="contact-icon email"><span class="material-symbols-outlined" aria-hidden="true">mail</span></span><h3>Email Dukungan</h3><p>Untuk pengaduan &amp; kerja sama</p><a href="mailto:cs@anteraja.id">cs@anteraja.id</a></article>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="w-full bg-white border-t border-border-subtle text-on-surface-variant">
+      <div class="max-w-7xl mx-auto px-6 lg:px-12 py-14">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
+          <div class="lg:col-span-2 flex flex-col gap-4">
+            <div class="flex items-center gap-3"><a href="../index.html"><img alt="Anteraja" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPPf6qGq-Zr5MtoSPI_IjEAsNa8dHslQycOXhNyUdWu-LvXw3V2gpmL5im-tGSWWGJai3NTCIeElX87nSwEa9c9z8sr22zJX2OWWris4_f2wpmtu_Dkb2EJQsN7qnn26WQqfM79RAFggsIEx_Js8CXBpkEh7bcsA_tLZ72TZltAYFOkFG4R3fRvxR_bHXd4DI30bERH9hbIuRjD1gVUQyx0Ya9v1VRwozrSFfnbg7ixWSpS5DfTZMFLsCnvGjalb_nSmE"/></a></div>
+            <p class="text-xs text-on-surface-variant leading-relaxed max-w-sm">Solusi pengiriman logistik kilat terpercaya berbasis ekosistem cerdas dan AI terintegrasi untuk kenyamanan jutaan pelanggan di seluruh Indonesia.</p>
+            <div class="flex flex-col gap-1 text-xs text-on-surface-variant mt-2"><span class="font-bold text-on-surface">PT Tri Adi Bersama (Anteraja)</span><span>Gedung Tri Adi Bersama, Jl. Terusan Rasuna Said No. 12, Kuningan Barat, Jakarta Selatan 12710</span><span>Call Center Resmi: (021) 5060 3333 | cs@anteraja.id</span></div>
+          </div>
+          <div class="flex flex-col gap-3"><h2 class="text-xs font-bold text-on-surface uppercase tracking-wider">Layanan</h2><nav class="flex flex-col gap-2 text-xs"><a class="hover:text-primary transition-colors" href="bantuan.html">Bantuan</a><a class="hover:text-primary transition-colors" href="lacak.html#lacak">Lacak Kiriman</a></nav></div>
+          <div class="flex flex-col gap-3"><h2 class="text-xs font-bold text-on-surface uppercase tracking-wider">Kemitraan &amp; Karir</h2><div class="flex flex-col gap-2 text-xs"><a class="hover:text-primary transition-colors" href="../index.html">Pendaftaran Mitra Satria</a><a class="hover:text-primary transition-colors" href="../index.html">Mitra Loket Drop Point</a><a class="hover:text-primary transition-colors" href="../index.html">Peluang Karir Satria &amp; IT</a><a class="hover:text-primary transition-colors" href="../index.html">Tentang PT Tri Adi Bersama</a></div></div>
+          <div class="flex flex-col gap-3"><h2 class="text-xs font-bold text-on-surface uppercase tracking-wider">Sertifikasi &amp; Keamanan</h2><div class="flex flex-col gap-2.5">
+            <div class="p-3 bg-surface-container rounded-xl flex items-center gap-3 border border-border-subtle"><span class="material-symbols-outlined text-primary text-[20px]">verified</span><div><div class="text-xs font-bold text-on-surface">ISO 9001:2015</div><div class="text-[11px] text-on-surface-variant">Sistem Manajemen Mutu</div></div></div>
+            <div class="p-3 bg-surface-container rounded-xl flex items-center gap-3 border border-border-subtle"><span class="material-symbols-outlined text-secondary text-[20px]">shield</span><div><div class="text-xs font-bold text-on-surface">ISO 27001:2013</div><div class="text-[11px] text-on-surface-variant">Keamanan Informasi &amp; Data</div></div></div>
+            <div class="p-2.5 bg-surface-container rounded-xl flex items-center gap-2 border border-border-subtle"><span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span><div class="text-[11px] font-semibold text-on-surface">Izin Resmi Penyelenggaraan Pos &amp; PSE Kominfo RI</div></div>
+          </div></div>
+        </div>
+        <div class="pt-8 border-t border-border-subtle flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-on-surface-variant"><div class="flex flex-wrap items-center gap-6"><a class="hover:text-primary transition-colors" href="bantuan.html">Syarat &amp; Ketentuan</a><a class="hover:text-primary transition-colors" href="bantuan.html">Kebijakan Privasi</a><a class="hover:text-primary transition-colors" href="bantuan.html">Pusat Bantuan (FAQ)</a><a class="hover:text-primary transition-colors" href="../index.html">Panduan Keamanan</a></div><div class="text-center md:text-right">© 2025 PT Tri Adi Bersama (Anteraja). Hak Cipta Dilindungi Undang-Undang.</div></div>
+      </div>
+    </footer>
+  <script>
+    const helpSearchForm = document.getElementById('help-search');
+    const helpSearchInput = document.getElementById('help-search-input');
+    const helpTopicCards = [...document.querySelectorAll('.topic-card')];
+    const normalizeHelpText = (value) => value.toLocaleLowerCase('id-ID').normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const filterHelpTopics = (query) => {
+      const normalizedQuery = normalizeHelpText(query.trim());
+      helpTopicCards.forEach((card) => {
+        const keywords = normalizeHelpText(`${card.dataset.keywords} ${card.innerText}`);
+        card.hidden = Boolean(normalizedQuery) && !keywords.includes(normalizedQuery);
+      });
+    };
+    helpSearchForm.addEventListener('submit', (event) => { event.preventDefault(); filterHelpTopics(helpSearchInput.value); document.getElementById('category-title').scrollIntoView({behavior:'smooth',block:'start'}); });
+    helpSearchInput.addEventListener('input', () => filterHelpTopics(helpSearchInput.value));
+    document.querySelectorAll('.topic[data-topic]').forEach((button) => button.addEventListener('click', () => { helpSearchInput.value=button.dataset.topic; filterHelpTopics(button.dataset.topic); }));
+    document.querySelectorAll('.faq-question').forEach((button) => button.addEventListener('click', () => { const item=button.closest('.faq-item'); const expanded=button.getAttribute('aria-expanded')==='true'; button.setAttribute('aria-expanded',String(!expanded)); item.classList.toggle('is-open',!expanded); item.querySelector('.faq-answer').hidden=expanded; }));
+  </script>
+</body>
+</html>
