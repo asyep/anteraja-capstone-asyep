@@ -59,7 +59,7 @@ async function salinKeClipboard(teks) {
  * Hero + kontrol pencarian halaman Lacak Kiriman.
  * Tampilan mengikuti desain referensi: satu input resi dengan ikon QR,
  * tombol Salin di dalam input, tombol "Lacak Paket" gradien magenta,
- * lalu deretan chip "Pencarian Terakhir".
+ * lalu deretan chip riwayat resi di bawahnya.
  */
 export default function SearchPod() {
   const navigate = useNavigate();
@@ -153,11 +153,7 @@ export default function SearchPod() {
         </div>
       </form>
 
-      <div className="flex flex-wrap items-center justify-center gap-2 text-xs text-gray-500">
-        <span className="mr-1 flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-gray-400">
-          <span className="material-symbols-outlined text-[14px]">history</span>
-          Pencarian Terakhir:
-        </span>
+      <div className="mb-6 mt-8 flex flex-wrap items-center justify-center gap-2 text-xs text-gray-500">
         {PENCARIAN_TERAKHIR.map((item) => (
           <button
             className="group inline-flex items-center gap-1.5 rounded-full border border-gray-200/90 bg-white px-3 py-1.5 text-gray-700 shadow-sm transition-all hover:border-[#ec008c] hover:text-[#ec008c]"
