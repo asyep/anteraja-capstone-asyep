@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BrandLogo from "@/shared/ui/BrandLogo";
+import Logo from "@/app/layout/Logo";
 import StoreBadges from "@/shared/ui/StoreBadges";
 import {
   FacebookIcon,
@@ -33,7 +33,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 gap-10 border-b border-gray-100 pb-12 md:grid-cols-2 lg:grid-cols-4">
           {/* Kolom 1 — Brand, bio, dan sosial utilitas */}
           <div className="flex flex-col items-start gap-4">
-            <BrandLogo className="h-9" />
+            <Logo className="h-9" />
             <p className="text-sm leading-relaxed text-gray-500">
               Solusi pengiriman logistik pintar berbasis teknologi dengan armada
               Satria terpercaya untuk kebutuhan perorangan maupun korporasi di

@@ -1,58 +1,48 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import BrandLogo from "@/shared/ui/BrandLogo";
+import { useLocation } from "react-router-dom";
 
-/** Route pelacakan tetap dianggap bagian dari menu "Lacak Kiriman". */
-const PREFIX_LACAK = [
-  "/lacak",
-  "/tracking",
-  "/delivered",
-  "/canceled",
-  "/ai-fallback",
-];
+import Logo from "@/app/layout/Logo";
+import MobileNav from "@/app/layout/MobileNav";
+import NavLinks from "@/app/layout/NavLinks";
+import { NAV_ITEMS } from "@/app/layout/navigation";
+import useMobileNav from "@/app/layout/useMobileNav";
 
+/**
+ * Header aplikasi — dipasang sekali di app/App.jsx sehingga tampil sama
+ * di semua halaman.
+ *
+ * Struktur berkas terkait:
+ *   navigation.js   konfigurasi menu + aturan menu aktif
+ *   useMobileNav.js state buka/tutup menu mobile
+ *   Logo.jsx        logo Anteraja
+ *   NavLinks.jsx    daftar menu (dipakai versi desktop & mobile)
+ *   MobileNav.jsx   tombol hamburger + panel dropdown
+ *
+ * Tinggi header 80px (h-20); offset konten diatur di App.jsx (pt-20).
+ */
 export default function Header() {
   const { pathname } = useLocation();
-
-  const berandaAktif = pathname === "/";
-  const lacakAktif = PREFIX_LACAK.some((prefix) => pathname.startsWith(prefix));
+  const { open, toggle, close } = useMobileNav(pathname);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-surface/90 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
-      <div className="mx-auto flex h-20 max-w-[1200px] items-center justify-between gap-space-md px-margin md:px-margin-tablet lg:px-margin-desktop">
-        <div className="flex items-center gap-space-xl">
-          <Link
-            aria-label="Anteraja — Beranda"
-            className="flex items-center gap-space-xs rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-            to="/"
-          >
-            <BrandLogo className="h-9" />
-          </Link>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border-subtle/70 bg-surface/90 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
+      <div className="mx-auto flex h-20 max-w-[1200px] items-center justify-between gap-4 px-margin md:px-margin-tablet lg:px-margin-desktop">
+        <div className="flex min-w-0 items-center gap-4 sm:gap-6 lg:gap-space-xl">
+          <Logo />
 
-          <nav
-            aria-label="Navigasi utama"
-            className="flex items-center gap-space-md"
-          >
-            <Link
-              aria-current={berandaAktif ? "page" : undefined}
-              className="px-3 py-2 font-label-lg text-label-lg text-on-surface-variant transition-colors hover:text-on-surface"
-              to="/"
-            >
-              Beranda
-            </Link>
-            <Link
-              aria-current={lacakAktif ? "page" : undefined}
-              className={
-                lacakAktif
-                  ? "rounded-full bg-pink-50 px-4 py-1.5 font-label-lg text-label-lg font-bold text-[#ec008c] transition-colors"
-                  : "px-3 py-2 font-label-lg text-label-lg text-on-surface-variant transition-colors hover:text-on-surface"
-              }
-              to="/lacak"
-            >
-              Lacak Kiriman
-            </Link>
+          {/* Navigasi desktop */}
+          <nav aria-label="Navigasi utama" className="hidden md:block">
+            <NavLinks items={NAV_ITEMS} pathname={pathname} />
           </nav>
         </div>
+
+        {/* Navigasi mobile */}
+        <MobileNav
+          items={NAV_ITEMS}
+          onNavigate={close}
+          onToggle={toggle}
+          open={open}
+          pathname={pathname}
+        />
       </div>
     </header>
   );
