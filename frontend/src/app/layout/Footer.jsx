@@ -61,14 +61,17 @@ export default function Footer() {
               Layanan
             </h2>
             <nav className="flex flex-col gap-2.5 text-sm font-medium text-gray-500">
-              <Link className="transition-colors hover:text-[#ec008c]" to="/">
-                Beranda
-              </Link>
               <Link
                 className="transition-colors hover:text-[#ec008c]"
                 to="/lacak"
               >
                 Lacak Kiriman
+              </Link>
+              <Link
+                className="transition-colors hover:text-[#ec008c]"
+                to="/bantuan"
+              >
+                Bantuan
               </Link>
             </nav>
           </div>

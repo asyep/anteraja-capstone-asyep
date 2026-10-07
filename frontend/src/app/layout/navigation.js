@@ -32,12 +32,6 @@ export const NAV_ITEMS = [
       "/smart-widget",
     ],
   },
-  {
-    id: "bantuan",
-    label: "Bantuan",
-    to: "/bantuan",
-    match: ["/bantuan"],
-  },
 ];
 
 /** Cek apakah sebuah route dianggap aktif untuk salah satu menu. */
