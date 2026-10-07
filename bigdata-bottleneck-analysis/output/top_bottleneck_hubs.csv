@@ -1,0 +1,7 @@
+hub_id,package_count,avg_dwell_hours,median_dwell_hours
+HUB_MKS,164,10.97,11.01
+HUB_SUB,155,8.39,8.29
+HUB_BDG,152,6.84,6.82
+HUB_JOG,165,2.53,2.51
+HUB_MES,157,2.48,2.57
+HUB_CGK,137,2.43,2.3
