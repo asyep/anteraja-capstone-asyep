@@ -53,7 +53,7 @@ export const ORDER_CREATED_DATA = {
     name: "Satria Assistant",
     courierName: "Satria Agus Prasetyo",
     courierId: "STR-8821",
-    avatar: "/satria-assistant.svg",
+    avatar: "/profil-assistant.svg",
     message:
       "Halo Kak! Pesanan kamu baru saja dibuat oleh pengirim (Toko Sentral Komputer Semarang). Saat ini kami sedang mengalokasikan Satria untuk segera menjemput paket ke lokasi pengirim. Pantau terus update terbarunya di sini ya!",
     whatsapp:
