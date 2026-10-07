@@ -15,7 +15,7 @@ export default function FeatureGrid() {
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
         {TRACKING_FEATURES.map((feature) => (
           <article
-            className="flex flex-col justify-between rounded-xl border border-border-subtle bg-surface-container-lowest p-6 shadow-sm transition-all group hover:-translate-y-0.5 hover:shadow-md"
+            className="flex flex-col justify-between rounded-xl bg-surface-container-lowest p-6 shadow-sm transition-all group hover:shadow-md"
             key={feature.id}
           >
             <div>

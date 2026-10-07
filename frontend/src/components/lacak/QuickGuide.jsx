@@ -4,7 +4,7 @@ import SectionHeading from "./SectionHeading";
 
 export default function QuickGuide() {
   return (
-    <section className="relative mb-16 overflow-hidden rounded-xl border border-border-subtle bg-surface-container-low p-8 md:p-12">
+    <section className="relative mb-16 overflow-hidden rounded-xl bg-surface-container-low p-8 md:p-12">
       <div className="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-primary/5 blur-3xl" />
 
       <SectionHeading
@@ -19,7 +19,7 @@ export default function QuickGuide() {
       <div className="relative z-10 grid grid-cols-1 gap-8 md:grid-cols-3">
         {TRACKING_STEPS.map((step) => (
           <article
-            className="flex flex-col rounded-xl border border-border-subtle bg-surface-container-lowest p-6 shadow-sm"
+            className="flex flex-col rounded-xl bg-surface-container-lowest p-6 shadow-sm"
             key={step.id}
           >
             <div className="mb-4 flex items-center justify-between">
