@@ -11,6 +11,7 @@ import TrackingNormalPage from "@/features/tracking/TrackingNormalView";
 import TrackingLivePage from "@/features/tracking/TrackingLiveView";
 import TrackingWarningPage from "@/features/tracking/TrackingWarningView";
 import OrderCreatedPage from "@/features/tracking/OrderCreatedView";
+import CourierProcessedPage from "@/features/tracking/CourierProcessedView";
 import BantuanPage from "@/features/shipment-status/HelpPage";
 import DeliveredPage from "@/features/shipment-status/DeliveredPage";
 import CanceledPage from "@/features/shipment-status/CanceledPage";
@@ -36,6 +37,10 @@ export default function App() {
             <Route path="/tracking-live" element={<TrackingLivePage />} />
             <Route path="/tracking" element={<TrackingWarningPage />} />
             <Route path="/tracking/order-created" element={<OrderCreatedPage />} />
+            <Route
+              path="/tracking/courier-processed"
+              element={<CourierProcessedPage />}
+            />
             <Route path="/bantuan" element={<BantuanPage />} />
             <Route path="/delivered" element={<DeliveredPage />} />
             <Route path="/canceled" element={<CanceledPage />} />

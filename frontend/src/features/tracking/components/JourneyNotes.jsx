@@ -1,5 +1,13 @@
+/** Warna titik dan teks per status catatan perjalanan. */
+const NOTE_STYLE = {
+  done: { dot: "bg-success-base", time: "font-bold text-success-base" },
+  active: { dot: "bg-primary", time: "font-bold text-primary" },
+  idle: { dot: "bg-border-strong", time: "text-text-muted" },
+};
+
 /**
  * Catatan perjalanan detail — daftar waypoint dengan titik penanda.
+ * Status tiap catatan: "done" (hijau), "active" (magenta), "idle" (abu).
  */
 export default function JourneyNotes({ journey }) {
   return (
@@ -15,7 +23,8 @@ export default function JourneyNotes({ journey }) {
 
       <div className="flex flex-1 flex-col gap-space-xs font-body-sm text-body-sm">
         {journey.notes.map((note) => {
-          const active = note.state === "active";
+          const style = NOTE_STYLE[note.state] ?? NOTE_STYLE.idle;
+          const bold = note.state !== "idle";
 
           return (
             <div
@@ -24,14 +33,12 @@ export default function JourneyNotes({ journey }) {
             >
               <div className="flex items-start gap-space-sm">
                 <span
-                  className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${
-                    active ? "bg-primary" : "bg-border-strong"
-                  }`}
+                  className={`mt-1.5 h-2 w-2 shrink-0 rounded-full ${style.dot}`}
                 />
                 <div>
                   <p
                     className={`font-label-sm text-label-sm text-on-surface ${
-                      active ? "font-bold" : "font-semibold"
+                      bold ? "font-bold" : "font-semibold"
                     }`}
                   >
                     {note.title}
@@ -42,9 +49,7 @@ export default function JourneyNotes({ journey }) {
                 </div>
               </div>
               <span
-                className={`shrink-0 font-mono-code text-label-sm ${
-                  active ? "font-bold text-primary" : "text-text-muted"
-                }`}
+                className={`shrink-0 font-mono-code text-label-sm ${style.time}`}
               >
                 {note.time}
               </span>

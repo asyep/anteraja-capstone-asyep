@@ -48,10 +48,20 @@ function MilestoneStep({ milestone }) {
 }
 
 /**
- * Stepper "Progres Pengiriman Riil" — garis putus-putus penghubung di
- * desktop, menumpuk vertikal di mobile.
+ * Stepper "Progres Pengiriman Riil".
+ *
+ * Garis penghubung dihitung dari jumlah tahap yang sudah selesai:
+ * segmen yang sudah dilalui berwarna hijau penuh, sisanya putus-putus abu.
+ * Di mobile tahap menumpuk vertikal.
  */
 export default function MilestoneProgress({ milestones, updatedLabel }) {
+  const jumlahSelesai = milestones.filter((m) => m.state === "done").length;
+  // Segmen penghubung = jumlah tahap - 1
+  const segmen = milestones.map((milestone, index) => {
+    if (index === milestones.length - 1) return null;
+    return index < jumlahSelesai - 1 ? "done" : "pending";
+  });
+
   return (
     <div className="flex flex-col">
       <div className="mb-space-lg flex items-center justify-between">
@@ -69,15 +79,21 @@ export default function MilestoneProgress({ milestones, updatedLabel }) {
       </div>
 
       <div className="relative flex flex-col items-start justify-between gap-space-lg pb-space-xs pt-space-xs md:flex-row md:gap-space-xs">
-        {/* Garis putus-putus penghubung (desktop) */}
+        {/* Garis penghubung (desktop) */}
         <div className="pointer-events-none absolute left-[5%] right-[5%] top-[22px] z-0 hidden h-1 md:block">
           <div className="flex h-full w-full">
-            {[0, 1, 2, 3].map((i) => (
-              <div
-                className="h-full w-1/4 bg-[linear-gradient(to_right,#D1D5DB_50%,transparent_50%)] bg-[length:12px_100%]"
-                key={i}
-              />
-            ))}
+            {segmen.map((state, i) =>
+              state === null ? null : (
+                <div
+                  className={`h-full w-1/4 ${
+                    state === "done"
+                      ? "bg-success-base"
+                      : "bg-[linear-gradient(to_right,#D1D5DB_50%,transparent_50%)] bg-[length:12px_100%]"
+                  }`}
+                  key={i}
+                />
+              ),
+            )}
           </div>
         </div>
 

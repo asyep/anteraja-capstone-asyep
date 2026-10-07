@@ -1,6 +1,8 @@
 export const demoResiRoutes = {
   // Status "Pesanan Dibuat" — paket belum dijemput Satria.
   "10002847192847192837461928374619": "/tracking/order-created",
+  // Status "Sedang Diproses Kurir" — paket ada di Staging DC kota asal.
+  "10003920194827103948572910394857": "/tracking/courier-processed",
   1000849201994: "/tracking-normal",
   "10008492019948271039485729103948": "/tracking-normal",
   "00010242fe8c5a6d1ba2dd792cb16214": "/tracking-normal",

@@ -1,94 +1,138 @@
-/** Penanda lokasi tujuan pada peta radar. */
-function DestinationPin() {
-  return (
-    <svg
-      aria-hidden="true"
-      className="h-full w-full"
-      viewBox="0 0 64 88"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      {/* sisi gelap */}
-      <path
-        d="M32 88S64 50.5 64 32C64 14.3 49.7 0 32 0v88z"
-        fill="#c9006e"
-      />
-      {/* sisi terang */}
-      <path d="M32 88S0 50.5 0 32C0 14.3 14.3 0 32 0v88z" fill="#EC008C" />
-      {/* lingkaran dalam */}
-      <circle cx="32" cy="32" fill="#ffffff" r="12" />
-      <circle cx="32" cy="32" fill="#EC008C" r="5" />
-      <ellipse cx="32" cy="84" fill="#1c1b1b" opacity="0.18" rx="14" ry="3" />
-    </svg>
-  );
-}
+import StagingMap from "@/features/tracking/components/maps/StagingMap";
+import StandbyMap from "@/features/tracking/components/maps/StandbyMap";
 
 /**
  * Kartu "Radar Posisi Paket".
- * Peta digambar dengan CSS (grid + jalan) supaya tidak bergantung pada
- * aset peta eksternal, dengan penanda tujuan Jakarta Selatan.
+ *
+ * Dua varian tampilan:
+ * - "standby" : paket belum dijemput, GPS belum aktif (peta digambar CSS)
+ * - "staging" : paket ada di Staging DC, ada peta kawasan + live GPS
+ *
+ * Data varian diambil dari features/tracking/data/*.
  */
 export default function LivePositionCard({ radar }) {
+  const staging = radar.variant === "staging";
+
   return (
     <div className="flex w-full flex-col gap-space-sm rounded-2xl bg-surface-container-lowest p-space-md shadow-lg">
       <div className="flex items-center justify-between">
         <span className="flex items-center gap-1.5 font-label-md text-label-md font-bold text-on-surface">
           <span className="material-symbols-outlined text-[18px] text-primary">
-            near_me
+            {radar.icon}
           </span>
           Radar Posisi Paket
         </span>
-        <span className="rounded-full bg-surface-container-low px-2.5 py-0.5 font-label-sm text-label-sm font-bold text-text-muted">
+        <span
+          className={`rounded-full px-2.5 py-0.5 font-label-sm text-label-sm font-bold ${
+            staging
+              ? "bg-tertiary-fixed text-on-tertiary-fixed"
+              : "bg-surface-container-low text-text-muted"
+          }`}
+        >
           {radar.statusLabel}
         </span>
       </div>
 
-      <div className="relative flex h-48 w-full items-center justify-center overflow-hidden rounded-xl shadow-inner">
-        {/* Peta (CSS) */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-[#e8eef1]"
-          style={{
-            backgroundImage: [
-              "linear-gradient(0deg, rgba(255,255,255,0.85) 2px, transparent 2px)",
-              "linear-gradient(90deg, rgba(255,255,255,0.85) 2px, transparent 2px)",
-              "linear-gradient(90deg, #cfd9de 8px, transparent 8px)",
-              "linear-gradient(0deg, #cfd9de 10px, transparent 10px)",
-            ].join(","),
-            backgroundSize: "44px 44px, 44px 44px, 132px 132px, 220px 220px",
-          }}
-        />
+      <div
+        className={`relative w-full overflow-hidden rounded-xl shadow-inner ${
+          staging ? "h-56 border border-border-subtle/50 bg-[#eef2f6]" : "flex h-48 items-center justify-center"
+        }`}
+      >
+        {staging ? (
+          <>
+            <StagingMap />
 
-        {/* Lapisan blur di atas peta */}
-        <div className="absolute inset-0 bg-surface/40 backdrop-blur-sm" />
+            {radar.liveBadge ? (
+              <div className="absolute left-2.5 top-2.5 z-10 flex items-center gap-1.5 rounded-md border border-border-subtle/50 bg-white px-2.5 py-1 text-[11px] font-bold text-on-surface shadow-sm">
+                <span className="h-2 w-2 animate-pulse rounded-full bg-success-base" />
+                Live GPS Aktif
+              </div>
+            ) : null}
 
-        {/* Penanda tujuan */}
-        <div className="absolute left-1/2 top-1/2 h-16 w-12 -translate-x-1/2 -translate-y-[70%]">
-          <DestinationPin />
-        </div>
+            <div className="absolute right-2.5 top-2.5 z-10 flex flex-col gap-1">
+              <button
+                aria-label="Perbesar peta"
+                className="flex h-7 w-7 items-center justify-center rounded border border-border-subtle/50 bg-white text-xs font-bold text-on-surface shadow-sm transition-colors hover:bg-surface-container-high"
+                type="button"
+              >
+                +
+              </button>
+              <button
+                aria-label="Perkecil peta"
+                className="flex h-7 w-7 items-center justify-center rounded border border-border-subtle/50 bg-white text-xs font-bold text-on-surface shadow-sm transition-colors hover:bg-surface-container-high"
+                type="button"
+              >
+                −
+              </button>
+            </div>
 
-        {/* Keterangan status GPS */}
-        <div className="relative z-10 flex max-w-[240px] flex-col items-center gap-1 rounded-xl border border-border-subtle/50 bg-surface-container-lowest/95 p-3.5 text-center shadow-lg backdrop-blur-md">
-          <div className="mb-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
-            <span className="material-symbols-outlined text-[18px]">
-              location_off
-            </span>
-          </div>
-          <span className="font-label-md text-label-md font-bold text-on-surface">
-            {radar.title}
-          </span>
-          <p className="font-body-sm text-[11px] leading-tight text-text-muted">
-            {radar.description}
-          </p>
-        </div>
+            {/* Pin lokasi gudang */}
+            <div className="pointer-events-none absolute left-1/2 top-1/2 z-20 flex -translate-x-1/2 -translate-y-[88%] flex-col items-center">
+              <div className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-primary/30 bg-surface-container-lowest px-3 py-1.5 shadow-lg">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-primary text-white shadow-sm">
+                  <span className="material-symbols-outlined text-[15px]">
+                    {radar.icon}
+                  </span>
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="font-label-sm text-[11px] font-bold leading-tight text-primary">
+                    {radar.pin.title}
+                  </span>
+                  <span className="mt-0.5 font-body-sm text-[9px] leading-none text-text-muted">
+                    {radar.pin.subtitle}
+                  </span>
+                </div>
+                <span className="ml-0.5 h-1.5 w-1.5 animate-ping rounded-full bg-success-base" />
+              </div>
+              <div className="-mt-1 h-2.5 w-2.5 rotate-45 border-b border-r border-primary/30 bg-surface-container-lowest shadow-sm" />
+            </div>
+
+            {radar.coordinates ? (
+              <div className="absolute bottom-2 left-2 right-2 z-10 flex items-center justify-between rounded-lg border border-border-subtle/50 bg-white/95 px-3 py-1.5 text-[11px] shadow-sm">
+                <span className="flex items-center gap-1.5 font-medium text-text-primary">
+                  <span className="material-symbols-outlined text-[14px] text-primary">
+                    verified
+                  </span>
+                  {radar.zone}
+                </span>
+                <span className="font-mono-code text-[10px] font-bold text-primary">
+                  {radar.coordinates}
+                </span>
+              </div>
+            ) : null}
+          </>
+        ) : (
+          <StandbyMap
+            description={radar.description}
+            title={radar.title}
+          />
+        )}
       </div>
 
       <div className="flex items-center justify-between pt-1">
-        <span className="font-body-sm text-body-sm text-text-muted">
-          {radar.footerLeft}
+        <span
+          className={
+            staging
+              ? "flex items-center gap-1 font-label-sm text-label-sm text-text-muted"
+              : "font-body-sm text-body-sm text-text-muted"
+          }
+        >
+          {staging ? (
+            <>
+              <span className="material-symbols-outlined text-[18px] text-primary">
+                {radar.icon}
+              </span>
+              {radar.footerLabel}
+            </>
+          ) : (
+            radar.footerLeft
+          )}
         </span>
-        <span className="flex items-center gap-0.5 font-label-sm text-label-sm text-text-muted">
-          {radar.footerRight}
-        </span>
+        {!staging ? (
+          <span className="flex items-center gap-0.5 font-label-sm text-label-sm text-text-muted">
+            {radar.footerRight}
+          </span>
+        ) : null}
       </div>
     </div>
   );

@@ -130,8 +130,10 @@ export const ORDER_CREATED_DATA = {
     ],
   },
 
-  /** Kartu radar posisi paket. */
+  /** Kartu radar posisi paket (varian "standby": GPS belum aktif). */
   radar: {
+    variant: "standby",
+    icon: "near_me",
     statusLabel: "Menunggu Penjemputan",
     title: "Satria Belum Berjalan",
     description:

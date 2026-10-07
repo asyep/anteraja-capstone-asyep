@@ -64,7 +64,9 @@ export default function AssistantNarrative({ assistant, statusLabel }) {
               </span>
             </div>
             <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
-              {assistant.courierName} (ID: {assistant.courierId})
+              {assistant.courierId
+                ? `${assistant.courierName} (ID: ${assistant.courierId})`
+                : assistant.courierName}
             </span>
           </div>
 

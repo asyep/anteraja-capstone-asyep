@@ -1,15 +1,44 @@
+/** Latar banner per varian status. */
+const BANNER_VARIANT = {
+  "primary-solid": {
+    className: "bg-primary border border-primary/30 ring-2 ring-primary-fixed/30",
+    style: {
+      background:
+        "linear-gradient(135deg, #b30069 0%, #d4147f 55%, #e00085 100%)",
+      boxShadow: "0 10px 25px -5px rgba(179, 0, 105, 0.35)",
+    },
+    iconBox: "bg-white/20 text-white shadow-inner border border-white/30 backdrop-blur-xl",
+  },
+  default: {
+    className: "bg-gradient-to-r from-pink-500/80 to-rose-400/80 ring-4 ring-pink-300/30 backdrop-blur-md",
+    style: undefined,
+    iconBox: "bg-white shadow-lg",
+  },
+};
+
 /**
- * Banner status utama: gradien magenta + ring lembut, berisi status pesanan,
- * aksi cepat, dan dua badge (Gratis Ongkir / Menunggu Pickup).
+ * Banner status utama: berisi status pesanan, judul, dan badge
+ * (Gratis Ongkir / status hub). Varian warna diatur lewat `status.variant`.
  */
 export default function StatusBanner({ status }) {
+  const variant = BANNER_VARIANT[status.variant] ?? BANNER_VARIANT.default;
+
   return (
-    <div className="relative flex w-full flex-col items-start justify-between gap-space-md overflow-hidden rounded-2xl bg-gradient-to-r from-pink-500/80 to-rose-400/80 p-space-md text-white shadow-lg ring-4 ring-pink-300/30 backdrop-blur-md md:flex-row md:items-center">
+    <div
+      className={`relative flex w-full flex-col items-start justify-between gap-space-md overflow-hidden rounded-2xl p-space-md text-white shadow-lg md:flex-row md:items-center ${variant.className}`}
+      style={variant.style}
+    >
       <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
 
       <div className="relative z-10 flex items-center gap-space-md">
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white shadow-lg">
-          <span className="material-symbols-outlined text-[28px] font-bold text-[#EC008C]">
+        <div
+          className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${variant.iconBox}`}
+        >
+          <span
+            className={`material-symbols-outlined text-[28px] font-bold ${
+              status.variant === "primary-solid" ? "text-white" : "text-[#EC008C]"
+            }`}
+          >
             {status.icon}
           </span>
         </div>
@@ -37,7 +66,7 @@ export default function StatusBanner({ status }) {
                 {badge.icon}
               </span>
             ) : (
-              <span className="h-2 w-2 rounded-full bg-[#EC008C]" />
+              <span className={`h-2 w-2 rounded-full ${badge.dot ?? "bg-[#EC008C]"}`} />
             )}
             {badge.label}
           </span>
