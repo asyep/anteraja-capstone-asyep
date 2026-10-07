@@ -34,6 +34,17 @@ const BANNER_VARIANT = {
     padding: "p-space-md md:p-space-lg",
     titleClass: "text-[18px] md:text-[20px]",
   },
+  // Gradien magenta → hijau untuk status akhir ("Tiba di Tujuan").
+  delivered: {
+    className: "text-white",
+    style: {
+      background: "linear-gradient(135deg, #8a0050 0%, #0d5300 100%)",
+    },
+    iconBox:
+      "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
+  },
   default: {
     className:
       "bg-gradient-to-r from-pink-500/80 to-rose-400/80 ring-4 ring-pink-300/30 backdrop-blur-md",
@@ -73,7 +84,12 @@ function Badge({ badge }) {
 export default function StatusBanner({ status }) {
   const variant = BANNER_VARIANT[status.variant] ?? BANNER_VARIANT.default;
   // Varian dengan judul lebih kecil & badge lebih ringkas.
-  const ringkas = status.variant === "transit" || status.variant === "delivery";
+  const ringkas =
+    status.variant === "transit" ||
+    status.variant === "delivery" ||
+    status.variant === "delivered";
+  // Status akhir: titik penanda statis hijau, bukan berdenyut.
+  const selesai = status.variant === "delivered";
 
   return (
     <div

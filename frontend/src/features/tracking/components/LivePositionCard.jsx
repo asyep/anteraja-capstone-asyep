@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import DeliveredMap from "@/features/tracking/components/maps/DeliveredMap";
 import DeliveryMap from "@/features/tracking/components/maps/DeliveryMap";
 import StagingMap from "@/features/tracking/components/maps/StagingMap";
 import StandbyMap from "@/features/tracking/components/maps/StandbyMap";
@@ -76,9 +77,11 @@ export default function LivePositionCard({ radar }) {
     if (waypoint) setLabelTerlihat(true);
   }, [waypoint]);
 
-  const petaKelas = berAnimasi
-    ? "relative h-56 w-full overflow-hidden rounded-xl border border-border-subtle/50 bg-[#eef2f6] shadow-inner"
-    : radar.variant === "staging"
+  // Peta besar (dengan bingkai) dipakai varian animasi, staging, dan delivered.
+  const petaKelas =
+    berAnimasi ||
+    radar.variant === "staging" ||
+    radar.variant === "delivered"
       ? "relative h-56 w-full overflow-hidden rounded-xl border border-border-subtle/50 bg-[#eef2f6] shadow-inner"
       : "relative flex h-48 w-full items-center justify-center overflow-hidden rounded-xl shadow-inner";
 
@@ -164,6 +167,52 @@ export default function LivePositionCard({ radar }) {
                   : isTransit
                     ? `LAT: ${waypoint?.geo?.lat ?? "-"}, LON: ${waypoint?.geo?.lon ?? "-"}`
                     : radar.coordinates}
+              </span>
+            </div>
+          </>
+        ) : radar.variant === "delivered" ? (
+          <>
+            <DeliveredMap />
+
+            {/* Chip bukti serah terima (POD) */}
+            <div className="absolute left-2.5 top-2.5 z-10 flex items-center gap-1.5 rounded-md border border-border-subtle/50 bg-white px-2.5 py-1 text-[11px] font-bold text-tertiary shadow-sm">
+              <span className="h-2 w-2 rounded-full bg-success-base" />
+              {radar.liveBadgeLabel}
+            </div>
+            <ZoomControls />
+
+            {/* Pin titik penyerahan — paket sudah diterima di alamat */}
+            <div className="pointer-events-none absolute left-[64%] top-[25%] z-20 flex -translate-x-1/2 -translate-y-[88%] flex-col items-center">
+              <div className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-tertiary/30 bg-surface-container-lowest px-3 py-1.5 shadow-lg">
+                <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-tertiary text-white shadow-sm">
+                  <span className="material-symbols-outlined text-[15px]">
+                    {radar.icon}
+                  </span>
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="font-label-sm text-[11px] font-bold leading-tight text-tertiary">
+                    {radar.pin.title}
+                  </span>
+                  <span className="mt-0.5 font-body-sm text-[9px] leading-none text-text-muted">
+                    {radar.pin.subtitle}
+                  </span>
+                </div>
+                <span className="material-symbols-outlined ml-0.5 text-[16px] text-success-base">
+                  verified
+                </span>
+              </div>
+              <div className="-mt-1 h-2.5 w-2.5 rotate-45 border-b border-r border-tertiary/30 bg-surface-container-lowest shadow-sm" />
+            </div>
+
+            <div className="absolute bottom-2 left-2 right-2 z-10 flex items-center justify-between rounded-lg border border-border-subtle/50 bg-white/95 px-3 py-1.5 text-[11px] shadow-sm">
+              <span className="flex items-center gap-1.5 font-medium text-text-primary">
+                <span className="material-symbols-outlined text-[14px] text-tertiary">
+                  pin_drop
+                </span>
+                {radar.zone}
+              </span>
+              <span className="font-mono-code text-[10px] font-bold text-tertiary">
+                {radar.coordinates}
               </span>
             </div>
           </>
