@@ -1,153 +1,151 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import BrandLogo from "../common/BrandLogo";
+import StoreBadges from "../common/StoreBadges";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  TikTokIcon,
+  XIcon,
+  YouTubeIcon,
+} from "../common/SocialIcons";
+import { LACAK_CONTACT } from "../../data/lacakContent";
+
+const KANAL_SOSIAL = [
+  { id: "facebook", label: "Facebook", href: "#", Icon: FacebookIcon },
+  { id: "instagram", label: "Instagram", href: "#", Icon: InstagramIcon },
+  { id: "tiktok", label: "TikTok", href: "#", Icon: TikTokIcon },
+  { id: "x", label: "X", href: LACAK_CONTACT.x, Icon: XIcon },
+  { id: "youtube", label: "YouTube", href: "#", Icon: YouTubeIcon },
+];
+
+const IKON_UTILITAS = ["language", "chat", "share", "rss_feed"];
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-white border-t border-[#E5E7EB] text-[#5a3f49]">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-14">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
-          {/* Brand & Contact Block */}
-          <div className="lg:col-span-2 flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <Link to="/">
-                <img
-                  alt="Anteraja"
-                  className="h-8 w-auto object-contain"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCPPf6qGq-Zr5MtoSPI_IjEAsNa8dHslQycOXhNyUdWu-LvXw3V2gpmL5im-tGSWWGJai3NTCIeElX87nSwEa9c9z8sr22zJX2OWWris4_f2wpmtu_Dkb2EJQsN7qnn26WQqfM79RAFggsIEx_Js8CXBpkEh7bcsA_tLZ72TZltAYFOkFG4R3fRvxR_bHXd4DI30bERH9hbIuRjD1gVUQyx0Ya9v1VRwozrSFfnbg7ixWSpS5DfTZMFLsCnvGjalb_nSmE"
-                />
-              </Link>
-            </div>
-            <p className="text-xs text-[#5a3f49] leading-relaxed max-w-sm">
-              Solusi pengiriman logistik kilat terpercaya berbasis ekosistem
-              cerdas dan AI terintegrasi untuk kenyamanan jutaan pelanggan di
+    <footer className="mt-16 w-full border-t border-border-subtle bg-white pb-12 pt-16">
+      <div className="mx-auto max-w-[1200px] px-4 md:px-6 lg:px-10">
+        <div className="grid grid-cols-1 gap-10 border-b border-border-subtle pb-12 md:grid-cols-2 lg:grid-cols-4">
+          {/* Kolom 1 — Brand */}
+          <div className="flex flex-col items-start gap-4">
+            <Link aria-label="Anteraja — Beranda" to="/">
+              <BrandLogo className="h-9" />
+            </Link>
+            <p className="font-body-md text-body-md leading-relaxed text-text-muted">
+              Solusi pengiriman logistik pintar berbasis teknologi dengan armada
+              Satria terpercaya untuk kebutuhan perorangan maupun korporasi di
               seluruh Indonesia.
             </p>
-            <div className="flex flex-col gap-1 text-xs text-[#5a3f49] mt-2">
-              <span className="font-bold text-[#1c1b1b]">
-                PT Tri Adi Bersama (Anteraja)
-              </span>
-              <span>
-                Gedung Tri Adi Bersama, Jl. Terusan Rasuna Said No. 12, Kuningan
-                Barat, Jakarta Selatan 12710
-              </span>
-              <span>Call Center Resmi: (021) 5060 3333 | cs@anteraja.id</span>
+            <div className="flex items-center gap-2 pt-2">
+              {IKON_UTILITAS.map((ikon) => (
+                <a
+                  aria-label={ikon.replace("_", " ")}
+                  className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container-low text-text-muted transition-colors hover:bg-[#fce7f3] hover:text-[#ec008c]"
+                  href="#"
+                  key={ikon}
+                >
+                  <span className="material-symbols-outlined text-[18px]">
+                    {ikon}
+                  </span>
+                </a>
+              ))}
             </div>
           </div>
 
-          {/* Layanan Column */}
+          {/* Kolom 2 — Layanan */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold text-[#1c1b1b] uppercase tracking-wider">
+            <h2 className="font-label-lg text-label-lg font-bold uppercase tracking-wider text-on-surface">
               Layanan
             </h2>
-            <nav className="flex flex-col gap-2 text-xs">
-              <Link
-                className="hover:text-[#b30069] transition-colors"
-                to="/bantuan"
-              >
-                Bantuan
+            <nav className="flex flex-col gap-2.5 font-body-md text-body-md font-medium text-text-muted">
+              <Link className="transition-colors hover:text-[#ec008c]" to="/">
+                Beranda
               </Link>
               <Link
-                className="hover:text-[#b30069] transition-colors"
+                className="transition-colors hover:text-[#ec008c]"
                 to="/lacak"
               >
                 Lacak Kiriman
               </Link>
+              <Link
+                className="transition-colors hover:text-[#ec008c]"
+                to="/bantuan"
+              >
+                Pusat Bantuan
+              </Link>
             </nav>
           </div>
 
-          {/* Kemitraan Column */}
+          {/* Kolom 3 — Bantuan & Hubungi */}
           <div className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold text-[#1c1b1b] uppercase tracking-wider">
-              Kemitraan &amp; Karir
+            <h2 className="font-label-lg text-label-lg font-bold uppercase tracking-wider text-on-surface">
+              Bantuan &amp; Hubungi
             </h2>
-            <div className="flex flex-col gap-2 text-xs">
-              <Link className="hover:text-[#b30069] transition-colors" to="/">
-                Pendaftaran Mitra Satria
-              </Link>
-              <Link className="hover:text-[#b30069] transition-colors" to="/">
-                Mitra Loket Drop Point
-              </Link>
-              <Link className="hover:text-[#b30069] transition-colors" to="/">
-                Peluang Karir Satria &amp; IT
-              </Link>
-              <Link className="hover:text-[#b30069] transition-colors" to="/">
-                Tentang PT Tri Adi Bersama
-              </Link>
+            <div className="flex flex-col gap-3 font-body-md text-body-md">
+              <div>
+                <span className="block font-label-sm text-label-sm font-bold uppercase text-text-placeholder">
+                  X
+                </span>
+                <a
+                  className="font-semibold text-on-surface transition-colors hover:text-[#ec008c]"
+                  href={LACAK_CONTACT.x}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  {LACAK_CONTACT.xHandle}
+                </a>
+              </div>
+              <div>
+                <span className="block font-label-sm text-label-sm font-bold uppercase text-text-placeholder">
+                  Call Center
+                </span>
+                <a
+                  className="font-bold text-on-surface transition-colors hover:text-[#ec008c]"
+                  href={LACAK_CONTACT.hotline}
+                >
+                  {LACAK_CONTACT.hotlineLabel}
+                </a>
+              </div>
+              <div>
+                <span className="block font-label-sm text-label-sm font-bold uppercase text-text-placeholder">
+                  Customer Service
+                </span>
+                <a
+                  className="font-semibold text-on-surface transition-colors hover:text-[#ec008c]"
+                  href={`mailto:${LACAK_CONTACT.email}`}
+                >
+                  {LACAK_CONTACT.email}
+                </a>
+              </div>
             </div>
           </div>
 
-          {/* Sertifikasi & Keamanan Column */}
-          <div className="flex flex-col gap-3">
-            <h2 className="text-xs font-bold text-[#1c1b1b] uppercase tracking-wider">
-              Sertifikasi &amp; Keamanan
+          {/* Kolom 4 — Sosial media & aplikasi */}
+          <div className="flex flex-col gap-4">
+            <h2 className="font-label-lg text-label-lg font-bold uppercase tracking-wider text-on-surface">
+              Sosial Media
             </h2>
-            <div className="flex flex-col gap-2.5">
-              <div className="p-3 bg-[#f0eded] rounded-xl flex items-center gap-3 border border-[#E5E7EB]">
-                <span className="material-symbols-outlined text-[#b30069] text-[20px]">
-                  verified
-                </span>
-                <div>
-                  <div className="text-xs font-bold text-[#1c1b1b]">
-                    ISO 9001:2015
-                  </div>
-                  <div className="text-[11px] text-[#5a3f49]">
-                    Sistem Manajemen Mutu
-                  </div>
-                </div>
-              </div>
-              <div className="p-3 bg-[#f0eded] rounded-xl flex items-center gap-3 border border-[#E5E7EB]">
-                <span className="material-symbols-outlined text-[#775a00] text-[20px]">
-                  shield
-                </span>
-                <div>
-                  <div className="text-xs font-bold text-[#1c1b1b]">
-                    ISO 27001:2013
-                  </div>
-                  <div className="text-[11px] text-[#5a3f49]">
-                    Keamanan Informasi &amp; Data
-                  </div>
-                </div>
-              </div>
-              <div className="p-2.5 bg-[#f0eded] rounded-xl flex items-center gap-2 border border-[#E5E7EB]">
-                <span className="material-symbols-outlined text-[#146b00] text-[18px]">
-                  verified_user
-                </span>
-                <div className="text-[11px] font-semibold text-[#1c1b1b]">
-                  Izin Resmi Penyelenggaraan Pos &amp; PSE Kominfo RI
-                </div>
-              </div>
+            <div className="flex items-center gap-2.5">
+              {KANAL_SOSIAL.map(({ id, label, href, Icon }) => (
+                <a
+                  aria-label={label}
+                  className="flex h-9 w-9 items-center justify-center rounded-full bg-[#ec008c] text-white transition-opacity hover:opacity-90"
+                  href={href}
+                  key={id}
+                  rel="noreferrer"
+                  target={href.startsWith("http") ? "_blank" : undefined}
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
+            <StoreBadges className="pt-2" />
           </div>
         </div>
 
-        <div className="pt-8 border-t border-[#E5E7EB] flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#5a3f49]">
-          <div className="flex flex-wrap items-center gap-6">
-            <Link
-              className="hover:text-[#b30069] transition-colors"
-              to="/bantuan"
-            >
-              Syarat &amp; Ketentuan
-            </Link>
-            <Link
-              className="hover:text-[#b30069] transition-colors"
-              to="/bantuan"
-            >
-              Kebijakan Privasi
-            </Link>
-            <Link
-              className="hover:text-[#b30069] transition-colors"
-              to="/bantuan"
-            >
-              Pusat Bantuan (FAQ)
-            </Link>
-            <Link className="hover:text-[#b30069] transition-colors" to="/">
-              Panduan Keamanan
-            </Link>
-          </div>
-          <div className="text-center md:text-right">
-            © 2025 PT Tri Adi Bersama (Anteraja). Hak Cipta Dilindungi
-            Undang-Undang.
-          </div>
+        <div className="pt-8 text-center font-body-sm text-body-sm text-text-muted">
+          © 2024 PT Tri Adi Bersama (Anteraja). Hak Cipta Dilindungi
+          Undang-Undang.
         </div>
       </div>
     </footer>

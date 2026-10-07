@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 export default function LoadingPage() {
   return (
-    <div className="flex flex-col w-full min-h-[calc(100vh-74px)] bg-[#fcf9f8]">
+    <div className="flex flex-col w-full min-h-[calc(100vh-5rem)] bg-[#fcf9f8]">
       <section className="max-w-[800px] mx-auto px-4 sm:px-6 lg:px-10 py-12">
         <div className="bg-white rounded-2xl p-8 shadow-lg border border-[#E5E7EB] flex flex-col items-center text-center">
           <div className="w-16 h-16 rounded-full bg-[#b30069]/10 text-[#b30069] flex items-center justify-center mb-6 shadow-inner animate-spin">

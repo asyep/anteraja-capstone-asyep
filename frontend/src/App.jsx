@@ -27,7 +27,7 @@ export default function App() {
       <Router>
         <div className="flex flex-col min-h-screen bg-[#fcf9f8] font-['Plus_Jakarta_Sans',sans-serif]">
         <Header />
-        <main className="flex-1 pt-[74px]">
+        <main className="flex-1 pt-20">
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/lacak" element={<LacakPage />} />

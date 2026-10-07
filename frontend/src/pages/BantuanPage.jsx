@@ -50,7 +50,7 @@ export default function BantuanPage() {
   );
 
   return (
-    <div className="flex flex-col w-full min-h-[calc(100vh-74px)] bg-[#fcf9f8]">
+    <div className="flex flex-col w-full min-h-[calc(100vh-5rem)] bg-[#fcf9f8]">
       {/* Hero Search Section */}
       <section className="w-full bg-white border-b border-[#E5E7EB] py-12 md:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
