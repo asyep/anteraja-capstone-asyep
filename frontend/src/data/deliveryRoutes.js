@@ -16,6 +16,7 @@ const RUTE_TEBET = {
     {
       id: "titik-awal",
       svg: { x: 60, y: 120 },
+      geo: { lat: -6.2300, lon: 106.8450 },
       label: "Delivery Hub Tebet",
       detail: "Rute pengantaran dimulai",
       sisaKm: 2.4,
@@ -24,6 +25,7 @@ const RUTE_TEBET = {
     {
       id: "tebet-raya",
       svg: { x: 150, y: 120 },
+      geo: { lat: -6.2320, lon: 106.8480 },
       label: "Jl. Tebet Barat Dalam Raya",
       detail: "Menuju Tebet Barat Dalam",
       sisaKm: 1.6,
@@ -32,6 +34,7 @@ const RUTE_TEBET = {
     {
       id: "posisi-awal",
       svg: { x: 240, y: 140 },
+      geo: { lat: -6.2350, lon: 106.8500 },
       label: "Satria Agus Prasetyo",
       detail: "Menuju Tebet Barat Dalam",
       sisaKm: 0.8,
@@ -40,6 +43,7 @@ const RUTE_TEBET = {
     {
       id: "tikungan",
       svg: { x: 320, y: 140 },
+      geo: { lat: -6.2370, lon: 106.8500 },
       label: "Simpang Tebet Barat",
       detail: "Belok menuju nomor rumah",
       sisaKm: 0.3,
@@ -48,6 +52,7 @@ const RUTE_TEBET = {
     {
       id: "tujuan",
       svg: { x: 320, y: 60 },
+      geo: { lat: -6.2370, lon: 106.8480 },
       label: "Jl. Tebet Barat Dalam No. 42",
       detail: "Satria tiba di alamat penerima",
       sisaKm: 0,
