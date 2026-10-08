@@ -24,7 +24,7 @@ CREATE TABLE shipments (
     has_sla_guarantee boolean DEFAULT false,
     
     -- Status and Timing
-    shipment_status varchar(30) NOT NULL, -- 'IN_TRANSIT', 'DELIVERED', 'CANCELED', 'WARNING'
+    shipment_status varchar(30) NOT NULL, -- 'PESANAN_DIBUAT', 'DIPROSES_KURIR', 'DALAM_PERJALANAN', 'DALAM_PENGANTARAN', 'TIBA_DI_TUJUAN', 'TIDAK_DITEMUKAN'
     purchase_date timestamptz,
     estimated_delivery_date timestamptz NOT NULL,
     delivered_date timestamptz,
@@ -58,7 +58,7 @@ CREATE TABLE tracking_events (
     event_id bigint GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     waybill_number varchar(32) NOT NULL REFERENCES shipments(waybill_number) ON DELETE CASCADE,
     event_code varchar(40) NOT NULL, -- e.g., '[IN TRANSIT]', '[OUTBOUND]'
-    milestone_stage varchar(30), -- e.g., 'ORDER_CREATED', 'PICKUP_READY', 'IN_TRANSIT', 'DELIVERED'
+    milestone_stage varchar(30), -- 'PESANAN_DIBUAT', 'DIPROSES_KURIR', 'DALAM_PERJALANAN', 'DALAM_PENGANTARAN', 'TIBA_DI_TUJUAN'
     title varchar(150) NOT NULL,
     description text,
     facility_name varchar(120),
