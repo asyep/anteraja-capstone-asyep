@@ -10,6 +10,7 @@ export const MILESTONE_STAGES = [
   { code: "ORDER_CREATED", label: "Pesanan Dibuat" },
   { code: "PICKUP_READY", label: "Diproses Kurir" },
   { code: "IN_TRANSIT", label: "Dalam Perjalanan" },
+  { code: "OUT_FOR_DELIVERY", label: "Dalam Pengantaran" },
   { code: "DELIVERED", label: "Tiba di Tujuan" },
 ];
 

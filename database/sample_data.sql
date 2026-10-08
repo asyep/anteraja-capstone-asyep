@@ -13,35 +13,35 @@ INSERT INTO shipments (
 'Toko Gadget Sejahtera', 'Jl. Braga No. 10, Bandung', 
 'Budi Santoso', 'Jl. Merdeka No. 45, Jakarta Pusat', 
 1.2, 0.005, true, 'Proteksi Penuh', true, true, 
-'DALAM_PERJALANAN', '2026-09-28 18:30:00+07'),
+'IN_TRANSIT', '2026-09-28 18:30:00+07'),
 
 -- Live Telemetry (#10009214778215)
 ('10009214778215', 'AR-REG (Reguler)', 
 'Toko Sentral Gadget Bandung', 'Coblong, Kota Bandung', 
 'Dimas Prasetyo', 'Jl. Tebet Barat Raya No. 45, Jakarta Selatan', 
 1.25, 0.002, true, 'Proteksi Penuh', true, true, 
-'DALAM_PENGANTARAN', '2026-09-28 18:30:00+07'),
+'OUT_FOR_DELIVERY', '2026-09-28 18:30:00+07'),
 
 -- Warning / Peringatan Jalur (#10007812938125)
 ('10007812938125', 'AR-REG (Reguler)', 
 'Pusat Sepatu Olahraga', 'Grogol, Jakarta Barat', 
 'Ahmad Yani', 'Jl. Pandanaran No. 12, Semarang', 
 2.5, 0.015, false, 'Standar', false, false, 
-'DALAM_PERJALANAN', '2026-09-30 18:00:00+07'),
+'IN_TRANSIT', '2026-09-30 18:00:00+07'),
 
 -- Delivered (#11111111111111)
 ('11111111111111', 'AR-NDR (Next Day)', 
 'Kosmetik Nusantara', 'Sleman, Yogyakarta', 
 'Siti Aminah', 'Jl. Pahlawan No. 22, Surabaya', 
 0.5, 0.001, true, 'Proteksi Penuh', false, true, 
-'TIBA_DI_TUJUAN', '2026-09-20 18:00:00+07'),
+'DELIVERED', '2026-09-20 18:00:00+07'),
 
 -- Canceled (#22222222222222)
 ('22222222222222', 'AR-REG (Reguler)', 
 'Buku Kita', 'Denpasar, Bali', 
 'Rina Nose', 'Jl. Sudirman No. 8, Mataram', 
 1.0, 0.003, false, 'Standar', true, false, 
-'TIDAK_DITEMUKAN', '2026-09-25 18:00:00+07');
+'NOT_FOUND', '2026-09-25 18:00:00+07');
 
 
 INSERT INTO couriers (
@@ -61,12 +61,12 @@ INSERT INTO tracking_events (
     waybill_number, event_code, milestone_stage, title, description, facility_name, event_at
 ) VALUES 
 -- Tracking Live Events (#10009214778215)
-('10009214778215', '[PICKUP]', 'PESANAN_DIBUAT', 'Paket Diterima dari Pengirim', 'Penjemputan oleh Satria Drop Point Dipatiukur Bandung.', 'Dipatiukur Bandung', '2026-09-26 09:15:00+07'),
-('10009214778215', '[RECEIVED]', 'DIPROSES_KURIR', 'Paket Tiba di Staging Gateway Bandung', 'Diterima petugas Satria Inbound dalam kondisi kemasan baik dan tersegel.', 'Gateway Bandung', '2026-09-26 18:40:00+07'),
-('10009214778215', '[PROCESSED]', 'DIPROSES_KURIR', 'Paket Telah Di-sortir di Gateway Bandung', 'Pemilahan conveyor otomatis selesai, diteruskan ke manifes muatan kontainer utama.', 'Gateway Bandung', '2026-09-26 21:15:00+07'),
-('10009214778215', '[OUTBOUND]', 'DIPROSES_KURIR', 'Pemindaian Barcode & Konsolidasi Karung Kargo', 'Area Sortir Otomatis Line B Gateway Bandung.', 'Gateway Bandung', '2026-09-26 23:40:00+07'),
-('10009214778215', '[TRANSIT]', 'DALAM_PERJALANAN', 'Paket Diberangkatkan ke Hub Distribusi Cakung', 'Truk Linehaul Lintas Jawa Barat–DKI Jakarta via Tol Cipularang.', 'Hub Cakung', '2026-09-27 01:15:00+07'),
-('10009214778215', '[IN TRANSIT]', 'DALAM_PENGANTARAN', 'Paket Berangkat dari Hub Sortir Bandung', 'Linehaul Armada Antar-Kota Truk B 9421 KXP menuju Hub Distribusi Cakung, Jakarta Timur.', 'Hub Cakung', '2026-09-27 04:20:00+07');
+('10009214778215', '[PICKUP]', 'ORDER_CREATED', 'Paket Diterima dari Pengirim', 'Penjemputan oleh Satria Drop Point Dipatiukur Bandung.', 'Dipatiukur Bandung', '2026-09-26 09:15:00+07'),
+('10009214778215', '[RECEIVED]', 'PICKUP_READY', 'Paket Tiba di Staging Gateway Bandung', 'Diterima petugas Satria Inbound dalam kondisi kemasan baik dan tersegel.', 'Gateway Bandung', '2026-09-26 18:40:00+07'),
+('10009214778215', '[PROCESSED]', 'PICKUP_READY', 'Paket Telah Di-sortir di Gateway Bandung', 'Pemilahan conveyor otomatis selesai, diteruskan ke manifes muatan kontainer utama.', 'Gateway Bandung', '2026-09-26 21:15:00+07'),
+('10009214778215', '[OUTBOUND]', 'PICKUP_READY', 'Pemindaian Barcode & Konsolidasi Karung Kargo', 'Area Sortir Otomatis Line B Gateway Bandung.', 'Gateway Bandung', '2026-09-26 23:40:00+07'),
+('10009214778215', '[TRANSIT]', 'IN_TRANSIT', 'Paket Diberangkatkan ke Hub Distribusi Cakung', 'Truk Linehaul Lintas Jawa Barat–DKI Jakarta via Tol Cipularang.', 'Hub Cakung', '2026-09-27 01:15:00+07'),
+('10009214778215', '[IN TRANSIT]', 'OUT_FOR_DELIVERY', 'Paket Berangkat dari Hub Sortir Bandung', 'Linehaul Armada Antar-Kota Truk B 9421 KXP menuju Hub Distribusi Cakung, Jakarta Timur.', 'Hub Cakung', '2026-09-27 04:20:00+07');
 
 
 INSERT INTO telemetry_data (
