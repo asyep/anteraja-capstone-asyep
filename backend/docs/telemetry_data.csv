@@ -1,0 +1,13 @@
+waybill_number,latitude,longitude,speed_kmh,location_name,accuracy_percentage,is_gps_active,logistics_delay_reason,traffic_status,weather_condition,waiting_time_minutes,observed_at,created_at
+10006947530309,-6.3681,107.2891,78.0,Tol Cikampek KM 54 (Arah Barat),97.92,True,,Clear,Cerah,0,2026-09-27T14:00:00Z,2026-09-27T14:00:00Z
+10009776552803,-6.4215,107.4112,65.5,Tol Cipularang KM 82,97.63,True,,Moderate,Hujan Ringan,0,2026-09-27T14:15:00Z,2026-09-27T14:15:00Z
+10001298737106,-6.2297,106.8294,24.0,"Jl. Gatot Subroto Kav. 52, Jaksel",99.28,True,Kepadatan Jam Pulang Kerja,Heavy,Cerah,25,2026-09-27T14:30:00Z,2026-09-27T14:30:00Z
+10007609857128,-6.1852,106.8271,35.0,Jl. MH Thamrin Bundaran HI,98.76,True,,Clear,Berawan,0,2026-09-27T14:45:00Z,2026-09-27T14:45:00Z
+10003410529190,-6.3021,106.8951,82.0,Tol JORR KM 34 (Pasar Rebo),99.29,True,,Clear,Cerah,0,2026-09-27T15:00:00Z,2026-09-27T15:00:00Z
+10001284277889,-6.1754,106.9122,15.0,Jl. Raya Bekasi KM 21 (Cakung),98.64,True,Genangan Air & Penyempitan Jalur,Heavy,Hujan Sedang,40,2026-09-27T15:15:00Z,2026-09-27T15:15:00Z
+10008519962896,-6.2146,106.8451,18.0,Flyover Saharjo - Tebet,99.37,True,Perbaikan Jalan,Moderate,Berawan,15,2026-09-27T15:30:00Z,2026-09-27T15:30:00Z
+10008357059814,-6.4025,107.135,72.0,Tol Jakarta-Cikampek KM 38,98.73,True,,Clear,Cerah,0,2026-09-27T15:45:00Z,2026-09-27T15:45:00Z
+10003585650756,-6.1931,106.8833,40.0,Jl. Pemuda Rawamangun,97.76,True,,Clear,Cerah,0,2026-09-27T16:00:00Z,2026-09-27T16:00:00Z
+10009896606039,-6.2553,106.7978,22.0,Jl. Iskandarsyah Blok M,98.71,True,Kecelakaan Ringan Roda Dua,Heavy,Hujan Lebat,30,2026-09-27T16:15:00Z,2026-09-27T16:15:00Z
+10004721519026,-6.3218,107.0345,68.0,Tol Cimanggis - Cibitung KM 12,99.77,True,,Clear,Cerah,0,2026-09-27T16:30:00Z,2026-09-27T16:30:00Z
+10001540137296,-6.1345,106.8133,28.0,Kawasan Kota Tua Mangga Besar,97.6,True,Pasar Tumpah,Moderate,Berawan,10,2026-09-27T16:45:00Z,2026-09-27T16:45:00Z

@@ -2,6 +2,14 @@
 -- Run with: psql -d anteraja_tracking -f database/schema.sql
 BEGIN;
 
+DROP TABLE IF EXISTS tracking_events CASCADE;
+DROP TABLE IF EXISTS telemetry_data CASCADE;
+DROP TABLE IF EXISTS ai_narratives CASCADE;
+DROP TABLE IF EXISTS shipment_couriers CASCADE;
+DROP TABLE IF EXISTS couriers CASCADE;
+DROP TABLE IF EXISTS shipments CASCADE;
+DROP VIEW IF EXISTS tracking_summary CASCADE;
+
 -- 1. Table: shipments
 CREATE TABLE shipments (
     waybill_number varchar(32) PRIMARY KEY,

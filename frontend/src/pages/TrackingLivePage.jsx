@@ -1,19 +1,22 @@
-import React, { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { getRouteForResi } from "../data/shipmentsData";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useTrackingDetail from "../hooks/useTrackingDetail";
+import TrackingLoadingState from "../components/tracking/TrackingLoadingState";
+import { formatLongWib, formatShortWib, formatWeight, formatVolume, firstName } from "../utils/formatters";
 
 export default function TrackingLivePage() {
+  const { shipment: data, loading } = useTrackingDetail("live");
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const queryWaybill = searchParams.get("waybill_number");
-  const initialWaybill = queryWaybill?.startsWith("10008492019945")
-    ? "10008492019945"
-    : queryWaybill || "10009214778215";
-  const [waybill, setWaybill] = useState(initialWaybill);
+  const [waybill, setWaybill] = useState("");
+
+  useEffect(() => {
+    if (data) setWaybill(data.waybill_number);
+  }, [data]);
+
   function handleSubmit(event) {
     event.preventDefault();
     const value = waybill.trim();
-    if (value) navigate(getRouteForResi(value));
+    if (value) navigate(`/cek-resi?waybill_number=${value}`);
   }
   async function copyWaybill() {
     try {
@@ -40,6 +43,14 @@ export default function TrackingLivePage() {
       /* Sharing can be cancelled by the user. */
     }
   }
+  if (loading || !data) {
+    return <TrackingLoadingState waybill={waybill} />;
+  }
+
+  const shipment = data.shipment;
+  const milestones = data.milestone_stages || [];
+  const events = data.tracking_events || [];
+
   return (
     <main className="w-full bg-surface min-h-[calc(100vh-20rem)]" id="main">
       <div className="flex flex-col w-full">
@@ -122,24 +133,31 @@ export default function TrackingLivePage() {
                   </span>
                   <a
                     className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5"
-                    href="/tracking-normal?waybill_number=100084920199458271039485729103948"
+                    href="/tracking-normal"
                   >
                     <span className="w-2 h-2 rounded-full bg-success-base"></span>
-                    #10008492019945 (In-Transit)
+                    Normal
                   </a>
                   <a
                     className="px-3 py-1.5 rounded-full bg-primary-fixed/40 text-primary font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5 font-bold"
-                    href="/tracking-live?waybill_number=10009214778215"
+                    href="/tracking-live"
                   >
                     <span className="w-2 h-2 rounded-full bg-success-base animate-pulse"></span>
-                    #10009214778215 (Live Map)
+                    Live Map
                   </a>
                   <a
                     className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5"
-                    href="/tracking?waybill_number=10007812938125"
+                    href="/tracking-warning"
                   >
                     <span className="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
-                    #10007812938125 (Peringatan Jalur)
+                    Warning
+                  </a>
+                  <a
+                    className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5"
+                    href="/tracking-delivered"
+                  >
+                    <span className="w-2 h-2 rounded-full bg-primary-fixed"></span>
+                    Delivered
                   </a>
                 </div>
                 <button
@@ -172,7 +190,7 @@ export default function TrackingLivePage() {
                   </span>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-headline-md text-headline-md font-bold text-on-primary-fixed">
-                      28 September 2026, Est. 18:30 WIB
+                      {formatLongWib(data.order_estimated_delivery_date)}
                     </span>
                     <span className="px-2.5 py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold flex items-center gap-1">
                       <span className="material-symbols-outlined text-[14px]">
@@ -241,7 +259,7 @@ export default function TrackingLivePage() {
                       <p className="font-body-lg text-body-lg text-on-surface bg-surface-container-low/70 p-space-md rounded-xl leading-relaxed mt-1">
                         “Halo Kak! Paketmu bernomor resi{" "}
                         <strong className="font-mono-code text-primary">
-                          10009214778215
+                          {data.waybill_number}
                         </strong>{" "}
                         saat ini sedang meluncur aman bersama armada linehaul
                         Satria Hendra via Tol Cipularang. Kondisi cuaca
@@ -253,7 +271,7 @@ export default function TrackingLivePage() {
                       <div className="flex flex-wrap items-center gap-space-sm pt-space-xs">
                         <a
                           className="h-11 px-space-md rounded-xl bg-secondary-container text-on-secondary-container font-label-md text-label-md font-bold hover:bg-secondary-fixed active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm"
-                          href="https://wa.me/6281119603333?text=Kirim%20pembaruan%20resi%2010009214778215"
+                          href="https://wa.me/6281119603333?text=Kirim%20pembaruan%20resi%20{data.waybill_number}"
                           rel="noopener noreferrer"
                           target="_blank"
                         >
@@ -641,7 +659,7 @@ export default function TrackingLivePage() {
                           No. Resi (AWB)
                         </span>
                         <span className="font-mono-code text-label-md font-bold text-on-surface">
-                          10009214778215
+                          {data.waybill_number}
                         </span>
                       </div>
                       <div className="p-space-sm rounded-xl bg-surface-card flex flex-col">

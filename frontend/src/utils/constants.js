@@ -4,7 +4,8 @@ export const BRAND_COLORS = {
   warning: "#F59E0B",
 };
 
-export const WAYBILL_PATTERN = /^[A-Za-z0-9]{32}$/;
+// Nomor resi Anteraja: 14 digit angka (sama dengan validasi backend).
+export const WAYBILL_PATTERN = /^\d{14}$/;
 
 export const MILESTONE_STAGES = [
   { code: "ORDER_CREATED", label: "Pesanan Dibuat" },

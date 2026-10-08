@@ -1,0 +1,346 @@
+waybill_number,event_code,milestone_stage,title,description,facility_name,event_at,created_at
+10006947530309,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T16:00:00Z,2026-09-24T16:00:00Z
+10006947530309,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-24T19:00:00Z,2026-09-24T19:00:00Z
+10006947530309,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-24T21:00:00Z,2026-09-24T21:00:00Z
+10006947530309,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-25T02:00:00Z,2026-09-25T02:00:00Z
+10006947530309,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-25T08:00:00Z,2026-09-25T08:00:00Z
+10006947530309,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-25T14:00:00Z,2026-09-25T14:00:00Z
+10006947530309,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Budi Santoso.,Hub Cakung Jakarta,2026-09-25T18:00:00Z,2026-09-25T18:00:00Z
+10001338258951,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-29T17:00:00Z,2026-09-29T17:00:00Z
+10009776552803,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T17:00:00Z,2026-09-30T17:00:00Z
+10009776552803,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-30T20:00:00Z,2026-09-30T20:00:00Z
+10009776552803,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-30T22:00:00Z,2026-09-30T22:00:00Z
+10009776552803,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-10-01T03:00:00Z,2026-10-01T03:00:00Z
+10009776552803,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-10-01T09:00:00Z,2026-10-01T09:00:00Z
+10009776552803,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-10-01T15:00:00Z,2026-10-01T15:00:00Z
+10009776552803,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Dewi Lestari.,Hub Cakung Jakarta,2026-10-01T19:00:00Z,2026-10-01T19:00:00Z
+10003840104345,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T13:00:00Z,2026-09-30T13:00:00Z
+10003840104345,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-30T16:00:00Z,2026-09-30T16:00:00Z
+10003840104345,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-30T18:00:00Z,2026-09-30T18:00:00Z
+10003840104345,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-30T23:00:00Z,2026-09-30T23:00:00Z
+10003840104345,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-10-01T05:00:00Z,2026-10-01T05:00:00Z
+10003840104345,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-10-01T11:00:00Z,2026-10-01T11:00:00Z
+10003840104345,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Kevin Sanjaya.,Hub Cakung Jakarta,2026-10-01T15:00:00Z,2026-10-01T15:00:00Z
+10003840104345,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Kevin Sanjaya (Yang Bersangkutan).,Alamat Penerima,2026-10-02T11:00:00Z,2026-10-02T11:00:00Z
+10003727210979,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T14:00:00Z,2026-09-24T14:00:00Z
+10003727210979,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-24T17:00:00Z,2026-09-24T17:00:00Z
+10001298737106,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-29T13:00:00Z,2026-09-29T13:00:00Z
+10001298737106,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-29T16:00:00Z,2026-09-29T16:00:00Z
+10001298737106,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-29T18:00:00Z,2026-09-29T18:00:00Z
+10001298737106,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T23:00:00Z,2026-09-29T23:00:00Z
+10001298737106,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-30T05:00:00Z,2026-09-30T05:00:00Z
+10001298737106,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-30T11:00:00Z,2026-09-30T11:00:00Z
+10001298737106,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Sri Wahyuni.,Hub Cakung Jakarta,2026-09-30T15:00:00Z,2026-09-30T15:00:00Z
+10004944899549,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-29T14:00:00Z,2026-09-29T14:00:00Z
+10004944899549,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-29T17:00:00Z,2026-09-29T17:00:00Z
+10007017956955,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T14:00:00Z,2026-09-24T14:00:00Z
+10002631775357,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T17:00:00Z,2026-09-23T17:00:00Z
+10007609857128,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T12:00:00Z,2026-09-27T12:00:00Z
+10007609857128,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-27T15:00:00Z,2026-09-27T15:00:00Z
+10007609857128,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-27T17:00:00Z,2026-09-27T17:00:00Z
+10007609857128,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-27T22:00:00Z,2026-09-27T22:00:00Z
+10007609857128,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-28T04:00:00Z,2026-09-28T04:00:00Z
+10007609857128,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-28T10:00:00Z,2026-09-28T10:00:00Z
+10007609857128,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Budi Santoso.,Hub Cakung Jakarta,2026-09-28T14:00:00Z,2026-09-28T14:00:00Z
+10004504793184,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T12:00:00Z,2026-09-30T12:00:00Z
+10004246059658,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T11:00:00Z,2026-09-23T11:00:00Z
+10004246059658,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-23T14:00:00Z,2026-09-23T14:00:00Z
+10004246059658,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-23T16:00:00Z,2026-09-23T16:00:00Z
+10004246059658,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T21:00:00Z,2026-09-23T21:00:00Z
+10004246059658,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-24T03:00:00Z,2026-09-24T03:00:00Z
+10004246059658,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-24T09:00:00Z,2026-09-24T09:00:00Z
+10004246059658,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Andi Pratama.,Hub Cakung Jakarta,2026-09-24T13:00:00Z,2026-09-24T13:00:00Z
+10004246059658,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Andi Pratama (Yang Bersangkutan).,Alamat Penerima,2026-09-25T17:00:00Z,2026-09-25T17:00:00Z
+10003410529190,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T15:00:00Z,2026-09-27T15:00:00Z
+10003410529190,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-27T18:00:00Z,2026-09-27T18:00:00Z
+10003410529190,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-27T20:00:00Z,2026-09-27T20:00:00Z
+10003410529190,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-28T01:00:00Z,2026-09-28T01:00:00Z
+10003410529190,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-28T05:00:00Z,2026-09-28T05:00:00Z
+10001284277889,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-25T12:00:00Z,2026-09-25T12:00:00Z
+10001284277889,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-25T15:00:00Z,2026-09-25T15:00:00Z
+10001284277889,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-25T17:00:00Z,2026-09-25T17:00:00Z
+10001284277889,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-25T22:00:00Z,2026-09-25T22:00:00Z
+10001284277889,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-26T02:00:00Z,2026-09-26T02:00:00Z
+10008519962896,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T13:00:00Z,2026-09-30T13:00:00Z
+10008519962896,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-30T16:00:00Z,2026-09-30T16:00:00Z
+10008519962896,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-30T18:00:00Z,2026-09-30T18:00:00Z
+10008519962896,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-30T23:00:00Z,2026-09-30T23:00:00Z
+10008519962896,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-10-01T05:00:00Z,2026-10-01T05:00:00Z
+10008519962896,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-10-01T11:00:00Z,2026-10-01T11:00:00Z
+10008519962896,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Siti Nurhaliza.,Hub Cakung Jakarta,2026-10-01T15:00:00Z,2026-10-01T15:00:00Z
+10002461042543,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-26T15:00:00Z,2026-09-26T15:00:00Z
+10002461042543,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-26T18:00:00Z,2026-09-26T18:00:00Z
+10007900268326,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T14:00:00Z,2026-09-23T14:00:00Z
+10003561557300,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T13:00:00Z,2026-09-28T13:00:00Z
+10003561557300,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T16:00:00Z,2026-09-28T16:00:00Z
+10003561557300,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T18:00:00Z,2026-09-28T18:00:00Z
+10003561557300,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-28T23:00:00Z,2026-09-28T23:00:00Z
+10003561557300,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T05:00:00Z,2026-09-29T05:00:00Z
+10003561557300,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-29T11:00:00Z,2026-09-29T11:00:00Z
+10003561557300,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Rian Hidayat.,Hub Cakung Jakarta,2026-09-29T15:00:00Z,2026-09-29T15:00:00Z
+10003561557300,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Rian Hidayat (Yang Bersangkutan).,Alamat Penerima,2026-10-01T13:00:00Z,2026-10-01T13:00:00Z
+10008357059814,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T10:00:00Z,2026-09-23T10:00:00Z
+10008357059814,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-23T13:00:00Z,2026-09-23T13:00:00Z
+10008357059814,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-23T15:00:00Z,2026-09-23T15:00:00Z
+10008357059814,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T20:00:00Z,2026-09-23T20:00:00Z
+10008357059814,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-24T00:00:00Z,2026-09-24T00:00:00Z
+10003585650756,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T16:00:00Z,2026-09-28T16:00:00Z
+10003585650756,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T19:00:00Z,2026-09-28T19:00:00Z
+10003585650756,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T21:00:00Z,2026-09-28T21:00:00Z
+10003585650756,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T02:00:00Z,2026-09-29T02:00:00Z
+10003585650756,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T06:00:00Z,2026-09-29T06:00:00Z
+10009896606039,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T17:00:00Z,2026-09-22T17:00:00Z
+10009896606039,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-22T20:00:00Z,2026-09-22T20:00:00Z
+10009896606039,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-22T22:00:00Z,2026-09-22T22:00:00Z
+10009896606039,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T03:00:00Z,2026-09-23T03:00:00Z
+10009896606039,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-23T07:00:00Z,2026-09-23T07:00:00Z
+10004721519026,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T17:00:00Z,2026-09-28T17:00:00Z
+10004721519026,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T20:00:00Z,2026-09-28T20:00:00Z
+10004721519026,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T22:00:00Z,2026-09-28T22:00:00Z
+10004721519026,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T03:00:00Z,2026-09-29T03:00:00Z
+10004721519026,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T07:00:00Z,2026-09-29T07:00:00Z
+10002193448329,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T14:00:00Z,2026-09-24T14:00:00Z
+10002193448329,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-24T17:00:00Z,2026-09-24T17:00:00Z
+10002193448329,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-24T19:00:00Z,2026-09-24T19:00:00Z
+10002193448329,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-25T00:00:00Z,2026-09-25T00:00:00Z
+10002193448329,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-25T06:00:00Z,2026-09-25T06:00:00Z
+10002193448329,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-25T12:00:00Z,2026-09-25T12:00:00Z
+10002193448329,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Kevin Sanjaya.,Hub Cakung Jakarta,2026-09-25T16:00:00Z,2026-09-25T16:00:00Z
+10002193448329,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Kevin Sanjaya (Yang Bersangkutan).,Alamat Penerima,2026-09-26T14:00:00Z,2026-09-26T14:00:00Z
+10004272602734,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-29T17:00:00Z,2026-09-29T17:00:00Z
+10004272602734,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-29T20:00:00Z,2026-09-29T20:00:00Z
+10004272602734,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-29T22:00:00Z,2026-09-29T22:00:00Z
+10004272602734,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-30T03:00:00Z,2026-09-30T03:00:00Z
+10004272602734,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-30T09:00:00Z,2026-09-30T09:00:00Z
+10004272602734,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-30T15:00:00Z,2026-09-30T15:00:00Z
+10004272602734,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Ahmad Fauzi.,Hub Cakung Jakarta,2026-09-30T19:00:00Z,2026-09-30T19:00:00Z
+10004272602734,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Ahmad Fauzi (Yang Bersangkutan).,Alamat Penerima,2026-10-02T23:00:00Z,2026-10-02T23:00:00Z
+10001540137296,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-26T14:00:00Z,2026-09-26T14:00:00Z
+10001540137296,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-26T17:00:00Z,2026-09-26T17:00:00Z
+10001540137296,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-26T19:00:00Z,2026-09-26T19:00:00Z
+10001540137296,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-27T00:00:00Z,2026-09-27T00:00:00Z
+10001540137296,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-27T04:00:00Z,2026-09-27T04:00:00Z
+10006927597015,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-21T16:00:00Z,2026-09-21T16:00:00Z
+10006927597015,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-21T19:00:00Z,2026-09-21T19:00:00Z
+10006927597015,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-21T21:00:00Z,2026-09-21T21:00:00Z
+10006927597015,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-22T02:00:00Z,2026-09-22T02:00:00Z
+10006927597015,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-22T06:00:00Z,2026-09-22T06:00:00Z
+10008877444318,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T12:00:00Z,2026-09-27T12:00:00Z
+10009928378856,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-25T16:00:00Z,2026-09-25T16:00:00Z
+10009928378856,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-25T19:00:00Z,2026-09-25T19:00:00Z
+10009928378856,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-25T21:00:00Z,2026-09-25T21:00:00Z
+10009928378856,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-26T02:00:00Z,2026-09-26T02:00:00Z
+10009928378856,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-26T08:00:00Z,2026-09-26T08:00:00Z
+10009928378856,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-26T14:00:00Z,2026-09-26T14:00:00Z
+10009928378856,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Rian Hidayat.,Hub Cakung Jakarta,2026-09-26T18:00:00Z,2026-09-26T18:00:00Z
+10004733616459,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-26T12:00:00Z,2026-09-26T12:00:00Z
+10004733616459,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-26T15:00:00Z,2026-09-26T15:00:00Z
+10004733616459,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-26T17:00:00Z,2026-09-26T17:00:00Z
+10004733616459,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-26T22:00:00Z,2026-09-26T22:00:00Z
+10004733616459,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-27T02:00:00Z,2026-09-27T02:00:00Z
+10007280359794,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T11:00:00Z,2026-09-24T11:00:00Z
+10007280359794,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-24T14:00:00Z,2026-09-24T14:00:00Z
+10007280359794,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-24T16:00:00Z,2026-09-24T16:00:00Z
+10007280359794,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-24T21:00:00Z,2026-09-24T21:00:00Z
+10007280359794,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-25T03:00:00Z,2026-09-25T03:00:00Z
+10007280359794,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-25T09:00:00Z,2026-09-25T09:00:00Z
+10007280359794,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Rian Hidayat.,Hub Cakung Jakarta,2026-09-25T13:00:00Z,2026-09-25T13:00:00Z
+10007280359794,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Rian Hidayat (Yang Bersangkutan).,Alamat Penerima,2026-09-27T07:00:00Z,2026-09-27T07:00:00Z
+10002028439863,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T15:00:00Z,2026-09-22T15:00:00Z
+10002051454923,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T14:00:00Z,2026-09-23T14:00:00Z
+10002051454923,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-23T17:00:00Z,2026-09-23T17:00:00Z
+10002051454923,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-23T19:00:00Z,2026-09-23T19:00:00Z
+10002051454923,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-24T00:00:00Z,2026-09-24T00:00:00Z
+10002051454923,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-24T04:00:00Z,2026-09-24T04:00:00Z
+10003962958940,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T17:00:00Z,2026-09-24T17:00:00Z
+10003962958940,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-24T20:00:00Z,2026-09-24T20:00:00Z
+10003962958940,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-24T22:00:00Z,2026-09-24T22:00:00Z
+10003962958940,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-25T03:00:00Z,2026-09-25T03:00:00Z
+10003962958940,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-25T09:00:00Z,2026-09-25T09:00:00Z
+10003962958940,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-25T15:00:00Z,2026-09-25T15:00:00Z
+10003962958940,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Andi Pratama.,Hub Cakung Jakarta,2026-09-25T19:00:00Z,2026-09-25T19:00:00Z
+10003962958940,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Andi Pratama (Yang Bersangkutan).,Alamat Penerima,2026-09-25T15:00:00Z,2026-09-25T15:00:00Z
+10009256195745,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-25T14:00:00Z,2026-09-25T14:00:00Z
+10009256195745,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-25T17:00:00Z,2026-09-25T17:00:00Z
+10009256195745,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-25T19:00:00Z,2026-09-25T19:00:00Z
+10009256195745,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-26T00:00:00Z,2026-09-26T00:00:00Z
+10009256195745,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-26T06:00:00Z,2026-09-26T06:00:00Z
+10009256195745,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-26T12:00:00Z,2026-09-26T12:00:00Z
+10009256195745,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Budi Santoso.,Hub Cakung Jakarta,2026-09-26T16:00:00Z,2026-09-26T16:00:00Z
+10005141907136,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-21T11:00:00Z,2026-09-21T11:00:00Z
+10005141907136,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-21T14:00:00Z,2026-09-21T14:00:00Z
+10005141907136,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-21T16:00:00Z,2026-09-21T16:00:00Z
+10005141907136,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-21T21:00:00Z,2026-09-21T21:00:00Z
+10005141907136,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-22T01:00:00Z,2026-09-22T01:00:00Z
+10005974249674,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-26T17:00:00Z,2026-09-26T17:00:00Z
+10005974249674,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-26T20:00:00Z,2026-09-26T20:00:00Z
+10005974249674,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-26T22:00:00Z,2026-09-26T22:00:00Z
+10005974249674,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-27T03:00:00Z,2026-09-27T03:00:00Z
+10005974249674,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-27T07:00:00Z,2026-09-27T07:00:00Z
+10006555540744,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T14:00:00Z,2026-09-28T14:00:00Z
+10008615270538,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-29T14:00:00Z,2026-09-29T14:00:00Z
+10008615270538,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-29T17:00:00Z,2026-09-29T17:00:00Z
+10008615270538,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-29T19:00:00Z,2026-09-29T19:00:00Z
+10008615270538,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-30T00:00:00Z,2026-09-30T00:00:00Z
+10008615270538,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-30T04:00:00Z,2026-09-30T04:00:00Z
+10001438989805,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T11:00:00Z,2026-09-22T11:00:00Z
+10002525876051,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T16:00:00Z,2026-09-22T16:00:00Z
+10002525876051,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-22T19:00:00Z,2026-09-22T19:00:00Z
+10002525876051,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-22T21:00:00Z,2026-09-22T21:00:00Z
+10002525876051,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T02:00:00Z,2026-09-23T02:00:00Z
+10002525876051,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-23T08:00:00Z,2026-09-23T08:00:00Z
+10002525876051,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-23T14:00:00Z,2026-09-23T14:00:00Z
+10002525876051,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Rina Melati.,Hub Cakung Jakarta,2026-09-23T18:00:00Z,2026-09-23T18:00:00Z
+10002525876051,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Rina Melati (Yang Bersangkutan).,Alamat Penerima,2026-09-23T14:00:00Z,2026-09-23T14:00:00Z
+10004529615275,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T11:00:00Z,2026-09-30T11:00:00Z
+10004529615275,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-30T14:00:00Z,2026-09-30T14:00:00Z
+10008378385615,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T17:00:00Z,2026-09-28T17:00:00Z
+10008378385615,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T20:00:00Z,2026-09-28T20:00:00Z
+10008378385615,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T22:00:00Z,2026-09-28T22:00:00Z
+10008378385615,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T03:00:00Z,2026-09-29T03:00:00Z
+10008378385615,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T09:00:00Z,2026-09-29T09:00:00Z
+10008378385615,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-29T15:00:00Z,2026-09-29T15:00:00Z
+10008378385615,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Siti Nurhaliza.,Hub Cakung Jakarta,2026-09-29T19:00:00Z,2026-09-29T19:00:00Z
+10008378385615,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Siti Nurhaliza (Yang Bersangkutan).,Alamat Penerima,2026-09-30T22:00:00Z,2026-09-30T22:00:00Z
+10001854316681,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T13:00:00Z,2026-09-22T13:00:00Z
+10001854316681,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-22T16:00:00Z,2026-09-22T16:00:00Z
+10001854316681,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-22T18:00:00Z,2026-09-22T18:00:00Z
+10001854316681,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-22T23:00:00Z,2026-09-22T23:00:00Z
+10001854316681,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-23T03:00:00Z,2026-09-23T03:00:00Z
+10008128575500,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-21T11:00:00Z,2026-09-21T11:00:00Z
+10008128575500,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-21T14:00:00Z,2026-09-21T14:00:00Z
+10008128575500,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-21T16:00:00Z,2026-09-21T16:00:00Z
+10008128575500,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-21T21:00:00Z,2026-09-21T21:00:00Z
+10008128575500,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-22T03:00:00Z,2026-09-22T03:00:00Z
+10008128575500,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-22T09:00:00Z,2026-09-22T09:00:00Z
+10008128575500,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Kevin Sanjaya.,Hub Cakung Jakarta,2026-09-22T13:00:00Z,2026-09-22T13:00:00Z
+10008128575500,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Kevin Sanjaya (Yang Bersangkutan).,Alamat Penerima,2026-09-24T05:00:00Z,2026-09-24T05:00:00Z
+10007439149233,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T16:00:00Z,2026-09-30T16:00:00Z
+10008173347748,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-25T16:00:00Z,2026-09-25T16:00:00Z
+10008173347748,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-25T19:00:00Z,2026-09-25T19:00:00Z
+10008173347748,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-25T21:00:00Z,2026-09-25T21:00:00Z
+10008173347748,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-26T02:00:00Z,2026-09-26T02:00:00Z
+10008173347748,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-26T08:00:00Z,2026-09-26T08:00:00Z
+10008173347748,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-26T14:00:00Z,2026-09-26T14:00:00Z
+10008173347748,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Maya Indah.,Hub Cakung Jakarta,2026-09-26T18:00:00Z,2026-09-26T18:00:00Z
+10008173347748,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Maya Indah (Yang Bersangkutan).,Alamat Penerima,2026-09-28T23:00:00Z,2026-09-28T23:00:00Z
+10007980611182,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T10:00:00Z,2026-09-27T10:00:00Z
+10007980611182,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-27T13:00:00Z,2026-09-27T13:00:00Z
+10007980611182,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-27T15:00:00Z,2026-09-27T15:00:00Z
+10007980611182,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-27T20:00:00Z,2026-09-27T20:00:00Z
+10007980611182,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-28T02:00:00Z,2026-09-28T02:00:00Z
+10007980611182,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-28T08:00:00Z,2026-09-28T08:00:00Z
+10007980611182,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Maya Indah.,Hub Cakung Jakarta,2026-09-28T12:00:00Z,2026-09-28T12:00:00Z
+10007980611182,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Maya Indah (Yang Bersangkutan).,Alamat Penerima,2026-09-28T06:00:00Z,2026-09-28T06:00:00Z
+10006004182187,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T10:00:00Z,2026-09-22T10:00:00Z
+10002801823908,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T14:00:00Z,2026-09-28T14:00:00Z
+10002801823908,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T17:00:00Z,2026-09-28T17:00:00Z
+10002801823908,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T19:00:00Z,2026-09-28T19:00:00Z
+10002801823908,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T00:00:00Z,2026-09-29T00:00:00Z
+10002801823908,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T06:00:00Z,2026-09-29T06:00:00Z
+10002801823908,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-29T12:00:00Z,2026-09-29T12:00:00Z
+10002801823908,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Rian Hidayat.,Hub Cakung Jakarta,2026-09-29T16:00:00Z,2026-09-29T16:00:00Z
+10008760038701,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T14:00:00Z,2026-09-22T14:00:00Z
+10008760038701,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-22T17:00:00Z,2026-09-22T17:00:00Z
+10008760038701,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-22T19:00:00Z,2026-09-22T19:00:00Z
+10008760038701,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T00:00:00Z,2026-09-23T00:00:00Z
+10008760038701,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-23T06:00:00Z,2026-09-23T06:00:00Z
+10008760038701,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-23T12:00:00Z,2026-09-23T12:00:00Z
+10008760038701,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Sri Wahyuni.,Hub Cakung Jakarta,2026-09-23T16:00:00Z,2026-09-23T16:00:00Z
+10007801222128,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T17:00:00Z,2026-09-28T17:00:00Z
+10007801222128,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T20:00:00Z,2026-09-28T20:00:00Z
+10007801222128,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T22:00:00Z,2026-09-28T22:00:00Z
+10007801222128,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T03:00:00Z,2026-09-29T03:00:00Z
+10007801222128,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T09:00:00Z,2026-09-29T09:00:00Z
+10007801222128,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-29T15:00:00Z,2026-09-29T15:00:00Z
+10007801222128,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Rian Hidayat.,Hub Cakung Jakarta,2026-09-29T19:00:00Z,2026-09-29T19:00:00Z
+10007801222128,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Rian Hidayat (Yang Bersangkutan).,Alamat Penerima,2026-10-01T17:00:00Z,2026-10-01T17:00:00Z
+10001599707677,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-21T15:00:00Z,2026-09-21T15:00:00Z
+10003119634399,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T17:00:00Z,2026-09-22T17:00:00Z
+10003119634399,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-22T20:00:00Z,2026-09-22T20:00:00Z
+10003119634399,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-22T22:00:00Z,2026-09-22T22:00:00Z
+10003119634399,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T03:00:00Z,2026-09-23T03:00:00Z
+10003119634399,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-23T09:00:00Z,2026-09-23T09:00:00Z
+10003119634399,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-23T15:00:00Z,2026-09-23T15:00:00Z
+10003119634399,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Ahmad Fauzi.,Hub Cakung Jakarta,2026-09-23T19:00:00Z,2026-09-23T19:00:00Z
+10003119634399,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Ahmad Fauzi (Yang Bersangkutan).,Alamat Penerima,2026-09-23T09:00:00Z,2026-09-23T09:00:00Z
+10004673561638,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-29T16:00:00Z,2026-09-29T16:00:00Z
+10004673561638,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-29T19:00:00Z,2026-09-29T19:00:00Z
+10004673561638,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-29T21:00:00Z,2026-09-29T21:00:00Z
+10004673561638,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-30T02:00:00Z,2026-09-30T02:00:00Z
+10004673561638,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-30T08:00:00Z,2026-09-30T08:00:00Z
+10004673561638,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-30T14:00:00Z,2026-09-30T14:00:00Z
+10004673561638,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Ahmad Fauzi.,Hub Cakung Jakarta,2026-09-30T18:00:00Z,2026-09-30T18:00:00Z
+10004673561638,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Ahmad Fauzi (Yang Bersangkutan).,Alamat Penerima,2026-10-01T11:00:00Z,2026-10-01T11:00:00Z
+10007110082321,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T11:00:00Z,2026-09-27T11:00:00Z
+10007110082321,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-27T14:00:00Z,2026-09-27T14:00:00Z
+10007110082321,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-27T16:00:00Z,2026-09-27T16:00:00Z
+10007110082321,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-27T21:00:00Z,2026-09-27T21:00:00Z
+10007110082321,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-28T03:00:00Z,2026-09-28T03:00:00Z
+10007110082321,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-28T09:00:00Z,2026-09-28T09:00:00Z
+10007110082321,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Budi Santoso.,Hub Cakung Jakarta,2026-09-28T13:00:00Z,2026-09-28T13:00:00Z
+10007110082321,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Budi Santoso (Yang Bersangkutan).,Alamat Penerima,2026-09-28T07:00:00Z,2026-09-28T07:00:00Z
+10008752612686,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-24T16:00:00Z,2026-09-24T16:00:00Z
+10008752612686,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-24T19:00:00Z,2026-09-24T19:00:00Z
+10008752612686,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-24T21:00:00Z,2026-09-24T21:00:00Z
+10008752612686,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-25T02:00:00Z,2026-09-25T02:00:00Z
+10008752612686,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-25T06:00:00Z,2026-09-25T06:00:00Z
+10005993561321,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T14:00:00Z,2026-09-28T14:00:00Z
+10005993561321,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T17:00:00Z,2026-09-28T17:00:00Z
+10005993561321,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T19:00:00Z,2026-09-28T19:00:00Z
+10005993561321,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-29T00:00:00Z,2026-09-29T00:00:00Z
+10005993561321,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T04:00:00Z,2026-09-29T04:00:00Z
+10008055995058,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T14:00:00Z,2026-09-27T14:00:00Z
+10007867414708,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-25T10:00:00Z,2026-09-25T10:00:00Z
+10007867414708,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-25T13:00:00Z,2026-09-25T13:00:00Z
+10007867414708,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-25T15:00:00Z,2026-09-25T15:00:00Z
+10007867414708,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-25T20:00:00Z,2026-09-25T20:00:00Z
+10007867414708,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-26T00:00:00Z,2026-09-26T00:00:00Z
+10005047709743,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T15:00:00Z,2026-09-30T15:00:00Z
+10001240251661,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T10:00:00Z,2026-09-28T10:00:00Z
+10008385972235,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T14:00:00Z,2026-09-23T14:00:00Z
+10008385972235,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-23T17:00:00Z,2026-09-23T17:00:00Z
+10008385972235,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-23T19:00:00Z,2026-09-23T19:00:00Z
+10008385972235,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-24T00:00:00Z,2026-09-24T00:00:00Z
+10008385972235,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-24T04:00:00Z,2026-09-24T04:00:00Z
+10004698408854,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T10:00:00Z,2026-09-27T10:00:00Z
+10004698408854,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-27T13:00:00Z,2026-09-27T13:00:00Z
+10003098545541,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-28T10:00:00Z,2026-09-28T10:00:00Z
+10003098545541,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-28T13:00:00Z,2026-09-28T13:00:00Z
+10003098545541,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-28T15:00:00Z,2026-09-28T15:00:00Z
+10003098545541,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-28T20:00:00Z,2026-09-28T20:00:00Z
+10003098545541,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-29T02:00:00Z,2026-09-29T02:00:00Z
+10003098545541,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-29T08:00:00Z,2026-09-29T08:00:00Z
+10003098545541,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Maya Indah.,Hub Cakung Jakarta,2026-09-29T12:00:00Z,2026-09-29T12:00:00Z
+10003098545541,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Maya Indah (Yang Bersangkutan).,Alamat Penerima,2026-10-01T09:00:00Z,2026-10-01T09:00:00Z
+10002554762903,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-23T10:00:00Z,2026-09-23T10:00:00Z
+10002554762903,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-23T13:00:00Z,2026-09-23T13:00:00Z
+10002554762903,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-23T15:00:00Z,2026-09-23T15:00:00Z
+10002554762903,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T20:00:00Z,2026-09-23T20:00:00Z
+10002554762903,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-24T02:00:00Z,2026-09-24T02:00:00Z
+10002554762903,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-24T08:00:00Z,2026-09-24T08:00:00Z
+10002554762903,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Dewi Lestari.,Hub Cakung Jakarta,2026-09-24T12:00:00Z,2026-09-24T12:00:00Z
+10002554762903,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Dewi Lestari (Yang Bersangkutan).,Alamat Penerima,2026-09-26T09:00:00Z,2026-09-26T09:00:00Z
+10008574149614,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-27T11:00:00Z,2026-09-27T11:00:00Z
+10008574149614,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-27T14:00:00Z,2026-09-27T14:00:00Z
+10008574149614,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-27T16:00:00Z,2026-09-27T16:00:00Z
+10008574149614,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-27T21:00:00Z,2026-09-27T21:00:00Z
+10008574149614,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-28T03:00:00Z,2026-09-28T03:00:00Z
+10008574149614,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-28T09:00:00Z,2026-09-28T09:00:00Z
+10008574149614,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Siti Nurhaliza.,Hub Cakung Jakarta,2026-09-28T13:00:00Z,2026-09-28T13:00:00Z
+10008574149614,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Siti Nurhaliza (Yang Bersangkutan).,Alamat Penerima,2026-09-28T08:00:00Z,2026-09-28T08:00:00Z
+10005231494220,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-22T15:00:00Z,2026-09-22T15:00:00Z
+10005231494220,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-22T18:00:00Z,2026-09-22T18:00:00Z
+10005231494220,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-22T20:00:00Z,2026-09-22T20:00:00Z
+10005231494220,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-23T01:00:00Z,2026-09-23T01:00:00Z
+10005231494220,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-09-23T07:00:00Z,2026-09-23T07:00:00Z
+10005231494220,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-09-23T13:00:00Z,2026-09-23T13:00:00Z
+10005231494220,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Budi Santoso.,Hub Cakung Jakarta,2026-09-23T17:00:00Z,2026-09-23T17:00:00Z
+10008217611860,[ORDER_CREATED],ORDER_CREATED,Pesanan Dibuat,Pengirim telah meminta penjemputan barang melalui sistem.,Sistem Anteraja,2026-09-30T10:00:00Z,2026-09-30T10:00:00Z
+10008217611860,[PICKUP_READY],PICKUP_READY,Kurir Ditugaskan Pick-up,Kurir Satria dijadwalkan menjemput paket di lokasi pengirim.,Hub Sortir Pengirim,2026-09-30T13:00:00Z,2026-09-30T13:00:00Z
+10008217611860,[PICKUP],IN_TRANSIT,Paket Telah Di-pickup,Paket telah diambil oleh Kurir Satria dari alamat pengirim.,Gateway Penjemputan,2026-09-30T15:00:00Z,2026-09-30T15:00:00Z
+10008217611860,[PROCESSED],IN_TRANSIT,Paket Tiba di Hub Sortir Asal,Paket sedang dalam proses pemilahan dan barcode scanning.,Hub Sortir Bandung,2026-09-30T20:00:00Z,2026-09-30T20:00:00Z
+10008217611860,[OUTBOUND],IN_TRANSIT,Paket Diberangkatkan ke Hub Tujuan,Linehaul Armada Antar-Kota bergerak menuju Hub Cakung.,Hub Sortir Bandung,2026-10-01T02:00:00Z,2026-10-01T02:00:00Z
+10008217611860,[RECEIVED],IN_TRANSIT,Paket Tiba di Hub Tujuan,Paket telah sampai di fasilitas transit kota tujuan dan siap di-staging.,Hub Cakung Jakarta,2026-10-01T08:00:00Z,2026-10-01T08:00:00Z
+10008217611860,[OUT_FOR_DELIVERY],OUT_FOR_DELIVERY,Paket Sedang Diantar,Kurir Satria sedang dalam perjalanan mengantarkan paket ke alamat Andi Pratama.,Hub Cakung Jakarta,2026-10-01T12:00:00Z,2026-10-01T12:00:00Z
+10008217611860,[DELIVERED],DELIVERED,Paket Telah Terkirim,Paket berhasil diterima oleh Andi Pratama (Yang Bersangkutan).,Alamat Penerima,2026-10-03T08:00:00Z,2026-10-03T08:00:00Z

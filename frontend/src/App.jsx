@@ -7,6 +7,7 @@ import Footer from "./components/layout/Footer";
 
 const HomePage = lazy(() => import("./pages/HomePage"));
 const LacakPage = lazy(() => import("./pages/LacakPage"));
+const TrackingResolverPage = lazy(() => import("./pages/TrackingResolverPage"));
 const TrackingNormalPage = lazy(() => import("./pages/TrackingNormalPage"));
 const TrackingLivePage = lazy(() => import("./pages/TrackingLivePage"));
 const TrackingWarningPage = lazy(() => import("./pages/TrackingWarningPage"));
@@ -42,6 +43,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/lacak" element={<LacakPage />} />
+              <Route path="/cek-resi" element={<TrackingResolverPage />} />
               <Route path="/tracking-normal" element={<TrackingNormalPage />} />
               <Route path="/tracking-live" element={<TrackingLivePage />} />
               <Route path="/tracking" element={<TrackingWarningPage />} />

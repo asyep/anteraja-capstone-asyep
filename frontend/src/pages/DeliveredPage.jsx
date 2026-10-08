@@ -5,6 +5,11 @@ export default function DeliveredPage() {
   const [searchParams] = useSearchParams();
   const waybillParam =
     searchParams.get("waybill_number") || "11111111111111111111111111111111";
+  if (loading || !data) return <TrackingLoadingState waybill={waybill} />;
+  const shipment = data.shipment;
+  const milestones = data.milestone_stages || [];
+  const events = data.tracking_events || [];
+
   return (
     <main className="w-full bg-surface min-h-[calc(100vh-20rem)]">
       <div className="flex flex-col w-full">

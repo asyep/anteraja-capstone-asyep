@@ -1,0 +1,16 @@
+courier_id,courier_name,courier_phone,courier_photo_url,vehicle_type,vehicle_plate,created_at
+#JKT-88200,Agus Prasetyo,+628112867825,https://images.unsplash.com/photo-1534528741775?auto=format&fit=crop&w=150&q=80,Motorcycle,B 9421 KXP,2026-08-01T08:00:00Z
+#JKT-88201,Bambang Pamungkas,+628111419610,https://images.unsplash.com/photo-1534528741776?auto=format&fit=crop&w=150&q=80,Blind Van,B 3102 SXZ,2026-08-02T08:00:00Z
+#JKT-88202,Dedi Kurniawan,+628115614226,https://images.unsplash.com/photo-1534528741777?auto=format&fit=crop&w=150&q=80,Linehaul Truck,B 6542 TUV,2026-08-03T08:00:00Z
+#JKT-88203,Eko Yulianto,+628115108603,https://images.unsplash.com/photo-1534528741778?auto=format&fit=crop&w=150&q=80,Motorcycle,D 8812 AB,2026-08-04T08:00:00Z
+#JKT-88204,Fajar Nugraha,+628114744854,https://images.unsplash.com/photo-1534528741779?auto=format&fit=crop&w=150&q=80,Blind Van,D 4591 ACG,2026-08-05T08:00:00Z
+#JKT-88205,Gilang Ramadhan,+628113341057,https://images.unsplash.com/photo-1534528741780?auto=format&fit=crop&w=150&q=80,Linehaul Truck,B 1928 POK,2026-08-06T08:00:00Z
+#JKT-88206,Hendra Setiawan,+628112719583,https://images.unsplash.com/photo-1534528741781?auto=format&fit=crop&w=150&q=80,Motorcycle,B 7731 QWE,2026-08-07T08:00:00Z
+#JKT-88207,Indra Wijaya,+628112458591,https://images.unsplash.com/photo-1534528741782?auto=format&fit=crop&w=150&q=80,Blind Van,L 1029 GH,2026-08-08T08:00:00Z
+#JKT-88208,Joko Susilo,+628118078673,https://images.unsplash.com/photo-1534528741783?auto=format&fit=crop&w=150&q=80,Linehaul Truck,B 5541 JKL,2026-08-09T08:00:00Z
+#JKT-88209,Kurniawan Dwi,+628111533224,https://images.unsplash.com/photo-1534528741784?auto=format&fit=crop&w=150&q=80,Motorcycle,B 2290 RFV,2026-08-10T08:00:00Z
+#JKT-88210,Lukman Hakim,+628111499914,https://images.unsplash.com/photo-1534528741785?auto=format&fit=crop&w=150&q=80,Blind Van,D 3341 TYU,2026-08-11T08:00:00Z
+#JKT-88211,Muhammad Rizky,+628112571945,https://images.unsplash.com/photo-1534528741786?auto=format&fit=crop&w=150&q=80,Linehaul Truck,B 9012 BNM,2026-08-12T08:00:00Z
+#JKT-88212,Nanang Hidayat,+628114668136,https://images.unsplash.com/photo-1534528741787?auto=format&fit=crop&w=150&q=80,Motorcycle,B 4412 IOP,2026-08-13T08:00:00Z
+#JKT-88213,Oki Setiawan,+628114903402,https://images.unsplash.com/photo-1534528741788?auto=format&fit=crop&w=150&q=80,Blind Van,L 8819 ER,2026-08-14T08:00:00Z
+#JKT-88214,Panji Trihatmodjo,+628119478454,https://images.unsplash.com/photo-1534528741789?auto=format&fit=crop&w=150&q=80,Linehaul Truck,B 6621 YHN,2026-08-15T08:00:00Z

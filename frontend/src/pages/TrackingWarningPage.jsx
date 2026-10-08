@@ -1,20 +1,23 @@
-import React, { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { getRouteForResi } from "../data/shipmentsData";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useTrackingDetail from "../hooks/useTrackingDetail";
+import TrackingLoadingState from "../components/tracking/TrackingLoadingState";
+import { formatLongWib, formatShortWib, formatWeight, formatVolume, firstName } from "../utils/formatters";
 
 export default function TrackingWarningPage() {
+  const { shipment: data, loading } = useTrackingDetail("warning");
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const queryWaybill = searchParams.get("waybill_number");
-  const initialWaybill = queryWaybill?.startsWith("10008492019945")
-    ? "10008492019945"
-    : queryWaybill || "10007812938125";
-  const [waybill, setWaybill] = useState(initialWaybill);
+  const [waybill, setWaybill] = useState("");
   const [routeOpen, setRouteOpen] = useState(false);
+
+  useEffect(() => {
+    if (data) setWaybill(data.waybill_number);
+  }, [data]);
+
   function handleSubmit(event) {
     event.preventDefault();
     const value = waybill.trim();
-    if (value) navigate(getRouteForResi(value));
+    if (value) navigate(`/cek-resi?waybill_number=${value}`);
   }
   async function copyWaybill() {
     try {
@@ -41,6 +44,11 @@ export default function TrackingWarningPage() {
       /* Sharing can be cancelled by the user. */
     }
   }
+  if (loading || !data) return <TrackingLoadingState waybill={waybill} />;
+  const shipment = data.shipment;
+  const milestones = data.milestone_stages || [];
+  const events = data.tracking_events || [];
+
   return (
     <main className="w-full bg-surface min-h-[calc(100vh-20rem)]" id="main">
       <div className="flex flex-col w-full">
@@ -121,26 +129,21 @@ export default function TrackingWarningPage() {
                   <span className="font-label-sm text-label-sm uppercase font-bold tracking-wider text-text-muted">
                     Uji Coba Resi:
                   </span>
-                  <a
-                    className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5"
-                    href="/tracking-normal?waybill_number=100084920199458271039485729103948"
-                  >
+                  <a className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5" href="/tracking-normal">
                     <span className="w-2 h-2 rounded-full bg-success-base"></span>
-                    #10008492019945 (In-Transit)
+                    Normal
                   </a>
-                  <a
-                    className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5"
-                    href="/tracking-live?waybill_number=10009214778215"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-success-base"></span>
-                    #10009214778215 (Live Map)
+                  <a className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5" href="/tracking-live">
+                    <span className="w-2 h-2 rounded-full bg-success-base animate-pulse"></span>
+                    Live Map
                   </a>
-                  <a
-                    className="px-3 py-1.5 rounded-full bg-primary-fixed/40 text-primary font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5 font-bold"
-                    href="/tracking?waybill_number=10007812938125"
-                  >
-                    <span className="w-2 h-2 rounded-full bg-warning-base"></span>
-                    #10007812938125 (Peringatan Jalur)
+                  <a className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5" href="/tracking-warning">
+                    <span className="w-2 h-2 rounded-full bg-secondary-fixed-dim"></span>
+                    Warning
+                  </a>
+                  <a className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1.5" href="/tracking-delivered">
+                    <span className="w-2 h-2 rounded-full bg-primary-fixed"></span>
+                    Delivered
                   </a>
                 </div>
                 <button
@@ -252,14 +255,14 @@ export default function TrackingWarningPage() {
                   </span>
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-headline-md text-headline-md font-bold text-on-surface">
-                      Estimasi Tiba: 29 September 2026, 12:00 WIB
+                      Estimasi Tiba: {formatLongWib(data.order_estimated_delivery_date)}
                     </span>
                     <span className="px-2.5 py-0.5 rounded-full bg-warning-surface text-secondary border border-warning-base/30 font-label-sm text-label-sm font-bold">
                       Dalam Penyesuaian
                     </span>
                   </div>
                   <span className="font-body-sm text-body-sm text-text-muted line-through mt-0.5">
-                    Estimasi awal: 28 September 2026, 18:00 WIB
+                    
                   </span>
                 </div>
               </div>
@@ -640,7 +643,7 @@ export default function TrackingWarningPage() {
                           Nomor Resi (AWB)
                         </span>
                         <span className="font-mono-code text-label-md font-bold text-on-surface">
-                          10007812938125
+                          {data.waybill_number}
                         </span>
                       </div>
                       <div className="p-space-sm rounded-xl bg-surface-card flex flex-col">
