@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Polyline, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, Polyline, Marker, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -93,11 +93,13 @@ export default function TrackingMap({ waypoints = [], activeIndex = 0, variant }
       <MapContainer
         center={currentCoord}
         zoom={13}
-        scrollWheelZoom={false}
+        scrollWheelZoom={true}
         className="h-full w-full"
         ref={mapRef}
         zoomControl={false}
       >
+        <ZoomControl position="topright" />
+        
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>'
           url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
