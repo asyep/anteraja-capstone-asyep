@@ -191,3 +191,8 @@
     display: none;
   }
 }
+
+/* Fix leaflet map tiles being squished by Tailwind's image reset */
+.leaflet-container img {
+  max-width: none !important;
+}
