@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3492741706fa63068ec0b91d799e9561",
+    "content-hash": "874bd840e7214709abe61129ca145e1e",
     "packages": [
         {
             "name": "brick/math",
@@ -6106,6 +6106,62 @@
         }
     ],
     "packages-dev": [
+        {
+            "name": "aerni/cloudflared",
+            "version": "v2.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/aerni/laravel-cloudflared.git",
+                "reference": "1e96a8cfd461180dc7e7a94277b37735406e5c3f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/aerni/laravel-cloudflared/zipball/1e96a8cfd461180dc7e7a94277b37735406e5c3f",
+                "reference": "1e96a8cfd461180dc7e7a94277b37735406e5c3f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "^12.0 || ^13.0",
+                "illuminate/support": "^12.0 || ^13.0",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^10.0 || ^11.0",
+                "pestphp/pest": "^4.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Aerni\\Cloudflared\\CloudflaredServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Aerni\\Cloudflared\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Aerni",
+                    "email": "hello@michaelaerni.ch",
+                    "homepage": "https://michaelaerni.ch",
+                    "role": "Developer"
+                }
+            ],
+            "description": "A Laravel package to create and manage Cloudflare Tunnels for local development",
+            "homepage": "https://github.com/aerni/laravel-cloudflared",
+            "support": {
+                "issues": "https://github.com/aerni/laravel-cloudflared/issues",
+                "source": "https://github.com/aerni/laravel-cloudflared/tree/v2.1.1"
+            },
+            "time": "2026-04-21T18:42:23+00:00"
+        },
         {
             "name": "fakerphp/faker",
             "version": "v1.24.1",

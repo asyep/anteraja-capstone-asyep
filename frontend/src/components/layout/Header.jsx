@@ -1,57 +1,48 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
+import Logo from "@/components/layout/Logo";
+import MobileNav from "@/components/layout/MobileNav";
+import NavLinks from "@/components/layout/NavLinks";
+import { NAV_ITEMS } from "@/components/layout/navigation";
+import useMobileNav from "@/components/layout/useMobileNav";
+
+/**
+ * Header aplikasi — dipasang sekali di app/App.jsx sehingga tampil sama
+ * di semua halaman.
+ *
+ * Struktur berkas terkait:
+ *   navigation.js   konfigurasi menu + aturan menu aktif
+ *   useMobileNav.js state buka/tutup menu mobile
+ *   Logo.jsx        logo Anteraja
+ *   NavLinks.jsx    daftar menu (dipakai versi desktop & mobile)
+ *   MobileNav.jsx   tombol hamburger + panel dropdown
+ *
+ * Tinggi header 80px (h-20); offset konten diatur di App.jsx (pt-20).
+ */
 export default function Header() {
-  const location = useLocation();
-  const currentPath = location.pathname;
+  const { pathname } = useLocation();
+  const { open, toggle, close } = useMobileNav(pathname);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-[#E5E7EB] shadow-sm">
-      <div className="h-[74px] max-w-[1320px] mx-auto px-2 sm:px-6 lg:px-10 flex items-center justify-between gap-1 sm:gap-8">
-        <div className="flex items-center gap-1 sm:gap-10">
-          <Link
-            to="/"
-            className="flex items-center gap-3 transition-transform hover:opacity-95"
-            aria-label="Anteraja Beranda"
-          >
-            <img
-              alt="Anteraja"
-              className="h-6 sm:h-9 w-auto object-contain"
-              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCe6Sd3grxrRWPcD50ZL9ML41Qgjht-JFyyH9oR_h216L-YuPxTnO476pV6oNgnxfW6GO3e69fnJ6zfE31GbHVruEB0qAqLhqyF4GzmBS6Uw8utcokB5ESQNjEUgBTQue2S_nmzjh85VMNah20d2omDqGQ8Z1easannyiXA-VC-6TascqvSc5Oq2eMij5tOvg1KKRukpf5TRfeUfqFgTRHTP1uW23cHVlgombuEI5jwo_4iEzCJmERdLH6uug9wp-LKkV8"
-            />
-          </Link>
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-border-subtle/70 bg-surface/90 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
+      <div className="mx-auto flex h-20 max-w-[1200px] items-center justify-between gap-4 px-margin md:px-margin-tablet lg:px-margin-desktop">
+        <div className="flex min-w-0 items-center gap-4 sm:gap-6 lg:gap-space-xl">
+          <Logo />
 
-          <nav
-            className="flex items-center gap-0 sm:gap-2"
-            aria-label="Navigasi utama"
-          >
-            <Link
-              to="/"
-              className={`inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl px-3 sm:px-5 text-xs sm:text-sm transition-colors ${
-                currentPath === "/"
-                  ? "bg-[#b30069]/10 font-bold text-[#b30069]"
-                  : "font-semibold text-[#5a3f49] hover:bg-[#f0eded] hover:text-[#b30069]"
-              }`}
-            >
-              Beranda
-            </Link>
-
-            <Link
-              to="/lacak"
-              className={`inline-flex min-h-9 shrink-0 items-center whitespace-nowrap rounded-xl px-1 sm:px-5 text-[10px] sm:text-sm transition-colors ${
-                currentPath.startsWith("/lacak") ||
-                currentPath.startsWith("/tracking") ||
-                currentPath === "/delivered" ||
-                currentPath === "/canceled" ||
-                currentPath === "/ai-fallback"
-                  ? "bg-[#b30069]/10 font-bold text-[#b30069]"
-                  : "font-semibold text-[#5a3f49] hover:bg-[#f0eded] hover:text-[#b30069]"
-              }`}
-            >
-              Lacak Kiriman
-            </Link>
+          {/* Navigasi desktop */}
+          <nav aria-label="Navigasi utama" className="hidden md:block">
+            <NavLinks items={NAV_ITEMS} pathname={pathname} />
           </nav>
         </div>
+
+        {/* Navigasi mobile */}
+        <MobileNav
+          items={NAV_ITEMS}
+          onNavigate={close}
+          onToggle={toggle}
+          open={open}
+          pathname={pathname}
+        />
       </div>
     </header>
   );

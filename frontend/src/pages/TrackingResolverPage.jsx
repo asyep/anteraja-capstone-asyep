@@ -1,14 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { fetchShipment } from "../services/api";
-import { getRouteForScenario } from "../data/shipmentsData";
-import { errorRoute } from "../hooks/useTrackingDetail";
 import TrackingLoadingState from "../components/tracking/TrackingLoadingState";
 
-/**
- * /cek-resi?waybill_number=… — memanggil API lalu meneruskan pengguna ke
- * halaman tracking yang sesuai dengan skenario kiriman.
- */
 export default function TrackingResolverPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -16,17 +9,40 @@ export default function TrackingResolverPage() {
 
   useEffect(() => {
     let active = true;
-    fetchShipment(waybill)
-      .then((shipment) => {
+    
+    async function resolveTracking() {
+      try {
+        const response = await fetch(`http://localhost:8000/api/v1/tracking/${waybill}`);
+        if (!response.ok) {
+           navigate(`/not-found?waybill_number=${waybill}`, { replace: true });
+           return;
+        }
+        const result = await response.json();
+        const status = result.data.order_status;
+        
+        let path = "/not-found";
+        if (status === "ORDER_CREATED") path = "/tracking/order-created";
+        else if (status === "PICKUP_READY" || status === "COURIER_PROCESSED") path = "/tracking/courier-processed";
+        else if (status === "IN_TRANSIT") path = "/tracking/in-transit";
+        else if (status === "OUT_FOR_DELIVERY") path = "/tracking/out-for-delivery";
+        else if (status === "DELIVERED") path = "/delivered";
+        
         if (active) {
-          navigate(getRouteForScenario(shipment.scenario, shipment.waybill_number), { replace: true });
+           navigate(`${path}?waybill_number=${waybill}`, { replace: true });
         }
-      })
-      .catch((error) => {
-        if (active && error.name !== "AbortError") {
-          navigate(errorRoute(error, waybill), { replace: true });
+      } catch (error) {
+        if (active) {
+           navigate(`/not-found?waybill_number=${waybill}`, { replace: true });
         }
-      });
+      }
+    }
+    
+    if (waybill) {
+      resolveTracking();
+    } else {
+      navigate(`/not-found?waybill_number=${waybill}`, { replace: true });
+    }
+
     return () => {
       active = false;
     };

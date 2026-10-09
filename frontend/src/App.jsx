@@ -1,67 +1,54 @@
-import React, { lazy, Suspense } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import { ShipmentProvider } from "./context/ShipmentContext";
 
 import Header from "./components/layout/Header";
 import Footer from "./components/layout/Footer";
 
-const HomePage = lazy(() => import("./pages/HomePage"));
-const LacakPage = lazy(() => import("./pages/LacakPage"));
-const TrackingResolverPage = lazy(() => import("./pages/TrackingResolverPage"));
-const TrackingNormalPage = lazy(() => import("./pages/TrackingNormalPage"));
-const TrackingLivePage = lazy(() => import("./pages/TrackingLivePage"));
-const TrackingWarningPage = lazy(() => import("./pages/TrackingWarningPage"));
-const BantuanPage = lazy(() => import("./pages/BantuanPage"));
-const DeliveredPage = lazy(() => import("./pages/DeliveredPage"));
-const CanceledPage = lazy(() => import("./pages/CanceledPage"));
-const AiFallbackPage = lazy(() => import("./pages/AiFallbackPage"));
-const NotFoundPage = lazy(() => import("./pages/NotFoundPage"));
-const ValidationErrorPage = lazy(() => import("./pages/ValidationErrorPage"));
-const ServiceErrorPage = lazy(() => import("./pages/ServiceErrorPage"));
-const LoadingPage = lazy(() => import("./pages/LoadingPage"));
-const SmartWidgetPage = lazy(() => import("./pages/SmartWidgetPage"));
-const PhpTrackingLabPage = lazy(() => import("./pages/PhpTrackingLabPage"));
+import HomePage from "./pages/HomePage";
+import LacakPage from "./pages/LacakPage";
+import TrackingResolverPage from "./pages/TrackingResolverPage";
+import OrderCreatedPage from "./pages/OrderCreatedPage";
+import CourierProcessedPage from "./pages/CourierProcessedPage";
+import InTransitPage from "./pages/InTransitPage";
+import OutForDeliveryPage from "./pages/OutForDeliveryPage";
+import HelpPage from "./pages/HelpPage";
+import DeliveredPage from "./pages/DeliveredPage";
+import NotFoundPage from "./pages/NotFoundPage";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
 
 export default function App() {
   return (
     <ShipmentProvider>
       <Router>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen bg-[#fcf9f8] font-['Plus_Jakarta_Sans',sans-serif]">
-        <Header />
-        <main className="flex-1 pt-[74px]">
-          <Suspense
-            fallback={
-              <div
-                aria-live="polite"
-                className="mx-auto max-w-[1240px] px-4 py-10 text-sm text-[#777079] sm:px-8"
-                role="status"
-              >
-                Memuat halaman...
-              </div>
-            }
-          >
+          <Header />
+          <main className="min-h-[calc(100vh-20rem)] flex-1 bg-surface pt-20">
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/lacak" element={<LacakPage />} />
               <Route path="/cek-resi" element={<TrackingResolverPage />} />
-              <Route path="/tracking-normal" element={<TrackingNormalPage />} />
-              <Route path="/tracking-live" element={<TrackingLivePage />} />
-              <Route path="/tracking" element={<TrackingWarningPage />} />
-              <Route path="/bantuan" element={<BantuanPage />} />
+              <Route path="/tracking/order-created" element={<OrderCreatedPage />} />
+              <Route path="/tracking/courier-processed" element={<CourierProcessedPage />} />
+              <Route path="/tracking/in-transit" element={<InTransitPage />} />
+              <Route path="/tracking/out-for-delivery" element={<OutForDeliveryPage />} />
+              <Route path="/bantuan" element={<HelpPage />} />
               <Route path="/delivered" element={<DeliveredPage />} />
-              <Route path="/canceled" element={<CanceledPage />} />
-              <Route path="/ai-fallback" element={<AiFallbackPage />} />
               <Route path="/not-found" element={<NotFoundPage />} />
-              <Route path="/validation-error" element={<ValidationErrorPage />} />
-              <Route path="/service-error" element={<ServiceErrorPage />} />
-              <Route path="/loading" element={<LoadingPage />} />
-              <Route path="/smart-widget" element={<SmartWidgetPage />} />
-              <Route path="/php-tracking-lab" element={<PhpTrackingLabPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
-          </Suspense>
-        </main>
-        <Footer />
+          </main>
+          <Footer />
         </div>
       </Router>
     </ShipmentProvider>
