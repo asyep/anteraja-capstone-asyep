@@ -5,8 +5,35 @@ import { useState } from "react";
  * aksi (WhatsApp, bagikan status). Tombol bagikan memakai Web Share API
  * bila tersedia, kalau tidak teks disalin ke clipboard.
  */
-export default function AssistantNarrative({ assistant, statusLabel }) {
+export default function AssistantNarrative({ assistant, statusLabel, waybill }) {
   const [shareLabel, setShareLabel] = useState("Bagikan Status");
+  const [feedbackStatus, setFeedbackStatus] = useState("idle");
+
+  async function handleFeedback(membantu) {
+    if (!waybill || feedbackStatus === "loading" || feedbackStatus === "success") return;
+    
+    setFeedbackStatus("loading");
+    try {
+      const response = await fetch("http://localhost:8000/api/v1/feedback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          resi: waybill,
+          membantu: membantu,
+        }),
+      });
+
+      if (!response.ok) throw new Error("Gagal mengirim feedback");
+      setFeedbackStatus("success");
+    } catch (error) {
+      console.error(error);
+      setFeedbackStatus("error");
+      setTimeout(() => setFeedbackStatus("idle"), 3000);
+    }
+  }
 
   async function bagikanStatus() {
     const teks = `${statusLabel} — resi ${assistant.courierId}. Pantau di halaman pelacakan Anteraja.`;
@@ -73,6 +100,45 @@ export default function AssistantNarrative({ assistant, statusLabel }) {
           <p className="mt-1 rounded-xl bg-surface-container-low/70 p-space-md font-body-lg text-body-lg leading-relaxed text-on-surface">
             &ldquo;{assistant.message}&rdquo;
           </p>
+
+          {waybill && (
+            <div className="mt-1 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border-subtle bg-surface-container-lowest p-3 shadow-sm sm:flex-nowrap">
+              <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
+                Apakah informasi dari AI ini membantu Anda?
+              </span>
+              <div className="flex gap-2">
+                {feedbackStatus === "success" ? (
+                  <span className="flex items-center gap-1 font-label-sm text-label-sm text-success-base">
+                    <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                    Terima kasih atas masukannya!
+                  </span>
+                ) : feedbackStatus === "error" ? (
+                  <span className="font-label-sm text-label-sm text-error">Gagal mengirim</span>
+                ) : (
+                  <>
+                    <button
+                      onClick={() => handleFeedback(true)}
+                      disabled={feedbackStatus === "loading"}
+                      className="flex h-8 items-center gap-1 rounded-lg bg-surface-container-low px-3 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-success-container hover:text-on-success-container disabled:opacity-50"
+                      title="Membantu"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">thumb_up</span>
+                      Ya
+                    </button>
+                    <button
+                      onClick={() => handleFeedback(false)}
+                      disabled={feedbackStatus === "loading"}
+                      className="flex h-8 items-center gap-1 rounded-lg bg-surface-container-low px-3 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-error-container hover:text-on-error-container disabled:opacity-50"
+                      title="Kurang membantu"
+                    >
+                      <span className="material-symbols-outlined text-[16px]">thumb_down</span>
+                      Tidak
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          )}
 
           <div className="flex flex-wrap items-center gap-space-sm pt-space-xs">
             <a

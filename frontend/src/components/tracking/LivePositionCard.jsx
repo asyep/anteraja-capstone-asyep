@@ -1,19 +1,18 @@
 import { useEffect, useState } from "react";
 
-import TrackingMap from "@/components/tracking/maps/TrackingMap";
-import { DELIVERY_ROUTES } from "@/data/deliveryRoutes";
-import { TRANSIT_ROUTES } from "@/data/transitRoutes";
-import useTransitAnimation from "@/hooks/useTransitAnimation";
+import TrackingMap from "./maps/TrackingMap";
+import { DELIVERY_ROUTES } from "../../data/deliveryRoutes";
+import { TRANSIT_ROUTES } from "../../data/transitRoutes";
+import useTransitAnimation from "../../hooks/useTransitAnimation";
 
 /** Label kapsul badge di kanan atas kartu. */
 function StatusPill({ children, strong }) {
   return (
     <span
-      className={`rounded-full px-2.5 py-0.5 font-label-sm text-label-sm font-bold ${
-        strong
+      className={`rounded-full px-2.5 py-0.5 font-label-sm text-label-sm font-bold ${strong
           ? "bg-tertiary-fixed text-on-tertiary-fixed"
           : "bg-surface-container-low text-text-muted"
-      }`}
+        }`}
     >
       {children}
     </span>
@@ -76,8 +75,8 @@ export default function LivePositionCard({ radar }) {
   // Peta besar (dengan bingkai) dipakai varian animasi, staging, dan delivered.
   const petaKelas =
     berAnimasi ||
-    radar.variant === "staging" ||
-    radar.variant === "delivered"
+      radar.variant === "staging" ||
+      radar.variant === "delivered"
       ? "relative h-56 w-full overflow-hidden rounded-xl border border-border-subtle/50 bg-[#eef2f6] shadow-inner"
       : "relative flex h-48 w-full items-center justify-center overflow-hidden rounded-xl shadow-inner";
 
@@ -104,10 +103,10 @@ export default function LivePositionCard({ radar }) {
       <div className={petaKelas}>
         {berAnimasi ? (
           <>
-            <TrackingMap 
-               waypoints={rute?.waypoints || []} 
-               activeIndex={index} 
-               variant={radar.variant} 
+            <TrackingMap
+              waypoints={rute?.waypoints || []}
+              activeIndex={index}
+              variant={radar.variant}
             />
             <div className="absolute left-2.5 top-2.5 z-[1000] flex items-center gap-1.5 rounded-md border border-border-subtle/50 bg-white px-2.5 py-1 text-[11px] font-bold text-on-surface shadow-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success-base" />
@@ -136,10 +135,10 @@ export default function LivePositionCard({ radar }) {
           </>
         ) : radar.variant === "delivered" ? (
           <>
-            <TrackingMap 
-               waypoints={[{ geo: { lat: -6.2370, lon: 106.8480 }, label: radar.pin.title, detail: radar.pin.subtitle }]} 
-               activeIndex={0} 
-               variant={radar.variant} 
+            <TrackingMap
+              waypoints={[{ geo: { lat: -6.2370, lon: 106.8480 }, label: radar.pin.title, detail: radar.pin.subtitle }]}
+              activeIndex={0}
+              variant={radar.variant}
             />
 
             {/* Chip bukti serah terima (POD) */}
@@ -162,10 +161,10 @@ export default function LivePositionCard({ radar }) {
           </>
         ) : radar.variant === "staging" ? (
           <>
-            <TrackingMap 
-               waypoints={[{ geo: { lat: -6.1750, lon: 106.8275 }, label: radar.pin.title, detail: radar.pin.subtitle }]} 
-               activeIndex={0} 
-               variant={radar.variant} 
+            <TrackingMap
+              waypoints={[{ geo: { lat: -6.1750, lon: 106.8275 }, label: radar.pin.title, detail: radar.pin.subtitle }]}
+              activeIndex={0}
+              variant={radar.variant}
             />
             {radar.liveBadge ? (
               <div className="absolute left-2.5 top-2.5 z-[1000] flex items-center gap-1.5 rounded-md border border-border-subtle/50 bg-white px-2.5 py-1 text-[11px] font-bold text-on-surface shadow-sm">
@@ -173,7 +172,7 @@ export default function LivePositionCard({ radar }) {
                 Live GPS Aktif
               </div>
             ) : null}
-            
+
             {radar.coordinates ? (
               <div className="absolute bottom-2 left-2 right-2 z-[1000] flex items-center justify-between rounded-lg border border-border-subtle/50 bg-white/95 px-3 py-1.5 text-[11px] shadow-sm">
                 <span className="flex items-center gap-1.5 font-medium text-text-primary">
@@ -190,9 +189,9 @@ export default function LivePositionCard({ radar }) {
           </>
         ) : (
           <div className="flex h-full w-full flex-col items-center justify-center bg-[#f8fafc]">
-             <span className="material-symbols-outlined mb-2 text-4xl text-gray-400">explore</span>
-             <h4 className="font-bold text-gray-700">{radar.title}</h4>
-             <p className="text-sm text-gray-500">{radar.description}</p>
+            <span className="material-symbols-outlined mb-2 text-4xl text-gray-400">explore</span>
+            <h4 className="font-bold text-gray-700">{radar.title}</h4>
+            <p className="text-sm text-gray-500">{radar.description}</p>
           </div>
         )}
       </div>

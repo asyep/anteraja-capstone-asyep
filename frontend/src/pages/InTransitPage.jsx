@@ -1,27 +1,24 @@
 import { useSearchParams } from "react-router-dom";
+import TrackingStatusLayout from "../components/tracking/TrackingStatusLayout";
+import { IN_TRANSIT_DATA } from "../data/inTransitData";
+import { useTrackingDetail, mergeShipmentData } from "../hooks/useTrackingDetail";
+import TrackingLoadingState from "../components/tracking/TrackingLoadingState";
 
-import TrackingStatusLayout from "@/components/tracking/TrackingStatusLayout";
-import { IN_TRANSIT_DATA } from "@/data/inTransitData";
-
-/**
- * Halaman status pelacakan: "Dalam Perjalanan".
- *
- * Kondisi ketika paket sedang menempuh perjalanan jarak jauh — dari hub
- * asal menuju hub sortir akhir, belum masuk tahap pengantaran ke penerima.
- *
- * Pada status ini "Radar Posisi Paket" bergerak otomatis mengikuti waypoint
- * rute (lihat data/transitRoutes.js + hooks/useTransitAnimation.js).
- */
 export default function InTransitView() {
   const [searchParams] = useSearchParams();
   const waybill = searchParams.get("waybill_number") || IN_TRANSIT_DATA.waybill;
 
-  const data = { ...IN_TRANSIT_DATA, waybill };
+  const { data: apiData, loading, error } = useTrackingDetail(waybill);
+
+  if (loading) return <TrackingLoadingState waybill={waybill} />;
+  if (error) return <div className="p-8 text-center text-red-500">Error: {error}</div>;
+
+  const mergedData = mergeShipmentData(IN_TRANSIT_DATA, apiData);
 
   return (
     <main className="min-h-[calc(100vh-20rem)] w-full bg-surface">
       <div className="flex w-full flex-col">
-        <TrackingStatusLayout data={data} />
+        <TrackingStatusLayout data={mergedData} />
       </div>
     </main>
   );

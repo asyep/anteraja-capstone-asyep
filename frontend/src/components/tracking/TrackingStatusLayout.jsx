@@ -1,11 +1,11 @@
-import AssistantNarrative from "@/components/tracking/AssistantNarrative";
-import CourierCard from "@/components/tracking/CourierCard";
-import JourneyNotes from "@/components/tracking/JourneyNotes";
-import LivePositionCard from "@/components/tracking/LivePositionCard";
-import MilestoneProgress from "@/components/tracking/MilestoneProgress";
-import PackageDetailCard from "@/components/tracking/PackageDetailCard";
-import StatusBanner from "@/components/tracking/StatusBanner";
-import TrackingSearchBar from "@/components/tracking/TrackingSearchBar";
+import AssistantNarrative from "./AssistantNarrative";
+import CourierCard from "./CourierCard";
+import JourneyNotes from "./JourneyNotes";
+import LivePositionCard from "./LivePositionCard";
+import MilestoneProgress from "./MilestoneProgress";
+import PackageDetailCard from "./PackageDetailCard";
+import StatusBanner from "./StatusBanner";
+import TrackingSearchBar from "./TrackingSearchBar";
 
 /**
  * Kerangka halaman status pelacakan — dipakai bersama oleh semua status
@@ -56,6 +56,7 @@ export default function TrackingStatusLayout({ data }) {
             <AssistantNarrative
               assistant={data.assistant}
               statusLabel={data.status.label}
+              waybill={data.waybill}
             />
 
             <div className="flex flex-1 flex-col rounded-2xl bg-surface-container-lowest p-space-lg shadow-lg">

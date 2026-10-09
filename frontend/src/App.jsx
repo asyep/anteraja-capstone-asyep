@@ -1,19 +1,20 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import { ShipmentProvider } from "@/context/ShipmentContext";
+import { ShipmentProvider } from "./context/ShipmentContext";
 
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "./components/layout/Header";
+import Footer from "./components/layout/Footer";
 
-import HomePage from "@/pages/HomePage";
-import LacakPage from "@/pages/LacakPage";
-import OrderCreatedPage from "@/pages/OrderCreatedPage";
-import CourierProcessedPage from "@/pages/CourierProcessedPage";
-import InTransitPage from "@/pages/InTransitPage";
-import OutForDeliveryPage from "@/pages/OutForDeliveryPage";
-import HelpPage from "@/pages/HelpPage";
-import DeliveredPage from "@/pages/DeliveredPage";
-import NotFoundPage from "@/pages/NotFoundPage";
+import HomePage from "./pages/HomePage";
+import LacakPage from "./pages/LacakPage";
+import TrackingResolverPage from "./pages/TrackingResolverPage";
+import OrderCreatedPage from "./pages/OrderCreatedPage";
+import CourierProcessedPage from "./pages/CourierProcessedPage";
+import InTransitPage from "./pages/InTransitPage";
+import OutForDeliveryPage from "./pages/OutForDeliveryPage";
+import HelpPage from "./pages/HelpPage";
+import DeliveredPage from "./pages/DeliveredPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -36,6 +37,7 @@ export default function App() {
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/lacak" element={<LacakPage />} />
+              <Route path="/cek-resi" element={<TrackingResolverPage />} />
               <Route path="/tracking/order-created" element={<OrderCreatedPage />} />
               <Route path="/tracking/courier-processed" element={<CourierProcessedPage />} />
               <Route path="/tracking/in-transit" element={<InTransitPage />} />

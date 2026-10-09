@@ -1,18 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { getRouteForResi } from "@/data/shipmentsData";
 
-export const ORDER_CREATED_DEMO_RESI = "10002847192847192837461928374619";
-
-const RECENT_SEARCHES = [
-  { resi: "10002847192847192837461928374619", label: "Order Created", dotClass: "bg-secondary" },
-  { resi: "10003920194827103948572910394857", label: "Diproses Kurir", dotClass: "bg-warning" },
-  { resi: "10002847192847192837461928374620", label: "In Transit", dotClass: "bg-tertiary" },
-  { resi: "10002847192847192837461928374621", label: "Out for Delivery", dotClass: "bg-primary" },
-  { resi: "10002847192847192837461928374622", label: "Delivered", dotClass: "bg-success-base" },
-];
-
+export const ORDER_CREATED_DEMO_RESI = "10001240251661";
 
 /**
  * Kolom pencarian resi di halaman status pelacakan.
@@ -23,6 +14,31 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
   const navigate = useNavigate();
   const [waybill, setWaybill] = useState(initialWaybill);
   const [copied, setCopied] = useState(false);
+  const [recentSearches, setRecentSearches] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:8000/api/v1/shipments/samples")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data && data.data) {
+          const mapped = data.data.slice(0, 5).map(item => {
+            let label = item.order_status;
+            let dotClass = "bg-primary";
+            if (label === "ORDER_CREATED") { label = "Order Created"; dotClass = "bg-secondary"; }
+            else if (label === "IN_TRANSIT") { label = "In Transit"; dotClass = "bg-tertiary"; }
+            else if (label === "DELIVERED") { label = "Delivered"; dotClass = "bg-success-base"; }
+            
+            return {
+              resi: item.waybill_number,
+              label,
+              dotClass
+            };
+          });
+          setRecentSearches(mapped);
+        }
+      })
+      .catch((err) => console.error("Gagal memuat sample resi", err));
+  }, []);
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -87,7 +103,7 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
           <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">
             Pencarian Terakhir:
           </span>
-          {RECENT_SEARCHES.map((item) => (
+          {recentSearches.map((item) => (
             <button
               className="flex items-center gap-1 rounded-full bg-surface-container-low px-3 py-1.5 font-mono-code text-label-sm text-on-surface shadow-sm transition-all hover:bg-primary-fixed/40 hover:text-primary"
               key={item.resi}

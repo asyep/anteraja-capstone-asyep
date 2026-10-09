@@ -1,4 +1,4 @@
-import CourierAvatar from "@/components/tracking/CourierAvatar";
+import CourierAvatar from "./CourierAvatar";
 
 /** Tombol aksi yang aktif (Hubungi / Pesan Kilat). */
 function ActionButton({ as = "button", href, icon, label, variant }) {

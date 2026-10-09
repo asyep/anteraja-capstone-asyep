@@ -8,7 +8,6 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      // Import absolut dari mana pun: import X from '@/shared/ui/Button'
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },

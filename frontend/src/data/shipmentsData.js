@@ -66,9 +66,9 @@ export function getRouteForResi(resi) {
   }
 
   // Nomor 13–14 digit dan AWB alfanumerik 32 karakter adalah format yang diterima.
-  // Resi valid tanpa fixture status khusus akan masuk ke halaman Not Found (belum tercatat).
+  // Resi valid tanpa fixture status khusus akan masuk ke halaman cek-resi (API Resolver).
   if (/^(?:\d{13,14}|[A-Za-z0-9]{32})$/.test(cleanResi)) {
-    return `/not-found${query}`;
+    return `/cek-resi${query}`;
   }
 
   return `/validation-error${query}`;

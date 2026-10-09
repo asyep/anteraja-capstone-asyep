@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getRouteForResi } from "@/data/shipmentsData";
+import { getRouteForResi } from "../data/shipmentsData";
 
 export default function NotFoundPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const waybillParam = searchParams.get("waybill_number") || "1000998877665544332211";
-  
+
   const [resi, setResi] = useState(waybillParam);
 
   const handleSearchSubmit = (e) => {
@@ -108,16 +108,16 @@ export default function NotFoundPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pt-1 relative z-10">
               <div className="flex flex-col gap-1 max-w-3xl">
                 <h2 className="font-headline-md text-[20px] md:text-[24px] font-extrabold text-white leading-tight tracking-tight">
-                  Nomor <span style={{letterSpacing: "-0.025em"}}>Resi {waybillParam}</span>
-                  <span style={{letterSpacing: "-0.025em"}}> Belum Tercatat </span><br/>
+                  Nomor <span style={{ letterSpacing: "-0.025em" }}>Resi {waybillParam}</span>
+                  <span style={{ letterSpacing: "-0.025em" }}> Belum Tercatat </span><br />
                 </h2>
                 <p className="font-body-sm text-sm text-white/80 leading-relaxed">
                   Sistem database AI kami telah memeriksa jaringan Hub & Staging Store nasional, namun riwayat pemindaian barcode fisik belum ditemukan.
                 </p>
               </div>
-              <button 
-                className="px-space-md py-2.5 bg-white text-red-950 hover:bg-white/90 font-label-lg text-label-lg font-bold rounded-xl shadow-md transition-all flex items-center gap-2 shrink-0 self-start md:self-center" 
-                onClick={handleKoreksiResi} 
+              <button
+                className="px-space-md py-2.5 bg-white text-red-950 hover:bg-white/90 font-label-lg text-label-lg font-bold rounded-xl shadow-md transition-all flex items-center gap-2 shrink-0 self-start md:self-center"
+                onClick={handleKoreksiResi}
                 type="button"
               >
                 <span className="material-symbols-outlined text-[18px]">edit</span>
@@ -176,7 +176,7 @@ export default function NotFoundPage() {
                   </button>
                 </div>
               </article>
-              
+
               {/* CARD 2: Kemungkinan Mengapa Resi Belum Ditemukan */}
               <article className="bg-surface-container-lowest rounded-2xl p-space-lg shadow-sm flex flex-col gap-space-md">
                 <div className="flex items-center justify-between">
