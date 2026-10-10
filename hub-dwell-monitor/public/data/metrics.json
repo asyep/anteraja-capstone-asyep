@@ -1,0 +1,56 @@
+[
+  {
+    "hub_id": "HUB-JKT-01",
+    "mean_dwell_hours": 7.8,
+    "min_dwell_hours": 3.2,
+    "max_dwell_hours": 14.5,
+    "completed_visits": 1420,
+    "open_visits": 85,
+    "priority": "HIGH"
+  },
+  {
+    "hub_id": "HUB-JKT-02",
+    "mean_dwell_hours": 6.9,
+    "min_dwell_hours": 2.5,
+    "max_dwell_hours": 12.0,
+    "completed_visits": 980,
+    "open_visits": 42,
+    "priority": "HIGH"
+  },
+  {
+    "hub_id": "HUB-BKS-01",
+    "mean_dwell_hours": 6.2,
+    "min_dwell_hours": 2.1,
+    "max_dwell_hours": 10.8,
+    "completed_visits": 1150,
+    "open_visits": 30,
+    "priority": "HIGH"
+  },
+  {
+    "hub_id": "HUB-JKT-03",
+    "mean_dwell_hours": 4.5,
+    "min_dwell_hours": 1.5,
+    "max_dwell_hours": 8.0,
+    "completed_visits": 1280,
+    "open_visits": 15,
+    "priority": "NORMAL"
+  },
+  {
+    "hub_id": "HUB-TGR-01",
+    "mean_dwell_hours": 3.8,
+    "min_dwell_hours": 1.2,
+    "max_dwell_hours": 6.5,
+    "completed_visits": 940,
+    "open_visits": 10,
+    "priority": "NORMAL"
+  },
+  {
+    "hub_id": "HUB-DPK-01",
+    "mean_dwell_hours": 3.2,
+    "min_dwell_hours": 1.0,
+    "max_dwell_hours": 5.9,
+    "completed_visits": 890,
+    "open_visits": 8,
+    "priority": "NORMAL"
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "summary": "Analisis operasional menunjukkan rata-rata dwell time jaringan hub adalah 5.4 jam. Terdapat 3 hub yang melewati simulasi threshold latihan 6.0 jam, dipimpin oleh Hub Cakung Mega Hub (7.8 jam) dan Hub Marunda (6.9 jam), mengindikasikan perlunya audit kapasitas staging dan proses sortasi armada Satria.",
+  "priority_hubs": [
+    "HUB-JKT-01",
+    "HUB-JKT-02",
+    "HUB-BKS-01"
+  ],
+  "next_checks": [
+    "Audit utilisasi kapasitas staging yard dan bottleneck shift malam di Hub Cakung",
+    "Evaluasi throughput pemrosesan paket rute Jakarta Utara di Hub Marunda",
+    "Sinkronisasi jadwal inbound transfer armada di Hub Tambun Gateway"
+  ]
+}

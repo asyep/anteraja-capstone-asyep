@@ -1,0 +1,44 @@
+[
+  {
+    "hub_id": "HUB-JKT-01",
+    "hub_name": "Hub Cakung Mega Hub",
+    "lat": -6.1824,
+    "lng": 106.9429,
+    "city": "Jakarta Timur"
+  },
+  {
+    "hub_id": "HUB-JKT-02",
+    "hub_name": "Hub Marunda Logistics",
+    "lat": -6.1158,
+    "lng": 106.9622,
+    "city": "Jakarta Utara"
+  },
+  {
+    "hub_id": "HUB-JKT-03",
+    "hub_name": "Hub Cengkareng Hub",
+    "lat": -6.1528,
+    "lng": 106.7265,
+    "city": "Jakarta Barat"
+  },
+  {
+    "hub_id": "HUB-BKS-01",
+    "hub_name": "Hub Tambun Gateway",
+    "lat": -6.2589,
+    "lng": 107.0601,
+    "city": "Bekasi"
+  },
+  {
+    "hub_id": "HUB-TGR-01",
+    "hub_name": "Hub Cipondoh Hub",
+    "lat": -6.1895,
+    "lng": 106.6712,
+    "city": "Tangerang"
+  },
+  {
+    "hub_id": "HUB-DPK-01",
+    "hub_name": "Hub Cimanggis Transit",
+    "lat": -6.3712,
+    "lng": 106.8654,
+    "city": "Depok"
+  }
+]
