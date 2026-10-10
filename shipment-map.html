@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peta Lokasi Pengiriman - Anteraja</title>
+  
+  <!-- Leaflet.js & Tile Layer (Gratis, Tanpa Registrasi Kartu) -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    body {
+      background-color: #f8fafc;
+      color: #1e293b;
+      padding: 24px;
+    }
+    .header {
+      margin-bottom: 20px;
+    }
+    .header h1 {
+      font-size: 22px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .badge {
+      background-color: #EC008C;
+      color: white;
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      font-weight: 600;
+    }
+    #map {
+      height: 600px;
+      width: 100%;
+      border-radius: 12px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      border: 1px solid #e2e8f0;
+    }
+    .info-box {
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .status-tag {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .tag-delivered { background-color: #dcfce7; color: #15803d; }
+    .tag-transit { background-color: #fef3c7; color: #b45309; }
+    .tag-pickup { background-color: #e0e7ff; color: #4338ca; }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>
+      Live Tracking Delivery Map
+      <span class="badge">Satria Operational</span>
+    </h1>
+    <p style="color: #64748b; font-size: 14px; margin-top: 4px;">
+      Monitoring sebaran armada kurir dan posisi paket area operasional Jakarta.
+    </p>
+  </div>
+
+  <div id="map"></div>
+
+  <script>
+    // 1. Inisialisasi peta di pusat operasional Jakarta
+    const map = L.map('map').setView([-6.2000, 106.8166], 12);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // 2. Data array shipment & kurir contoh
+    const shipmentList = [
+      {
+        trackingNumber: "AJ00129381023",
+        courier: "Satria Budi",
+        lat: -6.2088,
+        lng: 106.8456,
+        statusText: "Dalam Pengantaran",
+        tagClass: "tag-transit"
+      },
+      {
+        trackingNumber: "AJ00984712034",
+        courier: "Satria Rian",
+        lat: -6.1751,
+        lng: 106.8650,
+        statusText: "Menunggu Penjemputan",
+        tagClass: "tag-pickup"
+      },
+      {
+        trackingNumber: "AJ00561234981",
+        courier: "Satria Dimas",
+        lat: -6.2255,
+        lng: 106.8000,
+        statusText: "Paket Telah Diterima",
+        tagClass: "tag-delivered"
+      }
+    ];
+
+    // 3. Loop array: plot marker dan info window (popup saat diklik)
+    shipmentList.forEach(item => {
+      const marker = L.marker([item.lat, item.lng]).addTo(map);
+      
+      const popupContent = `
+        <div class="info-box">
+          <div><strong>No. Resi:</strong> ${item.trackingNumber}</div>
+          <div><strong>Kurir:</strong> ${item.courier}</div>
+          <span class="status-tag ${item.tagClass}">${item.statusText}</span>
+        </div>
+      `;
+      marker.bindPopup(popupContent);
+    });
+
+    // 4. Bonus: Geocoding alamat teks menggunakan Nominatim API gratis
+    const geocodeTarget = {
+      trackingNumber: "AJ00882299110",
+      courier: "Satria Fajar",
+      addressQuery: "Monumen Nasional, Gambir, Jakarta Pusat",
+      statusText: "Menuju Lokasi Tujuan (Geocoded)",
+      tagClass: "tag-transit"
+    };
+
+    fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(geocodeTarget.addressQuery)}`)
+      .then(response => response.json())
+      .then(data => {
+        if (data && data.length > 0) {
+          const lat = parseFloat(data[0].lat);
+          const lon = parseFloat(data[0].lon);
+
+          const geoMarker = L.marker([lat, lon]).addTo(map);
+          const geoPopup = `
+            <div class="info-box">
+              <div><strong>No. Resi:</strong> ${geocodeTarget.trackingNumber}</div>
+              <div><strong>Kurir:</strong> ${geocodeTarget.courier}</div>
+              <div><strong>Alamat:</strong> ${data[0].display_name.split(',').slice(0, 3).join(',')}</div>
+              <span class="status-tag ${geocodeTarget.tagClass}">${geocodeTarget.statusText}</span>
+            </div>
+          `;
+          geoMarker.bindPopup(geoPopup);
+        }
+      })
+      .catch(err => {
+        console.error("Geocoding gagal:", err);
+      });
+  </script>
+</body>
+</html>
