@@ -10,13 +10,17 @@ export default function CourierProcessedPage() {
 
   const { data: apiData, loading, error } = useTrackingDetail(waybill);
 
-  if (loading) return <TrackingLoadingState waybill={waybill} />;
-  if (error) return <div className="p-8 text-center text-red-500">Error: {error}</div>;
+  if (error && !apiData) return <div className="p-8 text-center text-red-500">Error: {error}</div>;
 
   const mergedData = mergeShipmentData(COURIER_PROCESSED_DATA, apiData);
 
   return (
-    <main className="min-h-[calc(100vh-20rem)] w-full bg-surface">
+    <main className="min-h-[calc(100vh-20rem)] w-full bg-surface relative">
+      {loading && (
+        <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-primary/20 overflow-hidden">
+          <div className="h-full bg-primary animate-pulse w-full" />
+        </div>
+      )}
       <div className="flex w-full flex-col">
         <TrackingStatusLayout data={mergedData} />
       </div>

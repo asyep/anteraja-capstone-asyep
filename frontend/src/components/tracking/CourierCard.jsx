@@ -1,14 +1,20 @@
 import CourierAvatar from "./CourierAvatar";
 
-/** Tombol aksi yang aktif (Hubungi / Pesan Kilat). */
-function ActionButton({ as = "button", href, icon, label, variant }) {
+/** Tombol aksi aktif (Hubungi / Pesan Kilat). */
+function ActionButton({ href, icon, label, variant }) {
   const kelas = `flex h-11 items-center justify-center gap-1.5 rounded-xl px-space-sm font-label-md text-label-md font-bold shadow-sm transition-all active:scale-[0.98] ${
     variant === "primary"
       ? "bg-primary text-on-primary shadow-md hover:bg-primary-container"
       : "bg-surface-container-low text-on-surface hover:bg-surface-container-high"
   }`;
-  const isi = (
-    <>
+
+  return (
+    <a
+      className={kelas}
+      href={href}
+      rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
+      target={href?.startsWith("http") ? "_blank" : undefined}
+    >
       <span
         className={`material-symbols-outlined text-[18px] ${
           variant === "primary" ? "" : "text-primary"
@@ -16,33 +22,14 @@ function ActionButton({ as = "button", href, icon, label, variant }) {
       >
         {icon}
       </span>
-      {label}
-    </>
-  );
-
-  if (as === "a") {
-    return (
-      <a
-        className={kelas}
-        href={href}
-        rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
-        target={href?.startsWith("http") ? "_blank" : undefined}
-      >
-        {isi}
-      </a>
-    );
-  }
-
-  return (
-    <button className={`${kelas} cursor-not-allowed opacity-60`} disabled type="button">
-      {isi}
-    </button>
+      <span>{label}</span>
+    </a>
   );
 }
 
 /**
  * Kartu "Satria Bertugas". Dua kondisi:
- * - belum ada kurir  -> tombol Hubungi & Pesan Kilat nonaktif
+ * - belum ada kurir  -> tombol Hubungi & Pesan Kilat nonaktif (abu-abu disabled)
  * - kurir bertugas   -> tampil profil, rating, status rute, dan tombol aktif
  */
 export default function CourierCard({ courier }) {
@@ -108,15 +95,19 @@ export default function CourierCard({ courier }) {
         </div>
       ) : (
         <div className="flex items-center gap-space-md">
-          <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-surface-container-high text-text-muted shadow-sm">
-            <span className="material-symbols-outlined text-[36px] text-text-placeholder">
-              two_wheeler
-            </span>
+          <div className="relative shrink-0">
+            <div className="flex h-16 w-16 items-center justify-center overflow-hidden rounded-2xl bg-surface-container-high text-text-muted shadow-sm">
+              <span className="material-symbols-outlined text-[36px] text-text-placeholder">
+                two_wheeler
+              </span>
+            </div>
           </div>
           <div className="flex min-w-0 flex-1 flex-col">
-            <h4 className="truncate font-headline-sm text-headline-sm font-bold text-text-muted">
-              {courier.title}
-            </h4>
+            <div className="flex items-center gap-1.5">
+              <h4 className="truncate font-headline-sm text-headline-sm font-bold text-text-muted">
+                {courier.title}
+              </h4>
+            </div>
             <span className="mt-0.5 font-body-sm text-body-sm text-on-surface-variant">
               {courier.description}
             </span>
@@ -125,36 +116,61 @@ export default function CourierCard({ courier }) {
       )}
 
       <div
-        className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-label-sm text-label-sm font-semibold ${
+        className={`inline-flex items-center gap-1.5 rounded-lg px-2.5 ${
           aktif
-            ? "bg-success-surface text-tertiary"
-            : "bg-surface-container text-text-muted"
-        }`}
+            ? "bg-success-surface py-1.5 text-tertiary"
+            : "bg-surface-container py-1 text-text-muted"
+        } font-label-sm text-label-sm font-semibold`}
       >
         <span
-          className={`h-2 w-2 rounded-full ${
-            aktif ? "animate-ping bg-success-base" : "bg-text-placeholder"
+          className={`${
+            aktif
+              ? "h-2 w-2 rounded-full animate-ping bg-success-base"
+              : "h-2 w-2 rounded-full bg-text-placeholder"
           }`}
         />
-        {aktif ? courier.activeNote : courier.standbyNote}
+        <span>{aktif ? courier.activeNote : courier.standbyNote}</span>
       </div>
 
-      <div className="grid grid-cols-2 gap-space-sm pt-space-xs">
-        <ActionButton
-          as={aktif ? "a" : "button"}
-          href={aktif ? courier.phone : undefined}
-          icon="call"
-          label="Hubungi"
-          variant="secondary"
-        />
-        <ActionButton
-          as={aktif ? "a" : "button"}
-          href={aktif ? courier.whatsapp : undefined}
-          icon="chat"
-          label="Pesan Kilat"
-          variant={aktif ? "primary" : "secondary"}
-        />
-      </div>
+      {aktif ? (
+        <div className="grid grid-cols-2 gap-space-sm pt-space-xs">
+          <ActionButton
+            href={courier.phone}
+            icon="call"
+            label="Hubungi"
+            variant="secondary"
+          />
+          <ActionButton
+            href={courier.whatsapp}
+            icon="chat"
+            label="Pesan Kilat"
+            variant="primary"
+          />
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 gap-space-sm pt-space-xs">
+          <button
+            className="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-surface-container-high px-space-sm font-label-md text-label-md font-bold text-text-placeholder opacity-60 cursor-not-allowed transition-all"
+            disabled
+            type="button"
+          >
+            <span className="material-symbols-outlined text-[18px] text-text-placeholder">
+              call
+            </span>
+            <span>Hubungi</span>
+          </button>
+          <button
+            className="flex h-11 items-center justify-center gap-1.5 rounded-xl bg-surface-container-high px-space-sm font-label-md text-label-md font-bold text-text-placeholder opacity-60 cursor-not-allowed transition-all"
+            disabled
+            type="button"
+          >
+            <span className="material-symbols-outlined text-[18px] text-text-placeholder">
+              chat
+            </span>
+            <span>Pesan Kilat</span>
+          </button>
+        </div>
+      )}
     </div>
   );
 }

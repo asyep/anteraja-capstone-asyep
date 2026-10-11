@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { getRouteForResi } from "@/data/shipmentsData";
+import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
+import { useRecentSearches } from "@/hooks/useRecentSearches";
+import { prefetchTracking } from "@/lib/api";
 
 export const ORDER_CREATED_DEMO_RESI = "10001240251661";
 
@@ -14,36 +16,19 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
   const navigate = useNavigate();
   const [waybill, setWaybill] = useState(initialWaybill);
   const [copied, setCopied] = useState(false);
-  const [recentSearches, setRecentSearches] = useState([]);
+  const { recentSearches, addSearch } = useRecentSearches();
 
   useEffect(() => {
-    fetch("http://localhost:8000/api/v1/shipments/samples")
-      .then((res) => res.json())
-      .then((data) => {
-        if (data && data.data) {
-          const mapped = data.data.slice(0, 5).map(item => {
-            let label = item.order_status;
-            let dotClass = "bg-primary";
-            if (label === "ORDER_CREATED") { label = "Order Created"; dotClass = "bg-secondary"; }
-            else if (label === "IN_TRANSIT") { label = "In Transit"; dotClass = "bg-tertiary"; }
-            else if (label === "DELIVERED") { label = "Delivered"; dotClass = "bg-success-base"; }
-            
-            return {
-              resi: item.waybill_number,
-              label,
-              dotClass
-            };
-          });
-          setRecentSearches(mapped);
-        }
-      })
-      .catch((err) => console.error("Gagal memuat sample resi", err));
-  }, []);
+    if (initialWaybill) {
+      addSearch(cleanResiInput(initialWaybill));
+    }
+  }, [initialWaybill, addSearch]);
 
   function handleSubmit(event) {
     event.preventDefault();
-    const bersih = waybill.trim();
+    const bersih = cleanResiInput(waybill);
     if (!bersih) return;
+    addSearch(bersih);
     navigate(getRouteForResi(bersih));
   }
 
@@ -99,21 +84,34 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
           </button>
         </div>
 
-        <div className="flex flex-wrap items-center gap-space-sm text-on-surface-variant">
+        <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">
           <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">
             Pencarian Terakhir:
           </span>
-          {recentSearches.map((item) => (
-            <button
-              className="flex items-center gap-1 rounded-full bg-surface-container-low px-3 py-1.5 font-mono-code text-label-sm text-on-surface shadow-sm transition-all hover:bg-primary-fixed/40 hover:text-primary"
-              key={item.resi}
-              onClick={() => setWaybill(item.resi)}
-              type="button"
-            >
-              <span className={`h-1.5 w-1.5 rounded-full ${item.dotClass}`} />
-              {item.label}
-            </button>
-          ))}
+          {recentSearches && recentSearches.length > 0 ? (
+            recentSearches.map((resi) => (
+              <button
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-low hover:bg-primary/10 hover:text-primary text-text-primary border border-border-subtle hover:border-primary/40 font-mono text-xs transition-all cursor-pointer group shadow-xs"
+                key={resi}
+                onMouseEnter={() => prefetchTracking(resi)}
+                onClick={() => {
+                  setWaybill(resi);
+                  navigate(getRouteForResi(resi));
+                }}
+                title={`Lacak kembali nomor resi ${resi}`}
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[14px] text-text-muted group-hover:text-primary">
+                  history
+                </span>
+                <span className="font-semibold tracking-tight">{resi}</span>
+              </button>
+            ))
+          ) : (
+            <span className="text-xs text-text-muted italic">
+              Belum ada riwayat pencarian
+            </span>
+          )}
         </div>
       </form>
     </div>

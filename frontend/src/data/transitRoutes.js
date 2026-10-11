@@ -67,11 +67,109 @@ const RUTE_SEMARANG_JAKARTA = {
   ],
 };
 
+const RUTE_BANDUNG_JAKARTA = {
+  id: "bandung-jakarta",
+  asal: "Hub Sortir Bandung",
+  tujuan: "Sorting Gateway Cakung DC",
+  koridor: "Koridor Tol Purbaleunyi - JORR",
+  waypoints: [
+    {
+      id: "bandung",
+      geo: { lat: -6.9412, lon: 107.6454 },
+      label: "Hub Sortir Asal Bandung",
+      detail: "Armada Linehaul • Jl. Soekarno-Hatta",
+      status: "Berangkat dari Hub Asal",
+    },
+    {
+      id: "padalarang",
+      geo: { lat: -6.8458, lon: 107.4912 },
+      label: "Tol Padaleunyi KM 122",
+      detail: "Armada Linehaul • Jalur Tol Purbaleunyi",
+      status: "Melintasi Padalarang",
+    },
+    {
+      id: "cipularang",
+      geo: { lat: -6.612, lon: 107.412 },
+      label: "Tol Cipularang KM 82",
+      detail: "Armada Linehaul • Koridor Purwakarta",
+      status: "Melintasi Cipularang",
+    },
+    {
+      id: "cikampek",
+      geo: { lat: -6.4025, lon: 107.135 },
+      label: "Gerbang Tol Cikampek Utama",
+      detail: "Armada Linehaul • Tol Jakarta-Cikampek",
+      status: "Melintasi Cikampek",
+    },
+    {
+      id: "pasar-rebo",
+      geo: { lat: -6.3021, lon: 106.8951 },
+      label: "Tol JORR KM 34 (Pasar Rebo)",
+      detail: "Armada Blind Van • Menuju Hub Cakung",
+      status: "Melintasi Tol JORR",
+    },
+    {
+      id: "cakung",
+      geo: { lat: -6.1856, lon: 106.9452 },
+      label: "Staging Gateway Cakung DC",
+      detail: "DC Anteraja • Kawasan Industri Cakung",
+      status: "Menuju Hub Cakung",
+    },
+  ],
+};
+
+const RUTE_SURABAYA_JAKARTA = {
+  id: "surabaya-jakarta",
+  asal: "Staging Gateway Surabaya Hub",
+  tujuan: "Sorting Gateway Cakung DC",
+  koridor: "Koridor Tol Trans Jawa (Jatim - Jabar)",
+  waypoints: [
+    {
+      id: "surabaya",
+      geo: { lat: -7.2341, lon: 112.6712 },
+      label: "Staging Hub Surabaya Margomulyo",
+      detail: "Armada Linehaul • Jawa Timur",
+      status: "Titik Keberangkatan",
+    },
+    {
+      id: "solo",
+      geo: { lat: -7.5561, lon: 110.8316 },
+      label: "Transit Hub Solo",
+      detail: "Armada Linehaul • Tol Solo-Ngawi",
+      status: "Melintasi Solo",
+    },
+    {
+      id: "semarang",
+      geo: { lat: -6.9582, lon: 110.4503 },
+      label: "Gateway Hub Semarang Kaligawe",
+      detail: "Armada Linehaul • Tol Krapyak",
+      status: "Melintasi Semarang",
+    },
+    {
+      id: "cirebon",
+      geo: { lat: -6.7063, lon: 108.557 },
+      label: "Transit Hub Cirebon",
+      detail: "Armada Linehaul • Tol Cipali",
+      status: "Melintasi Cirebon",
+    },
+    {
+      id: "jakarta",
+      geo: { lat: -6.1856, lon: 106.9452 },
+      label: "Sorting Gateway Cakung DC",
+      detail: "DC Anteraja • Hub Tujuan Jakarta",
+      status: "Menuju Hub Tujuan",
+    },
+  ],
+};
+
 export const TRANSIT_ROUTES = {
   [RUTE_SEMARANG_JAKARTA.id]: RUTE_SEMARANG_JAKARTA,
+  [RUTE_BANDUNG_JAKARTA.id]: RUTE_BANDUNG_JAKARTA,
+  [RUTE_SURABAYA_JAKARTA.id]: RUTE_SURABAYA_JAKARTA,
 };
 
 /** Titik awal animasi berdasarkan indeks waypoint yang sedang aktif. */
 export function waypointAwal(rute, indeks = 3) {
+  if (!rute?.waypoints || rute.waypoints.length === 0) return null;
   return rute.waypoints[Math.min(indeks, rute.waypoints.length - 1)];
 }

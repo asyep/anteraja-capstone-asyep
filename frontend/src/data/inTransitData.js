@@ -203,8 +203,9 @@ export const IN_TRANSIT_DATA = {
 
   /** Kartu kurir pengantaran akhir — belum tersedia. */
   courier: {
-    idLabel: "Satria Belum Tersedia",
-    title: "Kurir Pengantaran Belum Tersedia",
+    active: false,
+    idLabel: "ID: Menunggu Penugasan",
+    title: "Kurir Pengantaran Belum Dialokasikan",
     description:
       "Satria untuk pengantaran akhir akan ditugaskan otomatis ketika paket tiba di Delivery Hub kota tujuan Anda.",
     standbyNote: "Penugasan kurir standby di Delivery Hub Jakarta",

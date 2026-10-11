@@ -1,55 +1,64 @@
-/** Latar banner per varian status. */
+/** Latar banner per varian status: bertransisi mulus dari warna muda ke pekat (tahap 1 s/d 4). */
 const BANNER_VARIANT = {
-  // Gradien magenta pekat (mis. "Sedang Diproses Kurir").
-  "primary-solid": {
-    className:
-      "bg-primary border border-primary/30 ring-2 ring-primary-fixed/30",
-    style: {
-      background:
-        "linear-gradient(135deg, #b30069 0%, #d4147f 55%, #e00085 100%)",
-      boxShadow: "0 10px 25px -5px rgba(179, 0, 105, 0.35)",
-    },
-    iconBox:
-      "bg-white/20 text-white shadow-inner border border-white/30 backdrop-blur-xl",
-  },
-  // Gradien magenta cerah dengan judul lebih kecil (mis. "Dalam Perjalanan").
-  transit: {
-    className: "text-white",
-    style: {
-      background: "linear-gradient(135deg, #c2006a 0%, #ec008c 100%)",
-    },
-    iconBox:
-      "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner",
-    padding: "p-space-md md:p-space-lg",
-    titleClass: "text-[18px] md:text-[20px]",
-  },
-  // Gradien magenta gelap untuk tahap pengantaran ("Dalam Pengantaran").
-  delivery: {
-    className: "text-white",
-    style: {
-      background: "linear-gradient(135deg, #9c0054 0%, #c2006a 100%)",
-    },
-    iconBox:
-      "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner",
-    padding: "p-space-md md:p-space-lg",
-    titleClass: "text-[18px] md:text-[20px]",
-  },
-  // Gradien magenta → hijau untuk status akhir ("Tiba di Tujuan").
-  delivered: {
-    className: "text-white",
-    style: {
-      background: "linear-gradient(135deg, #8a0050 0%, #0d5300 100%)",
-    },
-    iconBox:
-      "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner",
-    padding: "p-space-md md:p-space-lg",
-    titleClass: "text-[18px] md:text-[20px]",
-  },
+  // Tahap 1: "Pesanan Dibuat" — warna paling muda (pink/magenta muda cerah).
   default: {
-    className:
-      "bg-gradient-to-r from-pink-500/80 to-rose-400/80 ring-4 ring-pink-300/30 backdrop-blur-md",
-    style: undefined,
-    iconBox: "bg-white shadow-lg",
+    className: "text-white border border-pink-300/40 ring-2 ring-pink-300/30",
+    style: {
+      background: "linear-gradient(135deg, #f472b6 0%, #ec4899 100%)",
+      boxShadow: "0 10px 25px -5px rgba(244, 114, 182, 0.35)",
+    },
+    iconBox: "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner text-white",
+    iconColor: "text-white",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
+  },
+  // Tahap 2: "Sedang Diproses Kurir" — warna sedang (magenta khas Anteraja).
+  "primary-solid": {
+    className: "text-white border border-pink-400/40 ring-2 ring-primary-fixed/30",
+    style: {
+      background: "linear-gradient(135deg, #ec008c 0%, #c70072 100%)",
+      boxShadow: "0 10px 25px -5px rgba(236, 0, 140, 0.35)",
+    },
+    iconBox: "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner text-white",
+    iconColor: "text-white",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
+  },
+  // Tahap 3: "Dalam Perjalanan" — warna pekat (deep magenta linehaul).
+  transit: {
+    className: "text-white border border-pink-600/40",
+    style: {
+      background: "linear-gradient(135deg, #b50064 0%, #8f004c 100%)",
+      boxShadow: "0 10px 25px -5px rgba(181, 0, 100, 0.35)",
+    },
+    iconBox: "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner text-white",
+    iconColor: "text-white",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
+  },
+  // Tahap 4: "Dalam Pengantaran" — warna paling pekat (rich dark magenta/maroon).
+  delivery: {
+    className: "text-white border border-pink-800/40",
+    style: {
+      background: "linear-gradient(135deg, #78003a 0%, #4e0024 100%)",
+      boxShadow: "0 10px 25px -5px rgba(120, 0, 58, 0.35)",
+    },
+    iconBox: "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner text-white",
+    iconColor: "text-white",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
+  },
+  // Tahap 5: "Tiba di Tujuan" — warna hijau tetap (fix hijau tanpa gradasi ungu).
+  delivered: {
+    className: "text-white border border-emerald-600/30",
+    style: {
+      background: "linear-gradient(135deg, #16a34a 0%, #15803d 50%, #166534 100%)",
+      boxShadow: "0 10px 25px -5px rgba(22, 101, 52, 0.35)",
+    },
+    iconBox: "bg-white/20 backdrop-blur-md border border-white/20 shadow-inner text-white",
+    iconColor: "text-white",
+    padding: "p-space-md md:p-space-lg",
+    titleClass: "text-[18px] md:text-[20px]",
   },
 };
 
@@ -105,11 +114,11 @@ export default function StatusBanner({ status }) {
           className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${variant.iconBox}`}
         >
           <span
-            className={`material-symbols-outlined text-[28px] ${
-              status.variant === "default" ? "font-bold text-[#EC008C]" : "text-white"
+            className={`material-symbols-outlined text-[28px] font-bold ${
+              variant.iconColor ?? (!status.variant || status.variant === "default" ? "text-[#EC008C]" : "text-white")
             }`}
           >
-            {status.icon}
+            {status.icon || "inventory_2"}
           </span>
         </div>
 

@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
  */
 export default function useTransitAnimation(
   route,
-  { startIndex = 0, intervalMs = 4000, loop = false } = {},
+  { startIndex = 0, intervalMs = 4000, loop = false, enabled = true } = {},
 ) {
   const jumlah = route?.waypoints?.length ?? 0;
   const [index, setIndex] = useState(() =>
@@ -23,7 +23,7 @@ export default function useTransitAnimation(
   }, [route?.id, startIndex, jumlah]);
 
   useEffect(() => {
-    if (jumlah <= 1) return undefined;
+    if (!enabled || jumlah <= 1) return undefined;
 
     const timer = setInterval(() => {
       setIndex((sebelumnya) => {
