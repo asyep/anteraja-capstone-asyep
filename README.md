@@ -1,128 +1,98 @@
-# Smart AI Shipment Tracking Widget Anteraja
+# Anteraja Smart AI Shipment Tracking
 
-React migration of the Anteraja shipment tracking prototype. The interface is built with React, React Router, Vite, and Tailwind CSS. The active React application lives in `frontend/`; its tracking widget can use the configured Laravel API while the other route pages retain local demo data.
+Platform pelacakan pengiriman cerdas (*Smart Tracking*) berbasis AI telemetry, peta interaktif real-time, narasi prediktif pengiriman, dan REST API berkinerja tinggi untuk Anteraja Capstone Project.
 
-## Run locally
+Branch ini (`release/smart-tracking-v1`) merupakan rilis bersih (*clean release*) yang khusus memuat seluruh komponen aktif yang digunakan langsung dalam sistem Smart Tracking: **Frontend**, **Backend**, **Database**, dan **Dokumentasi Terkait**.
+
+---
+
+## Arsitektur & Struktur Proyek
+
+```text
+.
+├── frontend/               # Single Page Application (React 19 + Vite + Tailwind CSS + Leaflet)
+│   ├── src/
+│   │   ├── components/     # Komponen UI pelacakan (Map, Stepper, Card, Feedback, Modal)
+│   │   ├── context/        # State management pelacakan & cache
+│   │   ├── pages/          # Halaman rute (Lacak, In-Transit, Out-for-Delivery, Delivered, dll)
+│   │   ├── services/       # Integrasi API client & cache layer
+│   │   └── data/           # Dataset lokal & metadata fallback
+│   ├── public/             # Asset publik, ikon SVG, dan ilustrasi status
+│   └── package.json
+│
+├── backend/                # REST API Service (Laravel 11 + SQLite / MySQL)
+│   ├── app/                # Controllers, Models, Services (Tracking, Feedback, Telemetry)
+│   ├── database/           # Migrasi tabel & database seeders
+│   ├── routes/             # Definisi endpoint API (`api.php`)
+│   └── composer.json
+│
+├── database/               # Berkas skema SQL & master dataset
+│   ├── schema.sql          # DDL struktur tabel relasional
+│   ├── dataset.csv         # Dataset master pengiriman dan riwayat resi
+│   ├── seed_dataset.sql    # DML data awal pengujian
+│   └── sample_data.sql     # Data contoh untuk demonstrasi
+│
+└── docs/                   # Spesifikasi teknis & perancangan sistem
+    ├── prd/                # Product Requirement Document
+    ├── frd/                # Functional Requirement Document (F-01 s/d F-07)
+    ├── database/           # Rancangan ERD dan kamus data
+    ├── ui/                 # Panduan desain dan spesifikasi antarmuka
+    └── flow map.md         # Alur perjalanan paket dan state transition
+```
+
+---
+
+## Panduan Menjalankan Sistem
+
+### 1. Backend (Laravel REST API)
+
+Pastikan PHP (>= 8.2) dan Composer telah terpasang.
+
+```bash
+cd backend
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan serve
+```
+
+Server API default berjalan pada `http://127.0.0.1:8000`.
+
+### 2. Frontend (React + Vite)
+
+Pastikan Node.js (>= 18) telah terpasang.
 
 ```bash
 cd frontend
-npm ci
+npm install
 npm run dev
 ```
 
-Create and preview a production build:
+Buka browser pada `http://localhost:5173`.
 
+Untuk membuat build produksi:
 ```bash
-cd frontend
 npm run build
 npm run preview
 ```
 
-## Project structure
+---
 
-```text
-.
-├── frontend/                   # React, Vite, and Tailwind CSS application
-│   ├── index.html              # Vite document shell; mounts the React app
-│   ├── src/
-│   │   ├── main.jsx            # React entry point
-│   │   ├── App.jsx             # Shared layout, state provider, and routes
-│   │   ├── components/         # Categorized reusable UI and tracking components
-│   │   ├── context/            # Shared shipment and user state
-│   │   ├── hooks/              # Tracking and calculator business logic
-│   │   ├── services/           # API clients
-│   │   ├── utils/              # FRD formatters and constants
-│   │   ├── data/               # Local demo shipment data and route lookup
-│   │   └── pages/              # React page for each user-facing route
-│   ├── package.json
-│   └── vite.config.js
-├── php-api/                    # Backend PHP latihan dari Modul PHP Extended Guide
-├── prototype/                  # Preserved HTML/CSS archive; not loaded by the React app
-├── database/                   # Database schema and sample data documentation
-└── docs/                       # PRD, FRD, UI references, and project documents
-```
+## Fitur Utama Smart Tracking
 
-`prototype/` is retained as a design and implementation archive outside `frontend/src/`. The React app does not import its HTML, CSS, or JavaScript. Vite starts at `frontend/index.html` and loads only `frontend/src/main.jsx`; the archive is not included in the React runtime.
-
-## Routes
-
-| Route | React page | Purpose |
-| --- | --- | --- |
-| `/` | `HomePage` | Landing page and shipment lookup entry point |
-| `/lacak` | `LacakPage` | Single or batch shipment lookup |
-| `/tracking-normal` | `TrackingNormalPage` | In-transit shipment status |
-| `/tracking-live` | `TrackingLivePage` | Live telemetry shipment status |
-| `/tracking` | `TrackingWarningPage` | Operational warning and rerouted shipment status |
-| `/bantuan` | `BantuanPage` | Help search, topics, FAQs, and contact options |
-| `/delivered` | `DeliveredPage` | Delivered shipment status |
-| `/canceled` | `CanceledPage` | Canceled shipment status |
-| `/ai-fallback` | `AiFallbackPage` | Fallback shipment explanation |
-| `/not-found` | `NotFoundPage` | Unknown shipment result |
-| `/validation-error` | `ValidationErrorPage` | Invalid shipment number |
-| `/service-error` | `ServiceErrorPage` | Temporary tracking service error |
-| `/loading` | `LoadingPage` | Search progress state |
-| `/smart-widget` | `SmartWidgetPage` | Interactive tracking widget and demo controls |
-| `/php-tracking-lab` | `PhpTrackingLabPage` | Latihan integrasi React dengan endpoint PHP Asep |
-
-Shipment search and demo links use `src/data/shipmentsData.js` to select the matching status route. The five demo chips open their matching status pages. Valid resi numbers with no matching demo record open the AI fallback page; invalid formats open the validation error page. Header and footer are shared by `App` across routes.
-
-## Component layout
-
-```text
-App
-├── Header
-├── Route page
-│   ├── HomePage / LacakPage / BantuanPage
-│   ├── TrackingNormalPage / TrackingLivePage / TrackingWarningPage
-│   └── DeliveredPage / CanceledPage / error and loading pages
-└── Footer
-
-SmartWidgetPage
-├── SearchBox
-├── DynamicETABadge
-├── OperationalWarningBanner
-├── AINarrativeBox
-├── VisualMilestoneStepper
-├── ShipmentList
-│   ├── ShipmentCard
-│   └── EmptyState
-├── ShipmentSummary
-└── ShippingCalculator
-```
-
-Pages and components are JSX. Visual styling uses Tailwind utility classes; `frontend/src/index.css` loads Tailwind v4, defines theme tokens, and sets small document-wide defaults. There are no page-specific CSS files in the React runtime. The CSS files under `prototype/` remain archived and are not imported.
-
-## State and data
-
-- `frontend/src/App.jsx` owns the shared header, footer, shipment provider, and route configuration.
-- Each route page owns its local form and interaction state.
-- Tracking and lookup pages own their local input state and use the shared `getRouteForResi` lookup before navigation.
-- `SmartWidgetPage` owns the shipment status filter and connects search to the async tracking hook; child components receive data through props.
-- `useShippingCalculator` owns calculator state and computes the demo cost and ETA.
-- `frontend/src/data/shipmentsData.js` maps demo waybills to routes and validates supported legacy formats: 13–14 numeric digits or 32 alphanumeric characters. The Smart Widget follows F-01's exact 32-character alphanumeric validation.
-- `frontend/src/data/mockShipments.js` provides detailed local records for route demos.
-
-All shipment information, ETA calculations, and telemetry messages are simulations for the frontend prototype.
-
-## PHP module — Asep
-
-Bagian Asep dari **Modul PHP Extended Guide** telah diterapkan dalam folder [`php-api/`](php-api/):
-
-- Hari 1: `statusRamah()` menerjemahkan `MANIFESTED`, `ARRIVED_AT_HUB`, dan `OUT_FOR_DELIVERY` menjadi bahasa pelanggan.
-- Hari 2: class `TrackingWidget` menyusun data tracking per resi tanpa mencetak HTML.
-- `shipment-history.php`, `tracking-widget.php`, dan `tracking.php` menyediakan endpoint GET JSON. `feedback.php` menerima POST JSON dan mencatat feedback sederhana, sedangkan `tracking-download.php` mengunduh riwayat sebagai `.txt`.
-- Route React `/php-tracking-lab` menunjukkan penggunaan `fetch()` untuk mengambil riwayat, membuka widget, dan mengirim feedback.
-
-Jalankan backend dari root proyek:
-
-```bash
-php -S localhost:8000 -t php-api
-```
-
-Untuk mengaktifkan halaman latihan PHP, atur URL PHP terpisah di `frontend/.env`, lalu jalankan ulang Vite:
-
-```env
-VITE_PHP_API_URL=http://localhost:8000
-```
-
-Dokumentasi endpoint dan alternatif XAMPP tersedia di [`php-api/README.md`](php-api/README.md).
+1. **Pencarian Resi Instan (< 1 Detik)**:
+   - Pencarian cerdas dengan dukungan client-side cache & memory cache untuk respons instan.
+   - Deteksi otomatis status dan pengalihan dinamis ke halaman tracking yang sesuai.
+2. **Peta Pelacakan Real-time (Leaflet Map)**:
+   - Visualisasi posisi kurir (*Satria*), hub transit, rute perjalanan, dan titik pengantaran penerima.
+3. **5 Tahapan Status Pengiriman**:
+   - `Order Created` (Pesanan Dibuat)
+   - `Courier Processed` (Diproses Kurir / Hub)
+   - `In Transit` (Dalam Perjalanan antar-hub)
+   - `Out For Delivery` (Paket Sedang Diantar oleh Satria)
+   - `Delivered` (Paket Berhasil Diterima)
+4. **Narasi AI & Estimasi Dinamis**:
+   - Narasi ramah pengguna yang menerjemahkan status operasional logistik menjadi informasi yang mudah dipahami.
+5. **Konfirmasi Pengiriman & Feedback Cepat**:
+   - Respon optimis instan saat pelanggan mengonfirmasi penerimaan paket tanpa jeda waktu.
