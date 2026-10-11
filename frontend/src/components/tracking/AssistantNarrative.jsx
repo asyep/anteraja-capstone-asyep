@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { API_BASE } from "@/lib/api";
+import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
 
 /**
  * Kotak narasi Satria Assistant: avatar + badge AI, pesan naratif, dan
@@ -7,14 +9,36 @@ import { useState } from "react";
  */
 export default function AssistantNarrative({ assistant, statusLabel, waybill }) {
   const [shareLabel, setShareLabel] = useState("Bagikan Status");
-  const [feedbackStatus, setFeedbackStatus] = useState("idle");
+  const storageKey = waybill ? `anteraja_feedback_${waybill}` : null;
+  const [feedbackStatus, setFeedbackStatus] = useState(() => {
+    try {
+      if (typeof window !== "undefined" && storageKey) {
+        return localStorage.getItem(storageKey) === "done" ? "success" : "idle";
+      }
+    } catch {
+      /* ignore */
+    }
+    return "idle";
+  });
+  const [activeChoice, setActiveChoice] = useState(null);
 
   async function handleFeedback(membantu) {
     if (!waybill || feedbackStatus === "loading" || feedbackStatus === "success") return;
     
+    setActiveChoice(membantu);
     setFeedbackStatus("loading");
+
+    // 1. Kirim langsung ke Supabase (~30-50ms) dengan batas maksimal 700ms
+    const supabasePromise = Promise.race([
+      sendFeedbackToSupabase(waybill, membantu),
+      new Promise((resolve) => setTimeout(() => resolve(false), 700)),
+    ]);
+
+    // 2. Kirim juga ke backend lokal di background (fire-and-forget, non-blocking)
     try {
-      const response = await fetch("http://localhost:8000/api/v1/feedback", {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 600);
+      fetch(`${API_BASE}/feedback`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -22,17 +46,30 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
         },
         body: JSON.stringify({
           resi: waybill,
-          membantu: membantu,
+          membantu: Boolean(membantu),
         }),
-      });
-
-      if (!response.ok) throw new Error("Gagal mengirim feedback");
-      setFeedbackStatus("success");
-    } catch (error) {
-      console.error(error);
-      setFeedbackStatus("error");
-      setTimeout(() => setFeedbackStatus("idle"), 3000);
+        signal: controller.signal,
+      })
+        .catch(() => null)
+        .finally(() => clearTimeout(timer));
+    } catch {
+      /* ignore */
     }
+
+    // 3. Durasi animasi spinner ~350ms (pasti di bawah 1 detik, terasa cepat & responsif)
+    const minDelayPromise = new Promise((resolve) => setTimeout(resolve, 350));
+
+    await Promise.all([supabasePromise, minDelayPromise]);
+
+    try {
+      if (storageKey) {
+        localStorage.setItem(storageKey, "done");
+      }
+    } catch {
+      /* ignore */
+    }
+
+    setFeedbackStatus("success");
   }
 
   async function bagikanStatus() {
@@ -108,8 +145,8 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
               </span>
               <div className="flex gap-2">
                 {feedbackStatus === "success" ? (
-                  <span className="flex items-center gap-1 font-label-sm text-label-sm text-success-base">
-                    <span className="material-symbols-outlined text-[16px]">check_circle</span>
+                  <span className="flex items-center gap-1.5 font-label-sm text-label-sm font-semibold text-success-base transition-opacity duration-200">
+                    <span className="material-symbols-outlined text-[17px]">check_circle</span>
                     Terima kasih atas masukannya!
                   </span>
                 ) : feedbackStatus === "error" ? (
@@ -119,20 +156,36 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
                     <button
                       onClick={() => handleFeedback(true)}
                       disabled={feedbackStatus === "loading"}
-                      className="flex h-8 items-center gap-1 rounded-lg bg-surface-container-low px-3 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-success-container hover:text-on-success-container disabled:opacity-50"
+                      className="group flex h-8 items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-container-low px-3 font-label-sm text-label-sm font-semibold text-on-surface transition-all duration-150 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-sm active:scale-95 disabled:opacity-75 cursor-pointer"
                       title="Membantu"
                     >
-                      <span className="material-symbols-outlined text-[16px]">thumb_up</span>
-                      Ya
+                      {feedbackStatus === "loading" && activeChoice === true ? (
+                        <span className="material-symbols-outlined animate-spin text-[16px] text-emerald-600">
+                          progress_activity
+                        </span>
+                      ) : (
+                        <span className="material-symbols-outlined text-[16px] text-text-muted transition-colors group-hover:text-emerald-600">
+                          thumb_up
+                        </span>
+                      )}
+                      <span>Ya</span>
                     </button>
                     <button
                       onClick={() => handleFeedback(false)}
                       disabled={feedbackStatus === "loading"}
-                      className="flex h-8 items-center gap-1 rounded-lg bg-surface-container-low px-3 font-label-sm text-label-sm text-on-surface transition-colors hover:bg-error-container hover:text-on-error-container disabled:opacity-50"
+                      className="group flex h-8 items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-container-low px-3 font-label-sm text-label-sm font-semibold text-on-surface transition-all duration-150 hover:border-rose-400 hover:bg-rose-50 hover:text-rose-700 hover:shadow-sm active:scale-95 disabled:opacity-75 cursor-pointer"
                       title="Kurang membantu"
                     >
-                      <span className="material-symbols-outlined text-[16px]">thumb_down</span>
-                      Tidak
+                      {feedbackStatus === "loading" && activeChoice === false ? (
+                        <span className="material-symbols-outlined animate-spin text-[16px] text-rose-600">
+                          progress_activity
+                        </span>
+                      ) : (
+                        <span className="material-symbols-outlined text-[16px] text-text-muted transition-colors group-hover:text-rose-600">
+                          thumb_down
+                        </span>
+                      )}
+                      <span>Tidak</span>
                     </button>
                   </>
                 )}

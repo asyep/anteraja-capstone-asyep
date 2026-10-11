@@ -59,7 +59,7 @@ export default function TrackingStatusLayout({ data }) {
               waybill={data.waybill}
             />
 
-            <div className="flex flex-1 flex-col rounded-2xl bg-surface-container-lowest p-space-lg shadow-lg">
+            <div className="w-full flex flex-1 flex-col rounded-2xl bg-surface-container-lowest p-space-lg shadow-lg">
               <MilestoneProgress
                 milestones={data.milestones}
                 updatedLabel={data.updatedLabel}

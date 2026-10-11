@@ -1,4 +1,4 @@
-const DONE_RING = "bg-success-base text-on-primary ring-4 ring-success-surface";
+const DONE_RING = "bg-success-base text-on-primary shadow-md ring-4 ring-success-surface";
 const PENDING_RING =
   "bg-surface-container-high text-on-surface-variant shadow-inner ring-4 ring-surface-container-lowest";
 
