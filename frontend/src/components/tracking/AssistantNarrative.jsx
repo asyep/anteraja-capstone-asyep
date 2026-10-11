@@ -20,6 +20,7 @@
 import { useState } from "react";
 import { API_BASE } from "@/lib/api";
 import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
+import { regenerateAiNarrative } from "@/lib/geminiClient";
 
 export default function AssistantNarrative({ assistant, statusLabel, waybill }) {
 
@@ -36,6 +37,32 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
     return "idle";
   });
   const [activeChoice, setActiveChoice] = useState(null);
+
+  // State untuk Live Gemini AI Regeneration
+  const [liveNarrative, setLiveNarrative] = useState(null);
+  const [isRegenerating, setIsRegenerating] = useState(false);
+  const [isLiveGemini, setIsLiveGemini] = useState(false);
+
+  async function handleRegenerateAi() {
+    if (!waybill || isRegenerating) return;
+    setIsRegenerating(true);
+
+    try {
+      const result = await regenerateAiNarrative(waybill, {
+        statusLabel,
+        courierName: assistant?.courierName,
+      });
+
+      if (result && result.text) {
+        setLiveNarrative(result.text);
+        setIsLiveGemini(!result.is_fallback);
+      }
+    } catch {
+      /* fallback */
+    } finally {
+      setIsRegenerating(false);
+    }
+  }
 
   async function handleFeedback(membantu) {
     if (!waybill || feedbackStatus === "loading" || feedbackStatus === "success") return;
@@ -138,6 +165,24 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
                 </span>
                 Satria AI
               </span>
+              <button
+                type="button"
+                onClick={handleRegenerateAi}
+                disabled={isRegenerating}
+                className="group flex items-center gap-1 rounded-full border border-ai-accent/30 bg-ai-surface/60 px-2 py-0.5 font-label-sm text-[11px] font-semibold text-ai-accent transition-all hover:border-ai-accent hover:bg-ai-surface active:scale-95 disabled:opacity-60 cursor-pointer"
+                title="Panggil Live Gemini AI untuk memperbarui narasi status ini"
+              >
+                <span className={`material-symbols-outlined text-[13px] ${isRegenerating ? "animate-spin" : "transition-transform group-hover:rotate-180"}`}>
+                  {isRegenerating ? "progress_activity" : "refresh"}
+                </span>
+                <span>{isRegenerating ? "Memanggil Gemini..." : "Live Gemini"}</span>
+              </button>
+              {isLiveGemini && (
+                <span className="hidden items-center gap-1 text-[11px] font-medium text-emerald-600 sm:flex">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                  Gemini Live
+                </span>
+              )}
               <span className="rounded-full bg-tertiary-fixed px-2 py-0.5 font-label-sm text-label-sm font-bold text-on-tertiary-fixed">
                 Terverifikasi
               </span>
@@ -150,7 +195,7 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
           </div>
 
           <p className="mt-1 rounded-xl bg-surface-container-low/70 p-space-md font-body-lg text-body-lg leading-relaxed text-on-surface">
-            &ldquo;{assistant.message}&rdquo;
+            &ldquo;{liveNarrative || assistant.message}&rdquo;
           </p>
 
           {waybill && (
