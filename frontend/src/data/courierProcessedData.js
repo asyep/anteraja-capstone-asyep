@@ -85,8 +85,9 @@ export const COURIER_PROCESSED_DATA = {
       label: "Diproses Kurir",
       time: "26 Sep 2024, 14:30 WIB",
       place: "Staging Hub Semarang",
-      icon: "check",
+      icon: "local_shipping",
       state: "done",
+      pulse: true,
     },
     {
       id: "transit",
@@ -146,12 +147,12 @@ export const COURIER_PROCESSED_DATA = {
     ],
   },
 
-  /** Kartu radar posisi paket (varian "staging": peta kawasan + live GPS). */
   radar: {
     variant: "staging",
     icon: "warehouse",
     statusLabel: "Titik Lokasi Staging DC",
     liveBadge: true,
+    geo: { lat: -6.9582, lon: 110.4503 },
     pin: {
       title: "Staging Gateway Semarang Hub",
       subtitle: "DC Anteraja • Jl. Kaligawe KM 5",

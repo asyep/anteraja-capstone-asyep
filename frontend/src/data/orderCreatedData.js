@@ -33,6 +33,7 @@ export const ORDER_CREATED_DATA = {
     code: "PESANAN DIBUAT",
     label: "Menunggu Penjemputan Paket oleh Satria",
     icon: "inventory_2",
+    variant: "default",
     badges: [
       {
         id: "gratis-ongkir",
@@ -70,8 +71,9 @@ export const ORDER_CREATED_DATA = {
       label: "Pesanan Dibuat",
       time: "26 Sep 2024, 09:15",
       place: "Hub Semarang / Pengirim",
-      icon: "check",
+      icon: "inventory_2",
       state: "done",
+      pulse: true,
     },
     {
       id: "courier",
@@ -140,6 +142,8 @@ export const ORDER_CREATED_DATA = {
       "Pelacakan GPS aktif otomatis saat paket telah dijemput dan dibawa oleh Satria.",
     footerLeft: "Status Kurir: Standby Alokasi",
     footerRight: "Peta Standby",
+    backgroundImage: "/images/map-standby.png",
+    location: "Jl. Tebet Barat Dalam, Jakarta Selatan, Indonesia",
   },
 
   /** Kartu kurir pengantaran akhir. */

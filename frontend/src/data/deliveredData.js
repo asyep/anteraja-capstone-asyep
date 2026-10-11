@@ -101,7 +101,7 @@ export const DELIVERED_DATA = {
       label: "Dalam Pengantaran",
       time: "28 Sep 2024, 13:45 WIB",
       place: "Menuju Lokasi Penerima",
-      icon: "local_shipping",
+      icon: "check",
       state: "done",
     },
     {
