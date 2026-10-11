@@ -19,6 +19,19 @@ function StatusPill({ children, strong }) {
   );
 }
 
+function parseStagingGeo(radar) {
+  if (radar?.geo?.lat != null && radar?.geo?.lon != null) {
+    return { lat: Number(radar.geo.lat), lon: Number(radar.geo.lon) };
+  }
+  if (radar?.coordinates) {
+    const match = String(radar.coordinates).match(/LAT:\s*([-\d.]+),\s*LON:\s*([-\d.]+)/i);
+    if (match) {
+      return { lat: parseFloat(match[1]), lon: parseFloat(match[2]) };
+    }
+  }
+  return { lat: -6.9582, lon: 110.4503 };
+}
+
 /** Tombol zoom peta (tampilan saja). */
 function ZoomControls() {
   return (
@@ -63,14 +76,20 @@ export default function LivePositionCard({ radar }) {
     {
       startIndex: radar.startIndex ?? 0,
       intervalMs: radar.intervalMs ?? 4000,
+      loop: true,
+      enabled: isDelivery,
     },
   );
+
+  // Untuk varian transit dan delivery, posisi awal peta stabil mengikuti radar.startIndex
+  const activeWpIndex = radar.startIndex ?? 0;
+  const currentWaypoint = isTransit ? (rute?.waypoints?.[activeWpIndex] ?? waypoint) : (waypoint ?? rute?.waypoints?.[activeWpIndex]);
 
   // Label dinaikkan sedikit agar area peta tetap terbaca.
   const [labelTerlihat, setLabelTerlihat] = useState(false);
   useEffect(() => {
-    if (waypoint) setLabelTerlihat(true);
-  }, [waypoint]);
+    if (currentWaypoint) setLabelTerlihat(true);
+  }, [currentWaypoint]);
 
   // Peta besar (dengan bingkai) dipakai varian animasi, staging, dan delivered.
   const petaKelas =
@@ -78,7 +97,7 @@ export default function LivePositionCard({ radar }) {
       radar.variant === "staging" ||
       radar.variant === "delivered"
       ? "relative h-56 w-full overflow-hidden rounded-xl border border-border-subtle/50 bg-[#eef2f6] shadow-inner"
-      : "relative flex h-48 w-full items-center justify-center overflow-hidden rounded-xl shadow-inner";
+      : "relative flex h-48 w-full items-center justify-center overflow-hidden rounded-xl bg-cover bg-center p-3 shadow-inner";
 
   return (
     <div className="flex w-full flex-col gap-space-sm rounded-2xl bg-surface-container-lowest p-space-md shadow-lg">
@@ -100,13 +119,25 @@ export default function LivePositionCard({ radar }) {
         </StatusPill>
       </div>
 
-      <div className={petaKelas}>
+      <div
+        className={petaKelas}
+        data-location={radar.location || "Jl. Tebet Barat Dalam, Jakarta Selatan, Indonesia"}
+        style={
+          radar.variant === "standby" || (!berAnimasi && radar.variant !== "staging" && radar.variant !== "delivered")
+            ? {
+                backgroundImage: `url("${radar.backgroundImage || '/images/map-standby.png'}")`,
+              }
+            : undefined
+        }
+      >
         {berAnimasi ? (
           <>
             <TrackingMap
               waypoints={rute?.waypoints || []}
-              activeIndex={index}
+              activeIndex={activeWpIndex}
               variant={radar.variant}
+              telemetryGeo={radar.telemetryGeo}
+              destinationAddress={radar.destinationAddress || radar.location}
             />
             <div className="absolute left-2.5 top-2.5 z-[1000] flex items-center gap-1.5 rounded-md border border-border-subtle/50 bg-white px-2.5 py-1 text-[11px] font-bold text-on-surface shadow-sm">
               <span className="h-2 w-2 animate-pulse rounded-full bg-success-base" />
@@ -121,14 +152,14 @@ export default function LivePositionCard({ radar }) {
                 {isDelivery
                   ? radar.zoneLabel
                   : isTransit
-                    ? `${radar.zoneLabel} — ${waypoint?.status ?? ""}`
+                    ? `${radar.zoneLabel} — ${currentWaypoint?.status ?? ""}`
                     : radar.zone}
               </span>
               <span className="font-mono-code text-[10px] font-bold text-primary">
                 {isDelivery
                   ? radar.coordinates
                   : isTransit
-                    ? `LAT: ${waypoint?.geo?.lat ?? "-"}, LON: ${waypoint?.geo?.lon ?? "-"}`
+                    ? (radar.coordinates || `LAT: ${currentWaypoint?.geo?.lat ?? "-"}, LON: ${currentWaypoint?.geo?.lon ?? "-"}`)
                     : radar.coordinates}
               </span>
             </div>
@@ -162,7 +193,13 @@ export default function LivePositionCard({ radar }) {
         ) : radar.variant === "staging" ? (
           <>
             <TrackingMap
-              waypoints={[{ geo: { lat: -6.1750, lon: 106.8275 }, label: radar.pin.title, detail: radar.pin.subtitle }]}
+              waypoints={[
+                {
+                  geo: parseStagingGeo(radar),
+                  label: radar.pin?.title || "Staging Gateway Hub",
+                  detail: radar.pin?.subtitle || "DC Anteraja",
+                },
+              ]}
               activeIndex={0}
               variant={radar.variant}
             />
@@ -188,11 +225,22 @@ export default function LivePositionCard({ radar }) {
             ) : null}
           </>
         ) : (
-          <div className="flex h-full w-full flex-col items-center justify-center bg-[#f8fafc]">
-            <span className="material-symbols-outlined mb-2 text-4xl text-gray-400">explore</span>
-            <h4 className="font-bold text-gray-700">{radar.title}</h4>
-            <p className="text-sm text-gray-500">{radar.description}</p>
-          </div>
+          <>
+            <div className="absolute inset-0 bg-surface/40 backdrop-blur-sm" />
+            <div className="relative z-10 flex max-w-[240px] flex-col items-center gap-1 rounded-xl border border-border-subtle/50 bg-surface-container-lowest/95 p-3.5 text-center shadow-lg backdrop-blur-md">
+              <div className="mb-0.5 flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+                <span className="material-symbols-outlined text-[18px]">
+                  location_off
+                </span>
+              </div>
+              <span className="font-label-md text-label-md font-bold text-on-surface">
+                {radar.title}
+              </span>
+              <p className="font-body-sm text-[11px] leading-tight text-text-muted">
+                {radar.description}
+              </p>
+            </div>
+          </>
         )}
       </div>
 
@@ -229,7 +277,7 @@ export default function LivePositionCard({ radar }) {
           </span>
         ) : isTransit ? (
           <span className="font-label-sm text-label-sm text-text-muted">
-            Pos {index + 1}/{rute?.waypoints?.length ?? 0}
+            Pos {activeWpIndex + 1}/{rute?.waypoints?.length ?? 0}
           </span>
         ) : null}
       </div>
