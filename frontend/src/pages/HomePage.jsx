@@ -1,18 +1,19 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
+import { useRecentSearches } from "@/hooks/useRecentSearches";
+import { prefetchTracking } from "@/lib/api";
 
 export default function HomePage() {
   const navigate = useNavigate();
   const [waybill, setWaybill] = useState("");
+  const { recentSearches, addSearch } = useRecentSearches();
 
   const handleSearch = (event) => {
     event.preventDefault();
-    if (waybill.trim()) {
-      navigate(`/lacak`);
-    } else {
-      setWaybill("1000849201994");
-      navigate(`/lacak`);
-    }
+    const cleanWaybill = cleanResiInput(waybill) || "1000849201994";
+    addSearch(cleanWaybill);
+    navigate(getRouteForResi(cleanWaybill));
   };
 
   const handlePaste = async () => {
@@ -92,6 +93,33 @@ export default function HomePage() {
 
             {/* Single Clean Quick Search / Recent Chips Row */}
             <div className="mt-4 pt-3 border-t border-border-subtle flex flex-wrap items-center gap-2 text-xs">
+              <span className="font-bold uppercase tracking-wider text-text-muted text-[11px]">
+                Pencarian Terakhir:
+              </span>
+              {recentSearches && recentSearches.length > 0 ? (
+                recentSearches.map((resi) => (
+                  <button
+                    className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-low hover:bg-primary/10 hover:text-primary text-text-primary border border-border-subtle hover:border-primary/40 font-mono text-xs transition-all cursor-pointer group shadow-xs"
+                    key={resi}
+                    onMouseEnter={() => prefetchTracking(resi)}
+                    onClick={() => {
+                      setWaybill(resi);
+                      navigate(getRouteForResi(resi));
+                    }}
+                    title={`Lacak kembali nomor resi ${resi}`}
+                    type="button"
+                  >
+                    <span className="material-symbols-outlined text-[14px] text-text-muted group-hover:text-primary">
+                      history
+                    </span>
+                    <span className="font-semibold tracking-tight">{resi}</span>
+                  </button>
+                ))
+              ) : (
+                <span className="text-xs text-text-muted italic">
+                  Belum ada riwayat pencarian
+                </span>
+              )}
             </div>
           </div>
         </div>

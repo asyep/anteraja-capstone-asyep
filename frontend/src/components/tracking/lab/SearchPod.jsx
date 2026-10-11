@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRouteForResi } from "@/data/shipmentsData";
+import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
+import { useRecentSearches } from "@/hooks/useRecentSearches";
 import Toast from "@/components/ui/Toast";
 
 /**
@@ -43,15 +44,17 @@ export default function SearchPod() {
   const navigate = useNavigate();
   const [resi, setResi] = useState("");
   const [toast, setToast] = useState("");
+  const { recentSearches, addSearch } = useRecentSearches();
 
   function lacak(nilai) {
-    const bersih = String(nilai ?? "").trim();
+    const bersih = cleanResiInput(nilai);
 
     if (!bersih) {
       setToast("Silakan masukkan nomor resi pengiriman terlebih dahulu.");
       return;
     }
 
+    addSearch(bersih);
     navigate(getRouteForResi(bersih));
   }
 
@@ -128,6 +131,36 @@ export default function SearchPod() {
             </span>
             Lacak Paket
           </button>
+        </div>
+
+        {/* Row Pencarian Terakhir */}
+        <div className="mt-3.5 flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
+          <span className="font-bold uppercase tracking-wider text-gray-400 text-[11px]">
+            Pencarian Terakhir:
+          </span>
+          {recentSearches && recentSearches.length > 0 ? (
+            recentSearches.map((item) => (
+              <button
+                key={item}
+                type="button"
+                onClick={() => {
+                  setResi(item);
+                  lacak(item);
+                }}
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-gray-50 hover:bg-pink-50 hover:text-[#ec008c] text-gray-700 border border-gray-200 hover:border-pink-300 font-mono text-xs transition-all cursor-pointer group shadow-xs"
+                title={`Lacak kembali ${item}`}
+              >
+                <span className="material-symbols-outlined text-[14px] text-gray-400 group-hover:text-[#ec008c]">
+                  history
+                </span>
+                <span className="font-semibold tracking-tight">{item}</span>
+              </button>
+            ))
+          ) : (
+            <span className="text-xs text-gray-400 italic">
+              Belum ada riwayat pencarian
+            </span>
+          )}
         </div>
       </form>
 

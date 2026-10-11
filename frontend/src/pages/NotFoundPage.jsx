@@ -1,18 +1,22 @@
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { getRouteForResi } from "../data/shipmentsData";
+import { getRouteForResi, cleanResiInput } from "../data/shipmentsData";
+import { useRecentSearches } from "../hooks/useRecentSearches";
 
 export default function NotFoundPage() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
-  const waybillParam = searchParams.get("waybill_number") || "1000998877665544332211";
+  const waybillParam = cleanResiInput(searchParams.get("waybill_number")) || "1000998877665544332211";
 
   const [resi, setResi] = useState(waybillParam);
+  const { recentSearches, addSearch } = useRecentSearches();
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    if (resi.trim()) {
-      navigate(getRouteForResi(resi.trim()));
+    const bersih = cleanResiInput(resi);
+    if (bersih) {
+      addSearch(bersih);
+      navigate(getRouteForResi(bersih));
     }
   };
 
@@ -66,20 +70,27 @@ export default function NotFoundPage() {
                     <span>Lacak Paket</span>
                   </button>
                 </div>
-                <div className="flex flex-wrap items-center gap-space-sm text-on-surface-variant">
+                <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">
                   <span className="font-label-sm text-label-sm uppercase font-bold tracking-wider text-text-muted">Pencarian Terakhir:</span>
-                  <button className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1" type="button" onClick={() => navigate(getRouteForResi('100028471928'))}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-success-base"></span>
-                    100028471928...
-                  </button>
-                  <button className="px-3 py-1.5 rounded-full bg-surface-container-low hover:bg-primary-fixed/40 hover:text-primary text-on-surface font-mono-code text-label-sm shadow-sm transition-all flex items-center gap-1" type="button" onClick={() => navigate(getRouteForResi('100039201948'))}>
-                    <span className="w-1.5 h-1.5 rounded-full bg-secondary-fixed-dim"></span>
-                    100039201948...
-                  </button>
-                  <span className="bg-error-surface text-error px-3 py-1 rounded-full font-label-sm text-label-sm font-bold flex items-center gap-1 shadow-sm">
-                    <span className="w-1.5 h-1.5 rounded-full bg-error inline-block"></span>
-                    Nomor Resi Tidak Terdaftar
-                  </span>
+                  {recentSearches && recentSearches.length > 0 ? (
+                    recentSearches.map((item) => (
+                      <button
+                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-low hover:bg-primary/10 hover:text-primary text-text-primary border border-border-subtle hover:border-primary/40 font-mono text-xs transition-all cursor-pointer group shadow-xs"
+                        key={item}
+                        onClick={() => {
+                          setResi(item);
+                          navigate(getRouteForResi(item));
+                        }}
+                        title={`Lacak kembali ${item}`}
+                        type="button"
+                      >
+                        <span className="material-symbols-outlined text-[14px] text-text-muted group-hover:text-primary">history</span>
+                        <span className="font-semibold tracking-tight">{item}</span>
+                      </button>
+                    ))
+                  ) : (
+                    <span className="text-xs text-text-muted italic">Belum ada riwayat pencarian</span>
+                  )}
                 </div>
               </form>
             </div>
