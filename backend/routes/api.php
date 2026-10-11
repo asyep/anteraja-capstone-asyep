@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->middleware('throttle:60,1')->group(function () {
     Route::get('/tracking/{waybill}', [TrackingController::class, 'show']);
+    Route::post('/tracking/{waybill}/regenerate-ai', [TrackingController::class, 'regenerateAi']);
 
     Route::get('/shipments/samples', [ShipmentController::class, 'samples']);
     Route::get('/shipments', [ShipmentController::class, 'index']);
