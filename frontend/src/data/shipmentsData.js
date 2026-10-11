@@ -2,12 +2,18 @@
  * =============================================================================
  * shipmentsData.js - Pemetaan Rute Status Nomor Resi & Kamus Data Demo
  * =============================================================================
- * Berfungsi untuk:
- * 1. `demoResiRoutes`: Kamus rute cepat untuk nomor-nomor resi pengujian milestone.
- * 2. `cleanResiInput(resi)`: Sanitasi karakter nomor resi dari spasi dan tanda baca.
- * 3. `getRouteForResi(resi)`: Penentu rute navigasi instan (0ms) berdasarkan
- *    status operasional resi (Order Created, In Transit, Out for Delivery, dll).
+ * SEKILAS PENJELASAN LOGIKA:
+ * Fungsi `getRouteForResi(resi)` menentukan URL tujuan:
+ * 1. Bersihkan input dengan `cleanResiInput` (buang spasi/simbol).
+ * 2. Cek apakah resi ada di dataset master (`allShipmentsData.json`):
+ *    - Jika ada, baca `order_status` miliknya dan kembalikan URL tujuan seketika (0ms).
+ * 3. Cek apakah resi ada di `demoResiRoutes` -> jika ada, kembalikan rute demo.
+ * 4. Jika formatnya valid (13-14 digit atau 32 alfanumerik) tapi belum ada di dataset,
+ *    arahkan ke `/cek-resi` agar dicek ke server backend.
+ * 5. Jika format tidak valid atau kosong, arahkan ke `/not-found`.
+ * =============================================================================
  */
+
 
 import allShipmentsData from "./allShipmentsData.json";
 

@@ -2,14 +2,20 @@
  * =============================================================================
  * useTrackingDetail.js - Hook Pengambilan Data & Penyelaras Data Pengiriman
  * =============================================================================
- * Berfungsi untuk:
- * 1. `useTrackingDetail(waybill)`: Custom hook yang mengelola state pengambilan
- *    data (data, loading, error) dengan sinkronisasi instan (0ms) dari cache
- *    dan background revalidation ke API backend/Supabase.
- * 2. `mergeShipmentData(baseData, apiData)`: Fungsi transformer yang menggabungkan
- *    data live dari REST API ke dalam template visual UI (stepper milestone,
- *    telemetri GPS Leaflet map, narasi Satria AI, dan profil kurir).
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Logika Hook `useTrackingDetail`:
+ *    - Sinkronisasi Cepat: Begitu waybill berubah, periksa cache lokal. Jika ada data,
+ *      langsung pasang ke state `data` (0ms) sehingga layar tidak berkedip kosong.
+ *    - Revalidasi Background: Menjalankan `fetchTrackingData` di latar belakang
+ *      untuk memastikan data event tracking dan posisi kurir selalu paling baru.
+ * 2. Logika Merger `mergeShipmentData`:
+ *    - Data API dari database hanya berupa teks mentah (JSON).
+ *    - Fungsi ini mengubah teks tersebut menjadi format UI: memformat tanggal ke WIB,
+ *      menentukan warna tahapan (done/active/pending), menyusun polyline peta Leaflet,
+ *      dan melengkapi foto/nama kurir Satria. Jika ada data null, diisi default yang aman.
+ * =============================================================================
  */
+
 
 import { useState, useEffect } from "react";
 import { fetchTrackingData, getCachedTracking } from "../lib/api";

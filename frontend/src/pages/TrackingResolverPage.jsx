@@ -2,18 +2,21 @@
  * =============================================================================
  * TrackingResolverPage.jsx - Dynamic Route & Milestone Dispatcher
  * =============================================================================
- * Berfungsi sebagai perantara (bridge) cerdas saat pencarian nomor resi dilakukan:
- * 1. Jalur Sinkron Cepat (0ms): Jika nomor resi cocok dengan dataset lokal atau
- *    riwayat tersimpan, langsung redirect ke rute milestone spesifik tanpa loading.
- * 2. Jalur Resolusi Jaringan (< 750ms): Jika nomor resi baru, mengambil status
- *    operasional (`order_status`) melalui API lalu mendistribusikan ke:
- *    - `ORDER_CREATED` -> `/tracking/order-created`
- *    - `PICKUP_READY` / `COURIER_PROCESSED` -> `/tracking/courier-processed`
- *    - `IN_TRANSIT` -> `/tracking/in-transit`
- *    - `OUT_FOR_DELIVERY` -> `/tracking/out-for-delivery`
- *    - `DELIVERED` -> `/delivered`
- *    - Status tidak dikenal / gagal -> `/not-found`
+ * SEKILAS PENJELASAN LOGIKA:
+ * Komponen ini bertindak seperti 'lampu lalu lintas' rute pelacakan:
+ * 1. Logika Cepat (0ms): Cek apakah nomor resi sudah ada di dataset.
+ *    Jika ada, langsung redirect ke URL halamannya tanpa jeda loading.
+ * 2. Logika Resolusi API (< 750ms): Jika resi baru, tanya status terkini ke API
+ *    (order_status). Setelah status didapat:
+ *    - ORDER_CREATED       -> alihkan ke /tracking/order-created
+ *    - COURIER_PROCESSED   -> alihkan ke /tracking/courier-processed
+ *    - IN_TRANSIT          -> alihkan ke /tracking/in-transit
+ *    - OUT_FOR_DELIVERY    -> alihkan ke /tracking/out-for-delivery
+ *    - DELIVERED           -> alihkan ke /delivered
+ *    - Resi Salah/Tidak Ada -> alihkan ke /not-found
+ * =============================================================================
  */
+
 
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams, Navigate } from "react-router-dom";

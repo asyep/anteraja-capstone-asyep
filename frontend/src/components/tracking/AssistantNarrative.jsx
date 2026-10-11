@@ -2,13 +2,20 @@
  * =============================================================================
  * AssistantNarrative.jsx - Kartu Diagnostik Narasi AI & Feedback Pelanggan
  * =============================================================================
- * Menampilkan pesan narasi cerdas Satria AI yang menjelaskan status paket
- * dalam bahasa manusia yang ramah, serta menyediakan aksi interaktif:
- * 1. Narasi Cerdas: Menjelaskan kondisi pengiriman dan perkiraan langkah berikutnya.
- * 2. Tombol Aksi Cepat: Hubungi CS via WhatsApp resmi dan Bagikan Status (Web Share API).
- * 3. Quick Feedback: Tombol konfirmasi "Apakah informasi ini membantu?"
- *    dengan proses instan (< 1 detik) ke Supabase dan backend Laravel.
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Logika Feedback Instan (< 1 Detik):
+ *    Saat user klik "Ya" atau "Tidak", tombol langsung memutar spinner ~350ms
+ *    dan mengirim feedback ke Supabase. Tanpa menunggu lama, status berubah
+ *    menjadi centang hijau "Terima kasih atas feedback Anda!" (Optimistic UI).
+ * 2. Logika Pencegahan Duplikasi:
+ *    Status feedback disimpan di `localStorage` per nomor resi (`anteraja_feedback_${waybill}`).
+ *    Jika user membuka resi yang sama lagi, tombol otomatis sudah terkunci dalam status centang.
+ * 3. Logika Bagikan Status:
+ *    Mendeteksi ketersediaan `navigator.share` (smartphone). Jika tidak ada,
+ *    otomatis menyalin ringkasan resi dan tautan URL ke clipboard pengguna.
+ * =============================================================================
  */
+
 
 import { useState } from "react";
 import { API_BASE } from "@/lib/api";

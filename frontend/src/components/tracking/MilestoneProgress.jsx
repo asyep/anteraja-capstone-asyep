@@ -2,17 +2,18 @@
  * =============================================================================
  * MilestoneProgress.jsx - Stepper Visual 5 Tahapan Pengiriman Riil
  * =============================================================================
- * Menampilkan progress bar interaktif dengan 5 tahapan utama logistik:
- * 1. Pesanan Dibuat (Order Created)
- * 2. Diproses Kurir (Courier Processed / Pickup)
- * 3. Dalam Perjalanan (In Transit Linehaul)
- * 4. Sedang Diantar (Out For Delivery Satria)
- * 5. Tiba di Tujuan (Delivered)
- *
- * Mengatur garis penghubung otomatis (hijau untuk tahap yang sudah terlewati,
- * garis putus-putus untuk tahap mendatang), status aktif/pulse, dan tata letak
- * responsif (horizontal di desktop, vertikal di mobile).
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Logika Garis Penghubung (`segmen`):
+ *    - Dihitung dari jumlah tahap yang sudah selesai (`jumlahSelesai`).
+ *    - Jika tahap sudah terlewati, garis diberi warna hijau penuh (`bg-success-base`).
+ *    - Jika tahap belum tercapai, garis berbentuk garis putus-putus abu-abu (*dashed*).
+ * 2. Logika Status Titik Milestone (`state`):
+ *    - `done`: Berwarna hijau solid dengan ikon centang / ikon tahap selesai.
+ *    - `active` / `pulse`: Titik yang sedang berjalan diberi animasi berdenyut (*pulse*).
+ *    - `pending`: Berwarna abu-abu redup (opacity 60%) menandakan belum dimulai.
+ * =============================================================================
  */
+
 
 import React from "react";
 

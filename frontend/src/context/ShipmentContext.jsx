@@ -2,10 +2,16 @@
  * =============================================================================
  * ShipmentContext.jsx - State Management Global untuk Pelacakan Pengiriman
  * =============================================================================
- * Berfungsi untuk menyimpan dan mendistribusikan data pelacakan yang sedang aktif,
- * riwayat pencarian pengguna (recent searches), dan identitas sesi pengguna ke
- * seluruh komponen tanpa perlu prop-drilling.
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Logika Sharing Data Tanpa Prop-Drilling:
+ *    Menyimpan objek resi aktif (`activeShipment`) sehingga Header, Stepper,
+ *    dan Kartu Detail dapat membaca data pengiriman tanpa oper-operan props rumit.
+ * 2. Logika Riwayat Pencarian Unik (`recordShipment`):
+ *    Setiap kali resi baru dibuka, resi dimasukkan ke urutan paling atas (`unshift`).
+ *    Nomor resi duplikat dihapus, dan panjang daftar dibatasi maksimal 10 item terbaru.
+ * =============================================================================
  */
+
 
 import { createContext, useContext, useState } from "react";
 

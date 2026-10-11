@@ -2,15 +2,20 @@
  * =============================================================================
  * TrackingMap.jsx - Komponen Peta Interaktif Pelacakan Pengiriman (Leaflet)
  * =============================================================================
- * Menampilkan visualisasi geografis interaktif perjalanan paket:
- * 1. Base Map: OpenStreetMap tiles dengan kustomisasi kontrol zoom Leaflet.
- * 2. Visualisasi Rute: Polyline garis rute pengiriman (Hub asal -> Hub tujuan / Penerima).
- * 3. Custom Markers:
- *    - Marker Kurir/Armada dengan kalkulasi arah rotasi sudut (*bearing*).
- *    - Marker Lokasi Hub & Titik Drop-off Tujuan.
- * 4. Pengontrol Kamera Cerdas (`StaticMapController`):
- *    - Auto-centering posisi awal tanpa memaksa animasi saat pengguna sedang menggeser peta.
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Logika Marker & Arah Kurir (`getBearing`):
+ *    - Menghitung sudut derajat (0° - 360°) antara koordinat kurir saat ini dan
+ *      titik koordinat berikutnya. Ikon kurir/mobil otomatis berputar menghadap
+ *      ke arah jalan yang benar (`transform: rotate(...)`).
+ * 2. Logika Visualisasi Rute (`Polyline`):
+ *    - Menghubungkan titik hub asal, titik transit, dan alamat tujuan dengan
+ *      garis jalur berwarna cerah.
+ * 3. Logika Kamera Stabil (`StaticMapController`):
+ *    - Peta otomatis fokus ke posisi kurir saat pertama kali dibuka.
+ *    - Jika user menyentuh/menggeser peta, kamera tidak akan menarik paksa (tidak goyang).
+ * =============================================================================
  */
+
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { MapContainer, TileLayer, Polyline, Marker, ZoomControl, useMap } from "react-leaflet";

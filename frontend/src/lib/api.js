@@ -2,12 +2,17 @@
  * =============================================================================
  * api.js - Centralized API Gateway & High-Speed Cache Layer
  * =============================================================================
- * Menangani seluruh pengambilan data pelacakan resi dengan strategi multi-tier:
- * 1. Tier 1: In-Memory Map Cache (0ms - instant transition)
- * 2. Tier 2: Pre-bundled Local Master Dataset (0ms - 80+ nomor resi terdaftar)
- * 3. Tier 3: Browser SessionStorage Cache (persisten selama sesi tab aktif)
- * 4. Tier 4: Parallel Race antara Supabase Cloud API & Local Laravel API (< 500ms)
+ * SEKILAS PENJELASAN LOGIKA:
+ * Saat pengguna mencari resi, fungsi `fetchTrackingData` bekerja secara bertingkat:
+ * 1. [Lapis 1 - RAM]: Cek Map di memori -> jika ada, langsung render (0ms).
+ * 2. [Lapis 2 - Dataset]: Cek file JSON lokal -> jika ada, render instan (0ms) sambil
+ *    sinkronisasi data terbaru di latar belakang (Stale-While-Revalidate).
+ * 3. [Lapis 3 - SessionStorage]: Cek penyimpanan tab browser.
+ * 4. [Lapis 4 - Cloud & Backend]: Jika resi baru, jalankan balap paralel (Promise.race)
+ *    antara Supabase Cloud dan Laravel API -> respon tercepat langsung ditampilkan (< 500ms).
+ * =============================================================================
  */
+
 
 import { fetchTrackingFromSupabase } from "./supabaseTracking";
 import allShipmentsData from "../data/allShipmentsData.json";

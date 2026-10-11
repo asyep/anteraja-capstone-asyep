@@ -2,18 +2,19 @@
  * =============================================================================
  * StatusBanner.jsx - Komponen Banner Status Pengiriman & Indikator Warna
  * =============================================================================
- * Menampilkan kartu status utama di bagian atas hasil pelacakan.
- *
- * Fitur Estetika:
- * - Transisi warna bergradasi dari muda ke pekat sesuai 4 tahapan awal:
- *   1. Tahap 1 ("Pesanan Dibuat"): Pink / magenta muda cerah.
- *   2. Tahap 2 ("Sedang Diproses Kurir"): Magenta khas identitas Anteraja.
- *   3. Tahap 3 ("Dalam Perjalanan"): Deep magenta linehaul.
- *   4. Tahap 4 ("Dalam Pengantaran"): Rich dark maroon / plum pekat.
- *   5. Tahap 5 ("Tiba di Tujuan"): Hijau emerald sukses permanen.
- * - Efek pencahayaan modern (*glow/radial blur*) di sudut kartu.
- * - Tag indikator status live (*pulsing badge*) dan kode status operasional.
+ * SEKILAS PENJELASAN LOGIKA:
+ * Komponen ini menerima prop `status` yang berisi `status.variant`.
+ * Logika pemilihan warna gradasi:
+ * 1. 'default'     -> Tahap 1 (Pesanan Dibuat): Gradien Pink muda cerah.
+ * 2. 'primary-solid'-> Tahap 2 (Diproses Kurir): Gradien Magenta khas Anteraja.
+ * 3. 'transit'     -> Tahap 3 (Dalam Perjalanan): Gradien Deep Magenta linehaul.
+ * 4. 'delivery'    -> Tahap 4 (Dalam Pengantaran): Gradien Dark Maroon / Plum pekat.
+ * 5. 'delivered'   -> Tahap 5 (Tiba di Tujuan): Gradien Emerald Green sukses permanen.
+ * Tujuannya: Secara psikologis pengguna langsung mengenali progres paketnya
+ * dari perubahan kepekatan warna (muda -> sedang -> pekat -> hijau sukses).
+ * =============================================================================
  */
+
 
 import React from "react";
 
