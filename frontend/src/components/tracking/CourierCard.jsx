@@ -1,7 +1,23 @@
+/**
+ * =============================================================================
+ * CourierCard.jsx - Kartu Profil Kurir Satria Anteraja
+ * =============================================================================
+ * Menampilkan informasi identitas petugas pengantaran (Satria) yang bertugas:
+ * 1. Profil Kurir: Nama lengkap, foto avatar, ID Satria, rating kepuasan.
+ * 2. Info Kendaraan: Jenis armada (motor/van/truk) dan plat nomor kendaraan.
+ * 3. Hub Penugasan: Nama staging store atau sorting center asal.
+ * 4. Aksi Kontak Cepat: Tombol telepon langsung dan pesan instan via WhatsApp.
+ */
+
+import React from "react";
 import CourierAvatar from "./CourierAvatar";
 
-/** Tombol aksi aktif (Hubungi / Pesan Kilat). */
+/**
+ * Sub-komponen tombol aksi kontak (Telepon / WhatsApp).
+ * @param {{ href: string, icon: string, label: string, variant?: string }} props
+ */
 function ActionButton({ href, icon, label, variant }) {
+
   const kelas = `flex h-11 items-center justify-center gap-1.5 rounded-xl px-space-sm font-label-md text-label-md font-bold shadow-sm transition-all active:scale-[0.98] ${
     variant === "primary"
       ? "bg-primary text-on-primary shadow-md hover:bg-primary-container"

@@ -1,6 +1,18 @@
+/**
+ * =============================================================================
+ * shipmentsData.js - Pemetaan Rute Status Nomor Resi & Kamus Data Demo
+ * =============================================================================
+ * Berfungsi untuk:
+ * 1. `demoResiRoutes`: Kamus rute cepat untuk nomor-nomor resi pengujian milestone.
+ * 2. `cleanResiInput(resi)`: Sanitasi karakter nomor resi dari spasi dan tanda baca.
+ * 3. `getRouteForResi(resi)`: Penentu rute navigasi instan (0ms) berdasarkan
+ *    status operasional resi (Order Created, In Transit, Out for Delivery, dll).
+ */
+
 import allShipmentsData from "./allShipmentsData.json";
 
 export const demoResiRoutes = {
+
   // Status "Pesanan Dibuat" (ORDER_CREATED)
   "10001338258951": "/tracking/order-created",
   "10001240251661": "/tracking/order-created",

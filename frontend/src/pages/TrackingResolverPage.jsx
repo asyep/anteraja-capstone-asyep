@@ -1,3 +1,20 @@
+/**
+ * =============================================================================
+ * TrackingResolverPage.jsx - Dynamic Route & Milestone Dispatcher
+ * =============================================================================
+ * Berfungsi sebagai perantara (bridge) cerdas saat pencarian nomor resi dilakukan:
+ * 1. Jalur Sinkron Cepat (0ms): Jika nomor resi cocok dengan dataset lokal atau
+ *    riwayat tersimpan, langsung redirect ke rute milestone spesifik tanpa loading.
+ * 2. Jalur Resolusi Jaringan (< 750ms): Jika nomor resi baru, mengambil status
+ *    operasional (`order_status`) melalui API lalu mendistribusikan ke:
+ *    - `ORDER_CREATED` -> `/tracking/order-created`
+ *    - `PICKUP_READY` / `COURIER_PROCESSED` -> `/tracking/courier-processed`
+ *    - `IN_TRANSIT` -> `/tracking/in-transit`
+ *    - `OUT_FOR_DELIVERY` -> `/tracking/out-for-delivery`
+ *    - `DELIVERED` -> `/delivered`
+ *    - Status tidak dikenal / gagal -> `/not-found`
+ */
+
 import React, { useEffect } from "react";
 import { useNavigate, useSearchParams, Navigate } from "react-router-dom";
 import { fetchTrackingData } from "../lib/api";
@@ -10,7 +27,7 @@ export default function TrackingResolverPage() {
   const rawWaybill = searchParams.get("waybill_number") ?? "";
   const waybill = cleanResiInput(rawWaybill);
 
-  // 1. Jika nomor resi ada di dataset lokal atau demo, arahkan seketika (0ms, synchronous)
+  // 1. Pengalihan Instan (0ms) untuk resi yang telah terdaftar di dataset lokal
   if (waybill) {
     const directRoute = getRouteForResi(waybill);
     if (!directRoute.startsWith("/cek-resi")) {
@@ -21,7 +38,7 @@ export default function TrackingResolverPage() {
     return <Navigate to="/not-found" replace />;
   }
 
-  // 2. Jika resi baru di luar dataset, resolusi via API dengan timeout ketat
+  // 2. Resolusi API Asinkron untuk resi baru dengan timeout ketat
   useEffect(() => {
     let active = true;
 
@@ -36,7 +53,8 @@ export default function TrackingResolverPage() {
 
         let path = "/not-found";
         if (status === "ORDER_CREATED") path = "/tracking/order-created";
-        else if (status === "PICKUP_READY" || status === "COURIER_PROCESSED") path = "/tracking/courier-processed";
+        else if (status === "PICKUP_READY" || status === "COURIER_PROCESSED")
+          path = "/tracking/courier-processed";
         else if (status === "IN_TRANSIT") path = "/tracking/in-transit";
         else if (status === "OUT_FOR_DELIVERY") path = "/tracking/out-for-delivery";
         else if (status === "DELIVERED") path = "/delivered";
@@ -60,9 +78,11 @@ export default function TrackingResolverPage() {
 
   return (
     <div className="flex flex-col w-full min-h-[calc(100vh-20rem)] bg-surface items-center justify-center p-8">
+      {/* Top progress indicator bar */}
       <div className="fixed top-0 left-0 right-0 z-50 h-1 bg-primary/20 overflow-hidden">
         <div className="h-full bg-primary animate-pulse w-full" />
       </div>
+
       <div className="text-center flex flex-col items-center gap-3">
         <div className="w-10 h-10 border-3 border-primary/20 border-t-primary rounded-full animate-spin" />
         <p className="text-sm font-medium text-on-surface-variant">

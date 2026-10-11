@@ -1,4 +1,25 @@
-/** Latar banner per varian status: bertransisi mulus dari warna muda ke pekat (tahap 1 s/d 4). */
+/**
+ * =============================================================================
+ * StatusBanner.jsx - Komponen Banner Status Pengiriman & Indikator Warna
+ * =============================================================================
+ * Menampilkan kartu status utama di bagian atas hasil pelacakan.
+ *
+ * Fitur Estetika:
+ * - Transisi warna bergradasi dari muda ke pekat sesuai 4 tahapan awal:
+ *   1. Tahap 1 ("Pesanan Dibuat"): Pink / magenta muda cerah.
+ *   2. Tahap 2 ("Sedang Diproses Kurir"): Magenta khas identitas Anteraja.
+ *   3. Tahap 3 ("Dalam Perjalanan"): Deep magenta linehaul.
+ *   4. Tahap 4 ("Dalam Pengantaran"): Rich dark maroon / plum pekat.
+ *   5. Tahap 5 ("Tiba di Tujuan"): Hijau emerald sukses permanen.
+ * - Efek pencahayaan modern (*glow/radial blur*) di sudut kartu.
+ * - Tag indikator status live (*pulsing badge*) dan kode status operasional.
+ */
+
+import React from "react";
+
+/**
+ * Konfigurasi palet warna & tipografi gradien untuk setiap varian status.
+ */
 const BANNER_VARIANT = {
   // Tahap 1: "Pesanan Dibuat" — warna paling muda (pink/magenta muda cerah).
   default: {
@@ -62,7 +83,10 @@ const BANNER_VARIANT = {
   },
 };
 
-/** Satu badge di sisi kanan banner. */
+/**
+ * Sub-komponen badge informasi di sisi kanan banner (mis. Gratis Ongkir, estimasi waktu).
+ * @param {{ badge: Object }} props
+ */
 function Badge({ badge }) {
   return (
     <span
@@ -87,18 +111,17 @@ function Badge({ badge }) {
 }
 
 /**
- * Banner status utama: status pesanan, judul, dan badge (Gratis Ongkir /
- * status hub / estimasi tiba). Warna & ukuran diatur lewat `status.variant`.
+ * Komponen utama StatusBanner.
+ * @param {{ status: Object }} props - Objek data status dari milestone aktif.
  */
 export default function StatusBanner({ status }) {
   const variant = BANNER_VARIANT[status.variant] ?? BANNER_VARIANT.default;
-  // Varian dengan judul lebih kecil & badge lebih ringkas.
+
+  // Format ringkas pada fase perjalanan aktif
   const ringkas =
     status.variant === "transit" ||
     status.variant === "delivery" ||
     status.variant === "delivered";
-  // Status akhir: titik penanda statis hijau, bukan berdenyut.
-  const selesai = status.variant === "delivered";
 
   return (
     <div
@@ -107,15 +130,20 @@ export default function StatusBanner({ status }) {
       } ${variant.className}`}
       style={variant.style}
     >
+      {/* Efek aksen glowing latar belakang */}
       <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-white/10 blur-2xl" />
 
+      {/* Bagian Kiri: Ikon Status, Kode Status, dan Label Utama */}
       <div className="relative z-10 flex items-center gap-space-md">
         <div
           className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ${variant.iconBox}`}
         >
           <span
             className={`material-symbols-outlined text-[28px] font-bold ${
-              variant.iconColor ?? (!status.variant || status.variant === "default" ? "text-[#EC008C]" : "text-white")
+              variant.iconColor ??
+              (!status.variant || status.variant === "default"
+                ? "text-[#EC008C]"
+                : "text-white")
             }`}
           >
             {status.icon || "inventory_2"}
@@ -141,6 +169,7 @@ export default function StatusBanner({ status }) {
         </div>
       </div>
 
+      {/* Bagian Kanan: Deretan Badges (Layanan, SLA, Garansi) */}
       <div
         className={`relative z-10 flex flex-wrap items-center gap-space-xs self-end md:gap-space-sm md:self-center ${
           ringkas ? "shrink-0" : "gap-space-sm"

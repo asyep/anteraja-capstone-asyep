@@ -1,15 +1,30 @@
+/**
+ * =============================================================================
+ * TrackingMap.jsx - Komponen Peta Interaktif Pelacakan Pengiriman (Leaflet)
+ * =============================================================================
+ * Menampilkan visualisasi geografis interaktif perjalanan paket:
+ * 1. Base Map: OpenStreetMap tiles dengan kustomisasi kontrol zoom Leaflet.
+ * 2. Visualisasi Rute: Polyline garis rute pengiriman (Hub asal -> Hub tujuan / Penerima).
+ * 3. Custom Markers:
+ *    - Marker Kurir/Armada dengan kalkulasi arah rotasi sudut (*bearing*).
+ *    - Marker Lokasi Hub & Titik Drop-off Tujuan.
+ * 4. Pengontrol Kamera Cerdas (`StaticMapController`):
+ *    - Auto-centering posisi awal tanpa memaksa animasi saat pengguna sedang menggeser peta.
+ */
+
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { MapContainer, TileLayer, Polyline, Marker, ZoomControl, useMap } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 
-// Fix default marker icon issues with Vite/Webpack
+// Inisialisasi perbaikan icon default Leaflet di lingkungan bundling Vite
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
   iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
   shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
+
 
 function getBearing(startLat, startLng, endLat, endLng) {
   const startLatRad = (startLat * Math.PI) / 180;

@@ -1,12 +1,26 @@
-import { useEffect, useState } from "react";
+/**
+ * =============================================================================
+ * LivePositionCard.jsx - Kartu Radar Telemetri GPS & Modal Peta Interaktif
+ * =============================================================================
+ * Menampilkan preview radar posisi terkini paket / armada kurir, meliputi:
+ * 1. Mini Map Preview: Cuplikan visual posisi GPS kurir/hub terkini.
+ * 2. Tombol "Buka Peta Interaktif": Membuka modal peta penuh (Leaflet Map)
+ *    dengan rute jalur pengantaran dan marker koordinat presisi.
+ * 3. Indikator Telemetri: Akurasi GPS, kecepatan armada, dan estimasi jarak tersisa.
+ */
 
+import React, { useEffect, useState } from "react";
 import TrackingMap from "./maps/TrackingMap";
 import { DELIVERY_ROUTES } from "../../data/deliveryRoutes";
 import { TRANSIT_ROUTES } from "../../data/transitRoutes";
 import useTransitAnimation from "../../hooks/useTransitAnimation";
 
-/** Label kapsul badge di kanan atas kartu. */
+/**
+ * Label kapsul badge status di kanan atas kartu radar.
+ * @param {{ children: React.ReactNode, strong?: boolean }} props
+ */
 function StatusPill({ children, strong }) {
+
   return (
     <span
       className={`rounded-full px-2.5 py-0.5 font-label-sm text-label-sm font-bold ${strong

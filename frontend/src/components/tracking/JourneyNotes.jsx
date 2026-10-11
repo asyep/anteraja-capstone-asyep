@@ -1,3 +1,18 @@
+/**
+ * =============================================================================
+ * JourneyNotes.jsx - Kronologi Riwayat & Catatan Perjalanan Paket
+ * =============================================================================
+ * Menampilkan linimasa detail setiap pergerakan paket dari awal hingga akhir:
+ * 1. Status Titik Indikator:
+ *    - `done` (Hijau): Titik checkpoint yang sudah sukses dilewati.
+ *    - `progress` / `active` (Magenta & Berdenyut): Titik checkpoint aktif saat ini.
+ *    - `idle` (Abu-abu): Checkpoint rencana berikutnya.
+ * 2. Waktu & Lokasi: Timestamp kejadian, nama fasilitas (Staging Store / Hub),
+ *    dan keterangan aktivitas logistik.
+ */
+
+import React from "react";
+
 /** Warna titik dan teks per status catatan perjalanan. */
 const NOTE_STYLE = {
   done: { dot: "bg-success-base", time: "font-bold text-success-base", card: "" },
@@ -13,11 +28,8 @@ const NOTE_STYLE = {
   idle: { dot: "bg-border-strong", time: "text-text-muted", card: "" },
 };
 
-/**
- * Catatan perjalanan detail — daftar waypoint dengan titik penanda.
- * Status tiap catatan: "done" (hijau), "active" (magenta), "idle" (abu).
- */
 export default function JourneyNotes({ journey }) {
+
   return (
     <div className="mt-space-lg flex flex-col gap-space-sm border-t border-border-subtle/50 pt-space-md">
       <div className="flex items-center justify-between text-on-surface">

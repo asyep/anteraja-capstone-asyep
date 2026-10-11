@@ -1,3 +1,15 @@
+/**
+ * =============================================================================
+ * Footer.jsx - Komponen Footer Global Aplikasi
+ * =============================================================================
+ * Menampilkan footer konsisten di bagian bawah seluruh halaman:
+ * 1. Kolom 1: Profil Brand Anteraja, deskripsi singkat, dan kanal sosial media.
+ * 2. Kolom 2: Tautan Layanan Pengiriman (Same Day, Next Day, Reguler, Kargo).
+ * 3. Kolom 3: Navigasi Cepat (Cek Ongkir, Drop Off Point, Karir, Bantuan).
+ * 4. Kolom 4: Kontak Customer Care (WhatsApp, Email, Telepon) & Badges Toko Aplikasi.
+ * 5. Bagian Bawah: Hak cipta dan tautan legalitas (Kebijakan Privasi, Syarat & Ketentuan).
+ */
+
 import React from "react";
 import { Link } from "react-router-dom";
 import Logo from "@/components/layout/Logo";
@@ -10,6 +22,7 @@ import {
   YouTubeIcon,
 } from "@/components/ui/SocialIcons";
 import { LACAK_CONTACT } from "@/data/lacakContent";
+
 
 const KANAL_SOSIAL = [
   { id: "facebook", label: "Facebook", href: "#", Icon: FacebookIcon },

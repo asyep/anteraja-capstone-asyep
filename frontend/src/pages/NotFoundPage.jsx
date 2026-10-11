@@ -1,9 +1,21 @@
+/**
+ * =============================================================================
+ * NotFoundPage.jsx - Halaman Resi Tidak Ditemukan & Penanganan Kendala (404)
+ * =============================================================================
+ * Menampilkan pesan edukatif saat nomor resi tidak terdaftar atau salah ketik:
+ * 1. Diagnostik Masalah: Analisis kemungkinan penyebab (resi baru dibuat, salah digit).
+ * 2. Form Koreksi Cepat: Memungkinkan pengguna langsung memperbaiki input resi.
+ * 3. Panduan Format Resi: Menjelaskan format resmi Anteraja (13-14 digit / 32 karakter).
+ * 4. Tombol Bantuan: Hubungi customer care resmi Anteraja.
+ */
+
 import React, { useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { getRouteForResi, cleanResiInput } from "../data/shipmentsData";
 import { useRecentSearches } from "../hooks/useRecentSearches";
 
 export default function NotFoundPage() {
+
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const waybillParam = cleanResiInput(searchParams.get("waybill_number")) || "1000998877665544332211";

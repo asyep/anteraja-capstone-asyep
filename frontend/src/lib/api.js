@@ -1,28 +1,47 @@
+/**
+ * =============================================================================
+ * api.js - Centralized API Gateway & High-Speed Cache Layer
+ * =============================================================================
+ * Menangani seluruh pengambilan data pelacakan resi dengan strategi multi-tier:
+ * 1. Tier 1: In-Memory Map Cache (0ms - instant transition)
+ * 2. Tier 2: Pre-bundled Local Master Dataset (0ms - 80+ nomor resi terdaftar)
+ * 3. Tier 3: Browser SessionStorage Cache (persisten selama sesi tab aktif)
+ * 4. Tier 4: Parallel Race antara Supabase Cloud API & Local Laravel API (< 500ms)
+ */
+
 import { fetchTrackingFromSupabase } from "./supabaseTracking";
 import allShipmentsData from "../data/allShipmentsData.json";
 
 /**
- * Centralized API configuration.
- * Mengambil base URL dari environment variable VITE_API_URL,
- * dengan fallback ke localhost bila belum diset.
+ * Konfigurasi URL dasar API backend (Laravel).
+ * Menggunakan environment variable `VITE_API_URL` dengan fallback ke localhost.
  */
 const RAW_API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
-
 export const API_BASE = RAW_API_URL.replace(/\/+$/, "");
 
-// Cache in-memory agar peralihan antar halaman atau pencarian ulang instan (< 10ms)
+/**
+ * Cache memori lokal (RAM) agar pencarian berulang atau navigasi antar tab
+ * tidak memerlukan network request ulang.
+ */
 const trackingCache = new Map();
 
+/**
+ * Membersihkan format nomor resi dari karakter non-alfanumerik.
+ * @param {string|number} waybill - Nomor resi mentah.
+ * @returns {string} Nomor resi bersih.
+ */
 function cleanWaybillInput(waybill) {
   if (waybill == null) return "";
   return String(waybill).replace(/[^a-zA-Z0-9]/g, "").trim();
 }
 
 /**
- * Mengambil data tracking dengan performa ultra cepat (0ms - 50ms):
- * 1. Cek in-memory cache & dataset database lokal untuk output instan (0ms).
- * 2. Background revalidation ke Supabase untuk menjaga data tetap segar.
- * 3. Fallback query langsung ke Supabase jika resi baru dibuat di luar dataset.
+ * Mengambil data detail pelacakan untuk nomor resi tertentu.
+ * Mengimplementasikan pola 'Stale-While-Revalidate' untuk kecepatan maksimal.
+ *
+ * @param {string} waybill - Nomor resi paket.
+ * @returns {Promise<{ ok: boolean, data: Object }>}
+ * @throws {Error} Jika nomor resi kosong atau tidak ditemukan.
  */
 export async function fetchTrackingData(waybill) {
   const cleanWaybill = cleanWaybillInput(waybill);
@@ -30,27 +49,29 @@ export async function fetchTrackingData(waybill) {
     throw new Error("Nomor resi wajib diisi");
   }
 
-  // 1. Cek cache in-memory untuk transisi instan (0ms)
+  // --- Tier 1: Cek In-Memory Cache (0ms) ---
   if (trackingCache.has(cleanWaybill)) {
     return trackingCache.get(cleanWaybill);
   }
 
-  // 2. Cek dataset database lokal (80+ resi terdaftar) - langsung keluar output (< 1ms)
+  // --- Tier 2: Cek Master Dataset Lokal (0ms) ---
   if (allShipmentsData && allShipmentsData[cleanWaybill]) {
     const instantResult = { ok: true, data: allShipmentsData[cleanWaybill] };
     trackingCache.set(cleanWaybill, instantResult);
 
-    // Revalidasi di latar belakang tanpa menghambat tampilan (stale-while-revalidate)
-    fetchTrackingFromSupabase(cleanWaybill).then((fresh) => {
-      if (fresh?.ok && fresh?.data) {
-        trackingCache.set(cleanWaybill, fresh);
-      }
-    }).catch(() => null);
+    // Revalidasi data segar dari cloud di latar belakang tanpa memblokir UI
+    fetchTrackingFromSupabase(cleanWaybill)
+      .then((fresh) => {
+        if (fresh?.ok && fresh?.data) {
+          trackingCache.set(cleanWaybill, fresh);
+        }
+      })
+      .catch(() => null);
 
     return instantResult;
   }
 
-  // 3. Cek sessionStorage browser jika ada
+  // --- Tier 3: Cek SessionStorage Browser ---
   try {
     if (typeof window !== "undefined") {
       const cached = sessionStorage.getItem(`anteraja_track_${cleanWaybill}`);
@@ -63,18 +84,19 @@ export async function fetchTrackingData(waybill) {
       }
     }
   } catch {
-    /* abaikan kegagalan cache sessionStorage */
+    /* Abaikan jika storage browser tidak dapat diakses */
   }
 
-  // 3. Jalankan query Supabase Cloud secara langsung & cepat (~300ms)
+  // --- Tier 4: Pengambilan Data Jaringan (Supabase Cloud + Backend Laravel) ---
   const supabasePromise = fetchTrackingFromSupabase(cleanWaybill);
-
   let result = null;
 
-  // 4. Jika sedang dijalankan di localhost dan backend lokal diset, balap paralel
-  const isLocalHost = typeof window !== "undefined" && (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
+  const isLocalHost =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1");
   const isDeadTunnel = !API_BASE || API_BASE.includes("trycloudflare.com");
 
+  // Jika di localhost, jalankan balap paralel antara Laravel API dan Supabase Cloud
   if (isLocalHost && !isDeadTunnel) {
     const backendPromise = (async () => {
       try {
@@ -96,18 +118,19 @@ export async function fetchTrackingData(waybill) {
       return null;
     })();
 
-    // Ambil respon pertama yang valid
+    // Ambil respon tercepat yang berhasil
     result = await Promise.race([
       supabasePromise.then((res) => (res?.ok && res?.data ? res : Promise.reject())),
       backendPromise.then((res) => (res?.ok && res?.data ? res : Promise.reject())),
     ]).catch(() => null);
   }
 
-  // 5. Jika belum mendapatkan hasil dari balap paralel, tunggu hasil Supabase
+  // Jika balap paralel belum selesai / bukan di localhost, tunggu respon Supabase
   if (!result) {
     result = await supabasePromise;
   }
 
+  // Simpan ke cache jika data berhasil didapatkan
   if (result && result.ok && result.data) {
     trackingCache.set(cleanWaybill, result);
     try {
@@ -115,7 +138,7 @@ export async function fetchTrackingData(waybill) {
         sessionStorage.setItem(`anteraja_track_${cleanWaybill}`, JSON.stringify(result));
       }
     } catch {
-      /* abaikan error sessionStorage quota */
+      /* Abaikan jika kuota sessionStorage penuh */
     }
     return result;
   }
@@ -124,19 +147,26 @@ export async function fetchTrackingData(waybill) {
 }
 
 /**
- * Mengambil data tracking dari cache in-memory atau sessionStorage secara instan (0ms).
+ * Mengambil data tracking yang tersimpan di cache secara sinkron (0ms).
+ * Digunakan untuk render instan sebelum network request selesai.
+ *
+ * @param {string} waybill - Nomor resi.
+ * @returns {{ ok: boolean, data: Object } | null}
  */
 export function getCachedTracking(waybill) {
   const cleanWaybill = cleanWaybillInput(waybill);
   if (!cleanWaybill) return null;
+
   if (trackingCache.has(cleanWaybill)) {
     return trackingCache.get(cleanWaybill);
   }
+
   if (allShipmentsData && allShipmentsData[cleanWaybill]) {
     const instantResult = { ok: true, data: allShipmentsData[cleanWaybill] };
     trackingCache.set(cleanWaybill, instantResult);
     return instantResult;
   }
+
   try {
     if (typeof window !== "undefined") {
       const cached = sessionStorage.getItem(`anteraja_track_${cleanWaybill}`);
@@ -149,17 +179,20 @@ export function getCachedTracking(waybill) {
       }
     }
   } catch {
-    /* ignore */
+    /* Abaikan jika storage gagal dibaca */
   }
+
   return null;
 }
 
 /**
- * Melakukan prefetch data resi di latar belakang saat hover atau idle.
+ * Memuat data resi ke dalam cache di latar belakang (prefetch).
+ * Berguna saat pengguna mengarahkan kursor (hover) pada tombol atau riwayat pencarian.
+ *
+ * @param {string} waybill - Nomor resi.
  */
 export function prefetchTracking(waybill) {
   const cleanWaybill = cleanWaybillInput(waybill);
   if (!cleanWaybill || trackingCache.has(cleanWaybill)) return;
   fetchTrackingData(cleanWaybill).catch(() => null);
 }
-

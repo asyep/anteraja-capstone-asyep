@@ -1,3 +1,15 @@
+/**
+ * =============================================================================
+ * HomePage.jsx - Halaman Utama (Landing Page) Smart AI Tracking Anteraja
+ * =============================================================================
+ * Halaman gerbang utama yang menyajikan pengalaman pengguna modern:
+ * 1. Hero Section: Headline pelacakan berbasis AI dan kotak pencarian resi
+ *    dengan fitur tempel (paste), prefetch saat hover, dan chip demo cepat.
+ * 2. Fitur Unggulan: Telemetri real-time, narasi AI, dan akurasi estimasi tiba.
+ * 3. Statistik Layanan & Jangkauan Pengiriman Nasional Anteraja.
+ * 4. FAQ & Dukungan Pelanggan Cepat.
+ */
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
@@ -5,6 +17,7 @@ import { useRecentSearches } from "@/hooks/useRecentSearches";
 import { prefetchTracking } from "@/lib/api";
 
 export default function HomePage() {
+
   const navigate = useNavigate();
   const [waybill, setWaybill] = useState("");
   const { recentSearches, addSearch } = useRecentSearches();

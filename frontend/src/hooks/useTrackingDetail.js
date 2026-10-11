@@ -1,11 +1,30 @@
+/**
+ * =============================================================================
+ * useTrackingDetail.js - Hook Pengambilan Data & Penyelaras Data Pengiriman
+ * =============================================================================
+ * Berfungsi untuk:
+ * 1. `useTrackingDetail(waybill)`: Custom hook yang mengelola state pengambilan
+ *    data (data, loading, error) dengan sinkronisasi instan (0ms) dari cache
+ *    dan background revalidation ke API backend/Supabase.
+ * 2. `mergeShipmentData(baseData, apiData)`: Fungsi transformer yang menggabungkan
+ *    data live dari REST API ke dalam template visual UI (stepper milestone,
+ *    telemetri GPS Leaflet map, narasi Satria AI, dan profil kurir).
+ */
+
 import { useState, useEffect } from "react";
 import { fetchTrackingData, getCachedTracking } from "../lib/api";
 import { saveRecentSearch } from "./useRecentSearches";
 import { TRANSIT_ROUTES } from "../data/transitRoutes";
 
+/**
+ * Custom React Hook untuk mengambil data status pelacakan secara reaktif.
+ * @param {string} waybill - Nomor resi paket yang dilacak.
+ * @returns {{ data: Object|null, loading: boolean, error: string|null }}
+ */
 export function useTrackingDetail(waybill) {
   const cleanWaybill = String(waybill || "").replace(/[^a-zA-Z0-9]/g, "").trim();
   const cached = getCachedTracking(cleanWaybill);
+
 
   const [currentWaybill, setCurrentWaybill] = useState(cleanWaybill);
   const [data, setData] = useState(cached?.data || null);
@@ -68,8 +87,18 @@ export function useTrackingDetail(waybill) {
   return { data, loading, error };
 }
 
+/**
+ * Mengintegrasikan data pengiriman dari backend API / Supabase ke dalam template
+ * tampilan visual. Mengatur pemformatan kota, nama pengirim/penerima, tanggal,
+ * urutan tahapan milestone, rute Leaflet, serta telemetri GPS kurir/kendaraan.
+ *
+ * @param {Object} baseData - Template data lokal bawaan status halaman.
+ * @param {Object|null} apiData - Data pengiriman dinamis dari response API.
+ * @returns {Object} Objek data lengkap siap render oleh TrackingStatusLayout.
+ */
 export function mergeShipmentData(baseData, apiData) {
   if (!apiData) return baseData;
+
   
   const cleanCity = (val) => {
     if (!val) return "";

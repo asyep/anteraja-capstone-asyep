@@ -1,3 +1,14 @@
+/**
+ * =============================================================================
+ * constants.js - Konstanta Desain Sistem & Konfigurasi Layanan Anteraja
+ * =============================================================================
+ * Menyediakan nilai tetap standar yang digunakan di seluruh aplikasi:
+ * 1. `BRAND_COLORS`: Palet warna identitas brand Anteraja (Magenta, Sukses, Warning).
+ * 2. `WAYBILL_PATTERN`: Regex validasi nomor resi format 32 karakter alfanumerik.
+ * 3. `MILESTONE_STAGES`: Kode dan label urutan 5 milestone pengiriman.
+ * 4. `SHIPPING_SERVICES`: Tarif dasar dan estimasi SLA durasi pengiriman.
+ */
+
 export const BRAND_COLORS = {
   magenta: "#EC008C",
   success: "#10B981",

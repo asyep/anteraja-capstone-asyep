@@ -1,13 +1,21 @@
+/**
+ * =============================================================================
+ * AssistantNarrative.jsx - Kartu Diagnostik Narasi AI & Feedback Pelanggan
+ * =============================================================================
+ * Menampilkan pesan narasi cerdas Satria AI yang menjelaskan status paket
+ * dalam bahasa manusia yang ramah, serta menyediakan aksi interaktif:
+ * 1. Narasi Cerdas: Menjelaskan kondisi pengiriman dan perkiraan langkah berikutnya.
+ * 2. Tombol Aksi Cepat: Hubungi CS via WhatsApp resmi dan Bagikan Status (Web Share API).
+ * 3. Quick Feedback: Tombol konfirmasi "Apakah informasi ini membantu?"
+ *    dengan proses instan (< 1 detik) ke Supabase dan backend Laravel.
+ */
+
 import { useState } from "react";
 import { API_BASE } from "@/lib/api";
 import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
 
-/**
- * Kotak narasi Satria Assistant: avatar + badge AI, pesan naratif, dan
- * aksi (WhatsApp, bagikan status). Tombol bagikan memakai Web Share API
- * bila tersedia, kalau tidak teks disalin ke clipboard.
- */
 export default function AssistantNarrative({ assistant, statusLabel, waybill }) {
+
   const [shareLabel, setShareLabel] = useState("Bagikan Status");
   const storageKey = waybill ? `anteraja_feedback_${waybill}` : null;
   const [feedbackStatus, setFeedbackStatus] = useState(() => {

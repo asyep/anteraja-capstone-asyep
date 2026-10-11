@@ -1,4 +1,19 @@
-/** Satu baris informasi kecil di kartu rincian paket. */
+/**
+ * =============================================================================
+ * PackageDetailCard.jsx - Kartu Rincian Spesifikasi & Alamat Paket
+ * =============================================================================
+ * Menampilkan ringkasan data paket yang sedang dikirim:
+ * 1. Pihak Terlibat: Nama dan kota asal pengirim serta penerima.
+ * 2. Spesifikasi Fisik: Berat aktual paket (kg), dimensi, dan isi deskripsi barang.
+ * 3. Layanan & Asuransi: Tipe layanan (Reguler/NextDay/SameDay) dan status proteksi.
+ */
+
+import React from "react";
+
+/**
+ * Sub-komponen satu baris metadata informasi.
+ * @param {{ label: string, children: React.ReactNode }} props
+ */
 function MetaRow({ label, children }) {
   return (
     <div className="flex items-center justify-between font-body-sm text-body-sm text-text-muted">
@@ -8,12 +23,9 @@ function MetaRow({ label, children }) {
   );
 }
 
-/**
- * Kartu "Rincian Paket": pengirim, penerima, spesifikasi layanan,
- * berat, asuransi, dan instruksi khusus.
- */
 export default function PackageDetailCard({ data }) {
   const { sender, receiver, package: pkg, service } = data;
+
 
   return (
     <div className="flex w-full flex-col gap-space-md rounded-2xl bg-surface-container-lowest p-space-lg shadow-lg">

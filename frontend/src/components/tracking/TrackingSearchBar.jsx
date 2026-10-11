@@ -1,18 +1,24 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+/**
+ * =============================================================================
+ * TrackingSearchBar.jsx - Input Pencarian Resi Cepat & Quick Actions
+ * =============================================================================
+ * Komponen input pencarian nomor resi di dalam halaman pelacakan:
+ * 1. Validasi Input: Membersihkan format karakter resi (alfanumerik).
+ * 2. Salin Resi (Clipboard): Tombol one-click copy nomor resi aktif.
+ * 3. Prefetching Cerdas: Memuat data di background saat mouse hover.
+ * 4. Integrasi Riwayat: Menyimpan nomor resi ke recent search history.
+ */
 
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
 import { prefetchTracking } from "@/lib/api";
 
 export const ORDER_CREATED_DEMO_RESI = "10001240251661";
 
-/**
- * Kolom pencarian resi di halaman status pelacakan.
- * Menyimpan resi di state lokal, lalu mengarahkan ke halaman status yang
- * sesuai lewat getRouteForResi().
- */
 export default function TrackingSearchBar({ initialWaybill = "" }) {
+
   const navigate = useNavigate();
   const [waybill, setWaybill] = useState(initialWaybill);
   const [copied, setCopied] = useState(false);

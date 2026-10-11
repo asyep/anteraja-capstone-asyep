@@ -1,9 +1,31 @@
+/**
+ * =============================================================================
+ * MilestoneProgress.jsx - Stepper Visual 5 Tahapan Pengiriman Riil
+ * =============================================================================
+ * Menampilkan progress bar interaktif dengan 5 tahapan utama logistik:
+ * 1. Pesanan Dibuat (Order Created)
+ * 2. Diproses Kurir (Courier Processed / Pickup)
+ * 3. Dalam Perjalanan (In Transit Linehaul)
+ * 4. Sedang Diantar (Out For Delivery Satria)
+ * 5. Tiba di Tujuan (Delivered)
+ *
+ * Mengatur garis penghubung otomatis (hijau untuk tahap yang sudah terlewati,
+ * garis putus-putus untuk tahap mendatang), status aktif/pulse, dan tata letak
+ * responsif (horizontal di desktop, vertikal di mobile).
+ */
+
+import React from "react";
+
 const DONE_RING = "bg-success-base text-on-primary shadow-md ring-4 ring-success-surface";
 const PENDING_RING =
   "bg-surface-container-high text-on-surface-variant shadow-inner ring-4 ring-surface-container-lowest";
 
-/** Satu tahap pada stepper progres pengiriman. */
+/**
+ * Komponen satu titik tahap pada stepper progres pengiriman.
+ * @param {{ milestone: Object }} props
+ */
 function MilestoneStep({ milestone }) {
+
   const done = milestone.state === "done";
 
   return (

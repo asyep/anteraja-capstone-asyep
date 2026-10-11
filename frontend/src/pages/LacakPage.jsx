@@ -1,3 +1,15 @@
+/**
+ * =============================================================================
+ * LacakPage.jsx - Halaman Portal Pelacakan Pengiriman Cerdas
+ * =============================================================================
+ * Berfungsi sebagai halaman pencarian resi utama:
+ * 1. SearchPod: Input nomor resi dengan chip demo cepat, dropdown riwayat,
+ *    dan validasi nomor resi format Anteraja.
+ * 2. FeatureGrid: Keunggulan teknologi AI tracking Anteraja.
+ * 3. QuickGuide: Panduan cara melacak paket dan panduan status.
+ * 4. HelpAndFaq: Pertanyaan yang sering diajukan & opsi bantuan.
+ */
+
 import React from "react";
 import FeatureGrid from "@/components/tracking/lab/FeatureGrid";
 import HelpAndFaq from "@/components/tracking/lab/HelpAndFaq";
@@ -5,6 +17,7 @@ import QuickGuide from "@/components/tracking/lab/QuickGuide";
 import SearchPod from "@/components/tracking/lab/SearchPod";
 
 export default function LacakPage() {
+
   return (
     <main className="w-full bg-surface">
       <div className="flex w-full flex-col">

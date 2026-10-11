@@ -1,6 +1,18 @@
+/**
+ * =============================================================================
+ * HelpPage.jsx - Pusat Bantuan & Layanan Pelanggan (Satria Care)
+ * =============================================================================
+ * Menyediakan pusat bantuan komprehensif bagi pelanggan:
+ * 1. Search Box Bantuan: Pencarian topik solusi seputar pengiriman.
+ * 2. Kategori Layanan: Kendala resi, perubahan alamat, klaim asuransi, operasional hub.
+ * 3. FAQ Interaktif (Accordion): Jawaban pertanyaan populer pengguna.
+ * 4. Kanal Bantuan Langsung: Tombol kontak cepat ke WhatsApp Care & Call Center Anteraja.
+ */
+
 import React, { useState } from "react";
 
-export default function BantuanPage() {
+export default function HelpPage() {
+
   const [searchQuery, setSearchQuery] = useState("");
   const [openFaq, setOpenFaq] = useState(null);
 
