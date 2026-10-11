@@ -7,12 +7,33 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Ringkasan kiriman untuk daftar (riwayat, widget, contoh resi).
+ * =============================================================================
+ * ShipmentSummaryResource.php - API Resource Ringkasan Daftar Resi
+ * =============================================================================
+ * FUNGSI UTAMA:
+ * Menyajikan representasi data kiriman yang ringkas, ringan, dan cepat untuk:
+ * 1. Tabel / daftar riwayat kiriman pada endpoint `GET /api/v1/shipments`.
+ * 2. Tombol chip uji coba sampel resi pada endpoint `GET /api/v1/shipments/samples`.
+ *
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Perataan Data (Data Flattening):
+ *    Mengurangi beban transfer jaringan dengan hanya menyertakan atribut-atribut esensial
+ *    (status, kota asal/tujuan, skenario visual, estimasi tiba, dan indikator keterlambatan).
+ * 2. Perhitungan Skenario Ringkas:
+ *    Mengikutsertakan flag `scenario` dan `has_delay` agar frontend dapat langsung
+ *    memberikan badge warna status tanpa perlu mengkalkulasi ulang di browser.
+ * =============================================================================
  *
  * @mixin Shipment
  */
 class ShipmentSummaryResource extends JsonResource
 {
+    /**
+     * Mengubah resource model menjadi array ringkasan kiriman.
+     *
+     * @param Request $request Request HTTP yang masuk
+     * @return array Struktur data ringkasan kiriman
+     */
     public function toArray(Request $request): array
     {
         /** @var Shipment $shipment */

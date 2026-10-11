@@ -1,5 +1,28 @@
 <?php
 
+/**
+ * ============================================================================
+ * MIGRASI LARAVEL: Skema Tabel Sistem Pelacakan Anteraja (Tracking Tables)
+ * ============================================================================
+ * 
+ * FUNGSI FILE:
+ * File migrasi ini bertanggung jawab membangun seluruh struktur tabel database
+ * sistem Smart Tracking Anteraja, relasi foreign key, indeks performa pencarian,
+ * dan virtual VIEW pelaporan ringkasan pengiriman.
+ * 
+ * SEKILAS LOGIKA MIGRASI:
+ * 1. `shipments`: Tabel inti paket pengiriman (waybill_number sebagai Primary Key).
+ * 2. `couriers`: Master identitas kurir Satria (courier_id, foto, kontak, plat armada).
+ * 3. `shipment_couriers`: Pivot penugasan kurir ke paket dengan status aktif (`is_active`).
+ * 4. `tracking_events`: Riwayat kronologis checkpoint paket dengan index (`waybill_number`, `event_at`).
+ * 5. `telemetry_data`: Data telemetri real-time sensor IoT armada pengiriman (GPS, cuaca, delay reason).
+ * 6. `ai_narratives`: Audit trail riwayat narasi AI yang di-generate untuk tiap paket pengiriman.
+ * 7. `feedback`: Penyimpanan rating kepuasan pengguna (bintang/apresiasi WISMO).
+ * 8. `tracking_summary`: View SQL komposit yang menggabungkan paket, telemetri, dan narasi AI.
+ * 9. `down()`: Prosedur rollback bersih yang menghapus view dan seluruh tabel sesuai urutan relasi.
+ * ============================================================================
+ */
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -8,7 +31,7 @@ use Illuminate\Support\Facades\DB;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
+     * Jalankan migrasi: Buat tabel-tabel pelacakan, relasi FK, dan view ringkasan.
      */
     public function up(): void
     {

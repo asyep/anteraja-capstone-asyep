@@ -9,13 +9,40 @@ use Illuminate\Support\Facades\Log;
 use Throwable;
 
 /**
- * Service untuk integrasi Google Gemini LLM API & Rule-Based Fallback Engine.
- * Mengacu pada FRD F-03 (AI Status Narrative Box) dan Flow Map Anteraja.
+ * =============================================================================
+ * GeminiAIService.php - Layanan AI Generator & Rule-Based Fallback Engine
+ * =============================================================================
+ * FUNGSI UTAMA:
+ * Menghubungkan sistem pelacakan Anteraja dengan Google Gemini LLM API
+ * untuk menghasilkan narasi status ramah pelanggan berbahasa Indonesia, serta
+ * menyediakan fallback berbasis aturan otomatis jika API eksternal bermasalah.
+ *
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Konstruksi Prompt Terstruktur:
+ *    Menggabungkan data logistik dinamis (nomor resi, nama kurir Satria, kota asal,
+ *    kota tujuan, cuaca, kemacetan, dan telemetri IoT) ke dalam instruksi LLM.
+ * 2. Strict Prompt Guidelines (FRD F-03):
+ *    - Menghilangkan kode teknis logistik internal (seperti "HUB_JKT_01" / "MANIFESTED").
+ *    - Menggunakan persona asisten CS "Satria" yang menenangkan dan solutif.
+ *    - Membatasi panjang teks antara 150 - 250 karakter.
+ * 3. Resilient Fallback Engine:
+ *    Jika API Key belum disetel, koneksi timeout (>5.0s), atau kuota habis,
+ *    sistem secara mulus (*graceful degradation*) menghasilkan narasi templat
+ *    tanpa melempar fatal error dan menandai flag `is_fallback = true`.
+ * 4. Persistensi Database:
+ *    Setiap teks yang dihasilkan otomatis disimpan ke tabel `ai_narratives`
+ *    dengan status generasi `success` atau `fallback`.
+ * =============================================================================
  */
 class GeminiAIService
 {
+    /** Google Gemini API Key */
     protected ?string $apiKey;
+
+    /** Model LLM yang digunakan (default: gemini-3.5-flash-lite) */
     protected string $model;
+
+    /** Batas waktu tunggu panggilan HTTP (detik) */
     protected float $timeout;
 
     public function __construct()

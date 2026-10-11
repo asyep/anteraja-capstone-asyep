@@ -7,6 +7,30 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
+/**
+ * =============================================================================
+ * Shipment.php - Model Entitas Inti Pengiriman Paket (Aggregate Root)
+ * =============================================================================
+ * FUNGSI UTAMA:
+ * Merepresentasikan data pengiriman paket Anteraja dan menjadi pusat relasi
+ * terhadap data logistik lainnya (telemetri, riwayat event, kurir, dan narasi AI).
+ *
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Kunci Utama Non-Numerik (String Waybill):
+ *    Menggunakan `waybill_number` (14 digit) sebagai primary key unik bertipe string.
+ * 2. Siklus 5 Milestone Logistik:
+ *    Mendefinisikan konstanta status dari pembuatan resi hingga paket diterima:
+ *    `ORDER_CREATED` -> `PICKUP_READY` -> `IN_TRANSIT` -> `OUT_FOR_DELIVERY` -> `DELIVERED`.
+ * 3. Logika Skenario Tampilan Antarmuka (`scenario()`):
+ *    - `delivered`: Paket sudah sampai ke penerima.
+ *    - `warning`: Paket tertunda karena kendala cuaca/jalan/delay operasional.
+ *    - `live`: Paket sedang bergerak dalam transit dengan pemancar GPS aktif.
+ *    - `normal`: Tampilan standar progres perjalanan paket.
+ * 4. Helper Logistik:
+ *    Menyediakan method evaluasi cepat seperti `hasDelay()`, `activeCourier()`,
+ *    dan ekstraksi kota dari alamat penerima/pengirim (`cityFromAddress()`).
+ * =============================================================================
+ */
 class Shipment extends Model
 {
     public const STATUS_ORDER_CREATED = 'ORDER_CREATED';

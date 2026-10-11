@@ -1,5 +1,22 @@
 <?php
 
+/**
+ * ============================================================================
+ * SEEDER UTAMA: DatabaseSeeder
+ * ============================================================================
+ * 
+ * FUNGSI FILE:
+ * Titik masuk utama (entrypoint) eksekusi database seeding Laravel ketika perintah
+ * `php artisan db:seed` dijalankan.
+ * 
+ * SEKILAS LOGIKA SEEDER:
+ * 1. User Default: Membuat user uji coba (`test@example.com`) secara idempoten
+ *    dengan `firstOrCreate()` agar tidak gagal jika dijalankan berulang.
+ * 2. Delegasi DatasetSeeder: Memanggil `DatasetSeeder::class` untuk mengisi
+ *    seluruh dataset 6 tabel operasional pelacakan Anteraja dari CSV.
+ * ============================================================================
+ */
+
 namespace Database\Seeders;
 
 use App\Models\User;
@@ -11,7 +28,7 @@ class DatabaseSeeder extends Seeder
     use WithoutModelEvents;
 
     /**
-     * Seed the application's database.
+     * Jalankan seed utama basis data aplikasi.
      */
     public function run(): void
     {

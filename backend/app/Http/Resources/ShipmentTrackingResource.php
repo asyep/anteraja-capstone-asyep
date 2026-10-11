@@ -9,18 +9,34 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /**
- * Payload detail pelacakan untuk halaman tracking frontend.
+ * =============================================================================
+ * ShipmentTrackingResource.php - API Resource Detail Pelacakan Paket
+ * =============================================================================
+ * FUNGSI UTAMA:
+ * Mentransformasikan model `Shipment` beserta seluruh relasi (events, telemetry,
+ * narrative, couriers) menjadi payload JSON standar yang dikonsumsi oleh widget.
  *
- * Field datar (waybill_number, order_status, seller_city, dst.) dipertahankan
- * agar kompatibel dengan normalizeShipment() di frontend/src/services/api.js,
- * sedangkan objek bersarang (shipment, courier, telemetry, ...) melayani
- * kartu-kartu detail pada halaman tracking.
+ * SEKILAS PENJELASAN LOGIKA:
+ * 1. Struktur Ganda (Flat & Nested):
+ *    - Field Datar (Level Atas): `waybill_number`, `order_status`, `seller_city`, dll.
+ *      mempertahankan kompatibilitas dengan frontend API normalizer.
+ *    - Objek Bersarang (Nested Objects): `shipment`, `courier`, `telemetry`,
+ *      `milestone_stages`, `tracking_events`, dan `ai_narrative` melayani kartu-kartu
+ *      komponen individual di halaman pelacakan.
+ * 2. Visual Milestone Stepper (5 Tahapan):
+ *    Menghitung progres kiriman ke dalam 5 status visual: `ORDER_CREATED`,
+ *    `PICKUP_READY`, `IN_TRANSIT`, `OUT_FOR_DELIVERY`, dan `DELIVERED`.
+ *    Setiap tahap ditandai dengan status `completed`, `current`, atau `pending`.
+ * 3. Integrasi Kurir & Telemetri IoT:
+ *    Membentuk tautan direct chat WhatsApp kurir aktif (`https://wa.me/...`)
+ *    dan mengekstrak koordinat GPS, cuaca, kecepatan armada, serta alasan keterlambatan.
+ * =============================================================================
  *
  * @mixin Shipment
  */
 class ShipmentTrackingResource extends JsonResource
 {
-    /** Label & estimasi layanan berdasarkan kode service_type. */
+    /** Label & estimasi SLA layanan berdasarkan kode pengiriman Anteraja */
     private const SERVICES = [
         'AR-SD' => ['label' => 'Same Day', 'sla' => 'Tiba di hari yang sama'],
         'AR-NDR' => ['label' => 'Next Day', 'sla' => '1 Hari Kerja'],
@@ -28,6 +44,12 @@ class ShipmentTrackingResource extends JsonResource
         'AR-ECO' => ['label' => 'Ekonomis', 'sla' => '3-5 Hari Kerja'],
     ];
 
+    /**
+     * Mengubah resource model menjadi representasi array terstruktur.
+     *
+     * @param Request $request Request HTTP yang masuk
+     * @return array Struktur data JSON lengkap untuk antarmuka tracking
+     */
     public function toArray(Request $request): array
     {
         /** @var Shipment $shipment */
@@ -37,7 +59,9 @@ class ShipmentTrackingResource extends JsonResource
         $narrative = $shipment->latestNarrative;
         $courier = $shipment->activeCourier();
 
+        // Helper untuk mencari timestamp event pertama per milestone stage
         $firstEventAt = fn (string $stage) => $events->firstWhere('milestone_stage', $stage)?->event_at;
+        // Waktu update terakhir diambil dari event terbaru atau pengamatan sensor telemetri
         $lastUpdated = collect([$events->max('event_at'), $telemetry?->observed_at])->filter()->max();
 
         return [
@@ -124,6 +148,12 @@ class ShipmentTrackingResource extends JsonResource
         ];
     }
 
+    /**
+     * Parsing kode layanan pengiriman menjadi metadata label dan SLA.
+     *
+     * @param string|null $serviceType Kode layanan mentah (misal: "AR-SD Same Day")
+     * @return array Metadata kode, nama layanan, dan estimasi waktu sampai
+     */
     private function service(?string $serviceType): array
     {
         $code = strtoupper(trim(strtok((string) $serviceType, ' ')));
@@ -132,6 +162,12 @@ class ShipmentTrackingResource extends JsonResource
         return ['code' => $code, 'label' => $meta['label'], 'sla' => $meta['sla']];
     }
 
+    /**
+     * Memformat data kurir aktif dan membuat tautan direct chat WhatsApp resmi.
+     *
+     * @param Courier $courier Model kurir yang menangani paket
+     * @return array Data kurir beserta foto, nomor kendaraan, dan link WhatsApp
+     */
     private function courier(Courier $courier): array
     {
         $phone = preg_replace('/\D+/', '', (string) $courier->courier_phone);
@@ -149,7 +185,12 @@ class ShipmentTrackingResource extends JsonResource
         ];
     }
 
-    /** Lima tahap stepper beserta status completed/current/pending. */
+    /**
+     * Menyusun 5 tahapan visual milestone stepper beserta status completed/current/pending.
+     *
+     * @param Shipment $shipment Model data kiriman
+     * @return array Daftar 5 tahapan visual milestone dengan timestamp dan fasilitas
+     */
     private function milestones(Shipment $shipment): array
     {
         $events = $shipment->trackingEvents;

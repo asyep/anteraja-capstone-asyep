@@ -1,5 +1,31 @@
--- PostgreSQL schema for Smart AI Shipment Tracking Widget Anteraja
--- Run with: psql -d anteraja_tracking -f database/schema.sql
+-- ============================================================================
+-- SKEMA BASIS DATA: Smart AI Shipment Tracking Widget Anteraja (PostgreSQL)
+-- ============================================================================
+--
+-- FUNGSI FILE:
+-- File Data Definition Language (DDL) ini mendefinisikan struktur database relasional
+-- lengkap untuk sistem pelacakan pintar Anteraja, mencakup entitas pengiriman,
+-- kurir (Satria), riwayat checkpoint, telemetri IoT real-time, narasi AI, dan view ringkasan.
+--
+-- SEKILAS LOGIKA DATABASE:
+-- 1. `shipments`: Tabel utama (master resi), menyimpan data pengirim, penerima, berat,
+--    SLA, dan status pengiriman (ORDER_CREATED s.d. DELIVERED).
+-- 2. `couriers`: Master data kurir Satria (nama, kontak, kendaraan, foto profil).
+-- 3. `shipment_couriers`: Tabel pivot relasi Many-to-Many penugasan kurir ke resi,
+--    dilengkapi flag `is_active` untuk menandai kurir yang sedang aktif bertugas.
+-- 4. `tracking_events`: Tabel log audit kronologis setiap perpindahan paket (milestone,
+--    fasilitas/hub, waktu kejadian).
+-- 5. `telemetry_data`: Tabel data sensor IoT (GPS koordinat, kecepatan km/jam, cuaca,
+--    kondisi lalu lintas, dan alasan kendala operasional). Relasi 1-to-1 dengan shipments.
+-- 6. `ai_narratives`: Tabel riwayat narasi AI dari Google Gemini (atau fallback engine),
+--    mencatat teks narasi, judul sapaan, provider, dan status audit.
+-- 7. `tracking_summary`: Virtual VIEW yang menggabungkan shipments, telemetry_data,
+--    dan ai_narratives untuk kemudahan query pelaporan cepat.
+--
+-- CARA MENJALANKAN:
+-- psql -d anteraja_tracking -f database/schema.sql
+-- ============================================================================
+
 BEGIN;
 
 DROP TABLE IF EXISTS tracking_events CASCADE;
@@ -10,7 +36,7 @@ DROP TABLE IF EXISTS couriers CASCADE;
 DROP TABLE IF EXISTS shipments CASCADE;
 DROP VIEW IF EXISTS tracking_summary CASCADE;
 
--- 1. Table: shipments
+-- 1. Table: shipments (Master Data Resi Pengiriman)
 CREATE TABLE shipments (
     waybill_number varchar(32) PRIMARY KEY,
     service_type varchar(50) NOT NULL, -- e.g., 'AR-REG (Reguler)'
