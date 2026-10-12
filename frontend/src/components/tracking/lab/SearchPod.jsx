@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
+import { getRouteForResi, cleanResiInput, sampleResiList } from "@/data/shipmentsData";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
 import Toast from "@/components/ui/Toast";
 
@@ -133,8 +133,40 @@ export default function SearchPod() {
           </button>
         </div>
 
-        {/* Row Pencarian Terakhir */}
+        {/* Row Sampel Resi Demo Pengujian */}
         <div className="mt-3.5 flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
+          <span className="font-bold uppercase tracking-wider text-gray-400 text-[11px]">
+            Sampel Resi Demo:
+          </span>
+          {sampleResiList.map((sample) => (
+            <button
+              key={sample.resi}
+              type="button"
+              onClick={() => {
+                setResi(sample.resi);
+                lacak(sample.resi);
+              }}
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border font-mono text-xs font-semibold transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95 ${sample.badgeClass} hover:border-[#ec008c]`}
+              title={`Uji coba nomor resi ${sample.label} (${sample.resi})`}
+            >
+              {sample.label === "Peringatan Jalur" && (
+                <span className="material-symbols-outlined text-[14px] text-amber-600">
+                  warning
+                </span>
+              )}
+              {sample.label === "Live GPS Telemetry" && (
+                <span className="material-symbols-outlined text-[14px] text-purple-600">
+                  radar
+                </span>
+              )}
+              <span>{sample.label}</span>
+              <span className="text-[10px] opacity-70">#{sample.resi.slice(-4)}</span>
+            </button>
+          ))}
+        </div>
+
+        {/* Row Pencarian Terakhir */}
+        <div className="mt-2.5 flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
           <span className="font-bold uppercase tracking-wider text-gray-400 text-[11px]">
             Pencarian Terakhir:
           </span>

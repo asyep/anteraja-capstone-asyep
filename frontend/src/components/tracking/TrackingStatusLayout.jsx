@@ -3,19 +3,20 @@ import CourierCard from "./CourierCard";
 import JourneyNotes from "./JourneyNotes";
 import LivePositionCard from "./LivePositionCard";
 import MilestoneProgress from "./MilestoneProgress";
+import OperationalWarningBanner from "./OperationalWarningBanner";
 import PackageDetailCard from "./PackageDetailCard";
 import StatusBanner from "./StatusBanner";
 import TrackingSearchBar from "./TrackingSearchBar";
 
 /**
  * Kerangka halaman status pelacakan — dipakai bersama oleh semua status
- * (mis. "Pesanan Dibuat", "Sedang Diproses Kurir").
+ * (mis. "Pesanan Dibuat", "Sedang Diproses Kurir", "Dalam Perjalanan", "Dalam Pengantaran").
  *
  * Susunan:
  *   Hero + kolom resi
  *   Banner status
  *   Grid 12 kolom:
- *     kiri (8)  : narasi Satria Assistant + progres + catatan perjalanan
+ *     kiri (8)  : banner peringatan operasional (F-04) + narasi Satria Assistant + progres + catatan perjalanan
  *     kanan (4) : rincian paket, radar posisi, kurir bertugas
  *
  * Isi tiap bagian datang dari objek `data` masing-masing status.
@@ -53,6 +54,9 @@ export default function TrackingStatusLayout({ data }) {
         <div className="grid grid-cols-1 gap-space-lg lg:grid-cols-12">
           {/* Kolom kiri */}
           <div className="flex h-full flex-col gap-space-lg lg:col-span-8">
+            {/* FRD F-04: Operational Warning Banner (Muncul jika has_delay = true) */}
+            <OperationalWarningBanner warning={data.operationalWarning} />
+
             <AssistantNarrative
               assistant={data.assistant}
               statusLabel={data.status.label}

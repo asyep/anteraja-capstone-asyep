@@ -11,7 +11,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
+import { getRouteForResi, cleanResiInput, sampleResiList } from "@/data/shipmentsData";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
 import { prefetchTracking } from "@/lib/api";
 
@@ -88,6 +88,38 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
             <span className="material-symbols-outlined text-[20px]">search</span>
             Lacak Paket
           </button>
+        </div>
+
+        {/* Baris Sampel Resi Demo Pengujian Cepat */}
+        <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">
+          <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">
+            Sampel Resi Demo:
+          </span>
+          {sampleResiList.map((sample) => (
+            <button
+              className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-lg border font-mono text-xs font-semibold transition-all cursor-pointer shadow-xs hover:scale-105 active:scale-95 ${sample.badgeClass} hover:border-primary`}
+              key={sample.resi}
+              onClick={() => {
+                setWaybill(sample.resi);
+                navigate(getRouteForResi(sample.resi));
+              }}
+              title={`Uji coba nomor resi ${sample.label} (${sample.resi})`}
+              type="button"
+            >
+              {sample.label === "Peringatan Jalur" && (
+                <span className="material-symbols-outlined text-[14px] text-amber-600">
+                  warning
+                </span>
+              )}
+              {sample.label === "Live GPS Telemetry" && (
+                <span className="material-symbols-outlined text-[14px] text-purple-600">
+                  radar
+                </span>
+              )}
+              <span>{sample.label}</span>
+              <span className="text-[10px] opacity-70">#{sample.resi.slice(-4)}</span>
+            </button>
+          ))}
         </div>
 
         <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">

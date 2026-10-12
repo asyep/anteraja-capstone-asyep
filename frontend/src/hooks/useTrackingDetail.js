@@ -659,11 +659,41 @@ export function mergeShipmentData(baseData, apiData) {
     courier = baseData.courier;
   }
 
+  // Ekstrak Konteks Operasional Keterlambatan (FRD F-04: Operational Warning Banner)
+  const telemetry = apiData?.telemetry || {};
+  const rawDelayReason = apiData?.logistics_delay_reason || telemetry.logistics_delay_reason;
+  const isDelayReasonActive = rawDelayReason && String(rawDelayReason).trim().toLowerCase() !== "none";
+  const trafficStatus = apiData?.traffic_status || telemetry.traffic_status || "Clear";
+  const isTrafficHeavy = String(trafficStatus).trim().toLowerCase() === "heavy";
+
+  const hasDelay = Boolean(
+    apiData?.has_delay ||
+    isDelayReasonActive ||
+    isTrafficHeavy ||
+    baseData?.hasDelay ||
+    baseData?.operationalWarning?.hasDelay
+  );
+
+  const operationalWarning = hasDelay
+    ? {
+        hasDelay: true,
+        delayReason: isDelayReasonActive
+          ? rawDelayReason
+          : (isTrafficHeavy ? "Kepadatan Lalu Lintas" : "Kendala Operasional Jalur"),
+        trafficStatus: trafficStatus === "Heavy" ? "Padat (Heavy Traffic)" : trafficStatus,
+        weatherCondition: telemetry.weather_condition || apiData?.weather_condition || null,
+        waitingTimeMinutes: Number(telemetry.waiting_time_minutes || 0),
+        whatsappUrl: apiData?.courier?.whatsapp_url || baseData?.assistant?.whatsapp,
+      }
+    : null;
+
   return {
     ...baseData,
     waybill: apiData.waybill_number,
     service: apiData.shipment?.service?.label || baseData.service,
     status,
+    hasDelay,
+    operationalWarning,
     updatedLabel: baseData.updatedLabel || (apiData.last_updated_at ? `Updated ${formatDate(apiData.last_updated_at)}` : "Updated 2 menit lalu"),
     sender: {
       name: apiData.shipment?.sender?.name || baseData.sender?.name,

@@ -9913,9 +9913,9 @@
     "order_estimated_delivery_date": "2026-09-25T14:00:00+00:00",
     "order_delivered_customer_date": null,
     "last_updated_at": "2026-09-24T00:00:00.000Z",
-    "has_delay": false,
-    "logistics_delay_reason": null,
-    "traffic_status": "Clear",
+    "has_delay": true,
+    "logistics_delay_reason": "Kecelakaan Lalu Lintas",
+    "traffic_status": "Heavy",
     "shipment": {
       "service_type": "AR-NDR (Next Day)",
       "service": {
@@ -9953,16 +9953,16 @@
       "is_active": true
     },
     "telemetry": {
-      "latitude": -6.4025,
-      "longitude": 107.135,
-      "speed_kmh": 72,
-      "location_name": "Tol Jakarta-Cikampek KM 38",
-      "accuracy_percentage": 98.73,
+      "latitude": -6.8523,
+      "longitude": 107.5611,
+      "speed_kmh": 12,
+      "location_name": "Jalur Utama Pantura KM 10",
+      "accuracy_percentage": 95.0,
       "is_gps_active": true,
-      "traffic_status": "Clear",
-      "weather_condition": "Cerah",
-      "logistics_delay_reason": null,
-      "waiting_time_minutes": 0,
+      "traffic_status": "Heavy",
+      "weather_condition": "Hujan Lebat",
+      "logistics_delay_reason": "Kecelakaan Lalu Lintas",
+      "waiting_time_minutes": 25,
       "observed_at": "2026-09-27T15:45:00+00:00"
     },
     "milestone_stages": [
@@ -10052,7 +10052,7 @@
     "ai_narrative": {
       "title": "Satria Assistant",
       "subtitle": "Satria Eko (Linehaul Intercity)",
-      "text": "Perjalanan Lancar: Linehaul antar-kota berada di KM 38 Jakarta-Cikampek. Tidak ada kendala cuaca maupun hambatan lalu lintas.",
+      "text": "Perhatian: Terjadi kecelakaan lalu lintas di Tol Pantura KM 10 serta kondisi hujan lebat yang menyebabkan kepadatan arus kendaraan. Tim Satria Linehaul sedang mencari rute alternatif guna meminimalkan delay.",
       "is_fallback": false,
       "provider": "gemini",
       "generation_status": "success",
