@@ -20,7 +20,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { API_BASE } from "@/lib/api";
 import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
-import { regenerateAiNarrative } from "@/lib/geminiClient";
+import { regenerateAiNarrative, prefetchNextGeminiNarrative } from "@/lib/geminiClient";
 
 export default function AssistantNarrative({
   assistant,
@@ -50,23 +50,35 @@ export default function AssistantNarrative({
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isLiveGemini, setIsLiveGemini] = useState(false);
 
-  // Reset live narrative jika nomor resi, pesan default, atau status berganti
+  // Reset live narrative jika nomor resi berganti & prefetch narasi AI berikutnya di latar belakang
   useEffect(() => {
     setLiveNarrative(null);
     setIsLiveGemini(false);
-  }, [waybill, assistant?.message, statusLabel, isNotFound]);
+    if (waybill && !isNotFound) {
+      prefetchNextGeminiNarrative(waybill, {
+        statusLabel,
+        courierName: assistant?.courierName,
+        customerCity: assistant?.customerCity,
+        isNotFound,
+      });
+    }
+  }, [waybill, assistant?.message, assistant?.courierName, assistant?.customerCity, statusLabel, isNotFound]);
 
   const handleRegenerateAi = useCallback(async () => {
     if (!waybill || isRegenerating) return;
     setIsRegenerating(true);
 
     try {
-      const result = await regenerateAiNarrative(waybill, {
+      // Micro-transition 250ms agar animasi pemrosesan terlihat jelas namun total durasi selalu < 1 detik
+      const minDelayPromise = new Promise((resolve) => setTimeout(resolve, 250));
+      const aiPromise = regenerateAiNarrative(waybill, {
         statusLabel,
         courierName: assistant?.courierName,
         customerCity: assistant?.customerCity,
         isNotFound,
       });
+
+      const [result] = await Promise.all([aiPromise, minDelayPromise]);
 
       if (result && result.text) {
         setLiveNarrative(result.text);
