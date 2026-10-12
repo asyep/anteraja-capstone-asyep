@@ -119,41 +119,34 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
           </button>
         </div>
 
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-1 border-t border-border-subtle/50 text-xs text-text-muted">
-          <div className="flex items-center gap-1.5 text-[11px]">
-            <span className="material-symbols-outlined text-[14px] text-primary">info</span>
-            <span>Nomor resi resmi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
-          </div>
-
-          <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">
-            <span className="font-label-sm text-[11px] font-bold uppercase tracking-wider text-text-muted">
-              Pencarian Terakhir:
+        <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">
+          <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">
+            Pencarian Terakhir:
+          </span>
+          {recentSearches && recentSearches.length > 0 ? (
+            recentSearches.map((resi) => (
+              <button
+                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-surface-container-low hover:bg-primary/10 hover:text-primary text-text-primary border border-border-subtle hover:border-primary/40 font-mono text-xs transition-all cursor-pointer group shadow-xs"
+                key={resi}
+                onMouseEnter={() => prefetchTracking(resi)}
+                onClick={() => {
+                  setWaybill(resi);
+                  navigate(getRouteForResi(resi));
+                }}
+                title={`Lacak kembali nomor resi ${resi}`}
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[14px] text-text-muted group-hover:text-primary">
+                  history
+                </span>
+                <span className="font-semibold tracking-tight">{resi}</span>
+              </button>
+            ))
+          ) : (
+            <span className="text-xs text-text-muted italic">
+              Belum ada riwayat pencarian
             </span>
-            {recentSearches && recentSearches.length > 0 ? (
-              recentSearches.map((resi) => (
-                <button
-                  className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-container-low hover:bg-primary/10 hover:text-primary text-text-primary border border-border-subtle hover:border-primary/40 font-mono text-[11px] transition-all cursor-pointer group shadow-xs"
-                  key={resi}
-                  onMouseEnter={() => prefetchTracking(resi)}
-                  onClick={() => {
-                    setWaybill(resi);
-                    navigate(getRouteForResi(resi));
-                  }}
-                  title={`Lacak kembali nomor resi ${resi}`}
-                  type="button"
-                >
-                  <span className="material-symbols-outlined text-[13px] text-text-muted group-hover:text-primary">
-                    history
-                  </span>
-                  <span className="font-semibold tracking-tight">{resi}</span>
-                </button>
-              ))
-            ) : (
-              <span className="text-[11px] text-text-muted italic">
-                Belum ada riwayat
-              </span>
-            )}
-          </div>
+          )}
         </div>
       </form>
     </div>
