@@ -219,13 +219,13 @@ export default function SearchPod() {
 
 
 
-        {/* Row Pencarian Terakhir */}
-        <div className="mt-2.5 flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
-          <span className="font-bold uppercase tracking-wider text-gray-400 text-[11px]">
-            Pencarian Terakhir:
-          </span>
-          {recentSearches && recentSearches.length > 0 ? (
-            recentSearches.map((item) => (
+        {/* Row Pencarian Terakhir (hanya ditampilkan jika sudah ada riwayat di sesi aktif) */}
+        {recentSearches && recentSearches.length > 0 && (
+          <div className="mt-2.5 flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
+            <span className="font-bold uppercase tracking-wider text-gray-400 text-[11px]">
+              Pencarian Terakhir:
+            </span>
+            {recentSearches.map((item) => (
               <button
                 key={item}
                 type="button"
@@ -241,13 +241,9 @@ export default function SearchPod() {
                 </span>
                 <span className="font-semibold tracking-tight">{item}</span>
               </button>
-            ))
-          ) : (
-            <span className="text-xs text-gray-400 italic">
-              Belum ada riwayat pencarian
-            </span>
-          )}
-        </div>
+            ))}
+          </div>
+        )}
       </form>
 
       <Toast message={toast} onClose={() => setToast("")} open={Boolean(toast)} />
