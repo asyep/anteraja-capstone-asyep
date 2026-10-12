@@ -21,7 +21,7 @@ import allShipmentsData from "../data/allShipmentsData.json";
  * Konfigurasi URL dasar API backend (Laravel).
  * Menggunakan environment variable `VITE_API_URL` dengan fallback ke localhost.
  */
-const RAW_API_URL = import.meta.env.VITE_API_URL || "http://localhost:8000/api/v1";
+const RAW_API_URL = import.meta.env.VITE_API_URL || "http://localhost:8001/api/v1";
 export const API_BASE = RAW_API_URL.replace(/\/+$/, "");
 
 /**

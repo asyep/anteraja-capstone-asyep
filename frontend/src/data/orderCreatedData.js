@@ -6,7 +6,7 @@
  * mengubah komponen tampilan.
  */
 export const ORDER_CREATED_DATA = {
-  waybill: "10002847192847192837461928374619",
+  waybill: "10001338258951",
   service: "Reguler",
 
   sender: {
@@ -58,7 +58,7 @@ export const ORDER_CREATED_DATA = {
     message:
       "Halo Kak! Pesanan kamu baru saja dibuat oleh pengirim (Toko Sentral Komputer Semarang). Saat ini kami sedang mengalokasikan Satria untuk segera menjemput paket ke lokasi pengirim. Pantau terus update terbarunya di sini ya!",
     whatsapp:
-      "https://wa.me/6281119603333?text=Halo%20Satria%20Agus,%20saya%20penerima%20paket%20100028471928",
+      "https://wa.me/6281119603333?text=Halo%20Satria%20Agus,%20saya%20penerima%20paket%2010001338258951",
     protocol: "Protokol Satria Sigap & Aman",
   },
 

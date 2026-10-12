@@ -8,7 +8,7 @@
  * (lihat features/tracking/data/deliveryRoutes.js).
  */
 export const OUT_FOR_DELIVERY_DATA = {
-  waybill: "10002847192847192837461928374621",
+  waybill: "10006947530309",
   service: "Reguler",
 
   sender: {
@@ -69,7 +69,7 @@ export const OUT_FOR_DELIVERY_DATA = {
     message:
       "Halo Kak Budi! Kabar baik, paketmu saat ini sudah dibawa oleh Satria Agus Prasetyo dan sedang bergerak menuju alamat rumahmu di Jl. Tebet Barat Dalam No. 42. Pastikan nomor teleponmu aktif ya, Satria akan segera tiba dalam estimasi 30–45 menit ke depan!",
     whatsapp:
-      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%20100028471928",
+      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%2010006947530309",
     protocol: "Protokol Satria Sigap & Aman",
     aiBadge: true,
   },

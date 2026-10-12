@@ -13,14 +13,25 @@
  */
 
 import React from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Navigate } from "react-router-dom";
 import TrackingStatusLayout from "../components/tracking/TrackingStatusLayout";
 import { IN_TRANSIT_DATA } from "../data/inTransitData";
 import { useTrackingDetail, mergeShipmentData } from "../hooks/useTrackingDetail";
+import { cleanResiInput, getRouteForResi } from "../data/shipmentsData";
 
 export default function InTransitPage() {
   const [searchParams] = useSearchParams();
-  const waybill = searchParams.get("waybill_number") || IN_TRANSIT_DATA.waybill;
+  const rawWaybill = searchParams.get("waybill_number");
+  const waybill = rawWaybill ? cleanResiInput(rawWaybill) : IN_TRANSIT_DATA.waybill;
+
+  // Jika nomor resi diberikan di URL, validasi kesesuaian status.
+  // Resi anomali atau tidak terdaftar dialihkan langsung ke rute yang semestinya (/not-found).
+  if (rawWaybill) {
+    const expectedRoute = getRouteForResi(waybill);
+    if (!expectedRoute.startsWith("/tracking/in-transit")) {
+      return <Navigate to={expectedRoute} replace />;
+    }
+  }
 
   // Mengambil data detail pelacakan secara reaktif
   const { data: apiData, loading, error } = useTrackingDetail(waybill);

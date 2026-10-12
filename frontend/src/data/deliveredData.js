@@ -5,7 +5,7 @@
  * langsung oleh penerima dengan bukti serah terima (POD) yang valid.
  */
 export const DELIVERED_DATA = {
-  waybill: "10002847192847192837461928374622",
+  waybill: "10003840104345",
   service: "Reguler",
 
   sender: {
@@ -64,7 +64,7 @@ export const DELIVERED_DATA = {
     message:
       "Halo Kak Budi! Paketmu sudah berhasil diterima oleh Budi Santoso di alamat rumahnya di Jl. Tebet Barat Dalam No. 42 pada pukul 14:20 WIB. Bukti serah terima (POD) sudah terverifikasi dan tersimpan aman di sistem Anteraja. Terima kasih telah mempercayakan pengirimanmu kepada Anteraja.",
     whatsapp:
-      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%201000284719282847192837461922",
+      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%2010003840104345",
     protocol: "Protokol Satria Sigap & Aman",
     aiBadge: true,
   },

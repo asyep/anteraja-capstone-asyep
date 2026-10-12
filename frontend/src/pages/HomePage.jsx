@@ -83,7 +83,7 @@ export default function HomePage() {
                 <input 
                   className="w-full bg-transparent border-0 outline-none text-on-surface font-mono font-medium text-sm placeholder:text-text-placeholder placeholder:font-sans" 
                   id="resi-input" 
-                  placeholder="1000849201994 (atau tempel nomor resi di sini)" 
+                  placeholder="10001284277889 (atau tempel 14 digit nomor resi)" 
                   type="text" 
                   value={waybill}
                   onChange={(e) => setWaybill(e.target.value)}

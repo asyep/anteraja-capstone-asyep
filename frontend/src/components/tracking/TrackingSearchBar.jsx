@@ -59,13 +59,13 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
               tag
             </span>
             <input
-              aria-label="Nomor resi atau Order ID"
+              aria-label="Nomor resi Anteraja"
               autoComplete="off"
               className="h-14 w-full rounded-xl bg-surface-card pl-12 pr-12 font-mono-code text-mono-code tracking-wide text-text-primary shadow-inner transition-all placeholder:text-text-placeholder focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary"
               id="resi-input"
-              maxLength="32"
+              maxLength="20"
               onChange={(event) => setWaybill(event.target.value)}
-              placeholder="Masukkan 32 Karakter Nomor Resi / Order ID"
+              placeholder="Masukkan 14 Digit Nomor Resi (contoh: 10001284277889)"
               type="text"
               value={waybill}
             />

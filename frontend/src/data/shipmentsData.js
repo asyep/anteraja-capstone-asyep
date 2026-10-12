@@ -1,151 +1,70 @@
 /**
  * =============================================================================
- * shipmentsData.js - Pemetaan Rute Status Nomor Resi & Kamus Data Demo
+ * shipmentsData.js - Pemetaan Rute Status Nomor Resi Resmi Anteraja
  * =============================================================================
  * SEKILAS PENJELASAN LOGIKA:
  * Fungsi `getRouteForResi(resi)` menentukan URL tujuan:
- * 1. Bersihkan input dengan `cleanResiInput` (buang spasi/simbol).
- * 2. Cek apakah resi ada di dataset master (`allShipmentsData.json`):
+ * 1. Bersihkan input dengan `cleanResiInput` (buang spasi/simbol non-alfanumerik).
+ * 2. Validasi format standar Anteraja:
+ *    - Format resmi Anteraja WAJIB berupa 14 digit angka diawali '1000' (/^1000\d{10}$/).
+ *    - Nomor resi anomali (> 14 digit, < 14 digit, atau karakter aneh) langsung
+ *      dianggap TIDAK TERCATAT dan dialihkan ke `/not-found`.
+ * 3. Cek dataset master database (`allShipmentsData.json`):
  *    - Jika ada, baca `order_status` miliknya dan kembalikan URL tujuan seketika (0ms).
- * 3. Cek apakah resi ada di `demoResiRoutes` -> jika ada, kembalikan rute demo.
- * 4. Jika formatnya valid (13-14 digit atau 32 alfanumerik) tapi belum ada di dataset,
- *    arahkan ke `/cek-resi` agar dicek ke server backend.
- * 5. Jika format tidak valid atau kosong, arahkan ke `/not-found`.
+ * 4. Jika format 14 digit valid tapi belum ada di dataset lokal, arahkan ke `/cek-resi`
+ *    agar dicek langsung ke backend server / database PostgreSQL.
  * =============================================================================
  */
 
-
 import allShipmentsData from "./allShipmentsData.json";
 
-export const demoResiRoutes = {
+/**
+ * Pemetaan rute otomatis yang 100% tersinkronisasi dengan master dataset database.
+ */
+export const demoResiRoutes = Object.fromEntries(
+  Object.entries(allShipmentsData).map(([waybill, item]) => {
+    let path = "/not-found";
+    if (item.order_status === "ORDER_CREATED") path = "/tracking/order-created";
+    else if (item.order_status === "PICKUP_READY" || item.order_status === "COURIER_PROCESSED") path = "/tracking/courier-processed";
+    else if (item.order_status === "IN_TRANSIT") path = "/tracking/in-transit";
+    else if (item.order_status === "OUT_FOR_DELIVERY") path = "/tracking/out-for-delivery";
+    else if (item.order_status === "DELIVERED") path = "/delivered";
+    return [waybill, path];
+  })
+);
 
-  // Status "Pesanan Dibuat" (ORDER_CREATED)
-  "10001338258951": "/tracking/order-created",
-  "10001240251661": "/tracking/order-created",
-  "10007017956955": "/tracking/order-created",
-  "10002631775357": "/tracking/order-created",
-  "10004504793184": "/tracking/order-created",
-  "10007900268326": "/tracking/order-created",
-  "10008877444318": "/tracking/order-created",
-  "10002028439863": "/tracking/order-created",
-  "10006555540744": "/tracking/order-created",
-  "10001438989805": "/tracking/order-created",
-  "10007439149233": "/tracking/order-created",
-  "10006004182187": "/tracking/order-created",
-  "10001599707677": "/tracking/order-created",
-  "10008055995058": "/tracking/order-created",
-  "10005047709743": "/tracking/order-created",
-  "10002847192847192837461928374619": "/tracking/order-created",
-
-  // Status "Sedang Diproses Kurir" (PICKUP_READY / COURIER_PROCESSED)
-  "10003727210979": "/tracking/courier-processed",
-  "10004944899549": "/tracking/courier-processed",
-  "10002461042543": "/tracking/courier-processed",
-  "10004529615275": "/tracking/courier-processed",
-  "10004698408854": "/tracking/courier-processed",
-  "10003920194827103948572910394857": "/tracking/courier-processed",
-
-  // Status "Dalam Perjalanan" (IN_TRANSIT)
-  "10001284277889": "/tracking/in-transit",
-  "10003410529190": "/tracking/in-transit",
-  "10008357059814": "/tracking/in-transit",
-  "10003585650756": "/tracking/in-transit",
-  "10009896606039": "/tracking/in-transit",
-  "10004721519026": "/tracking/in-transit",
-  "10001540137296": "/tracking/in-transit",
-  "10006927597015": "/tracking/in-transit",
-  "10004733616459": "/tracking/in-transit",
-  "10002051454923": "/tracking/in-transit",
-  "10005141907136": "/tracking/in-transit",
-  "10005974249674": "/tracking/in-transit",
-  "10008615270538": "/tracking/in-transit",
-  "10001854316681": "/tracking/in-transit",
-  "10008752612686": "/tracking/in-transit",
-  "10005993561321": "/tracking/in-transit",
-  "10007867414708": "/tracking/in-transit",
-  "10008385972235": "/tracking/in-transit",
-  "10002847192847192837461928374620": "/tracking/in-transit",
-  "1000849201994": "/tracking/in-transit",
-  "10008492019948271039485729103948": "/tracking/in-transit",
-  "00010242fe8c5a6d1ba2dd792cb16214": "/tracking/in-transit",
-  "1000921477821": "/tracking/in-transit",
-  "1000781293812": "/tracking/in-transit",
-  "0008288aa423d2a3f00fcb17cd7d8719": "/tracking/in-transit",
-
-  // Status "Dalam Pengantaran" (OUT_FOR_DELIVERY)
-  "10006947530309": "/tracking/out-for-delivery",
-  "10009776552803": "/tracking/out-for-delivery",
-  "10001298737106": "/tracking/out-for-delivery",
-  "10007609857128": "/tracking/out-for-delivery",
-  "10008519962896": "/tracking/out-for-delivery",
-  "10009928378856": "/tracking/out-for-delivery",
-  "10009256195745": "/tracking/out-for-delivery",
-  "10002801823908": "/tracking/out-for-delivery",
-  "10008760038701": "/tracking/out-for-delivery",
-  "10005231494220": "/tracking/out-for-delivery",
-  "10002847192847192837461928374621": "/tracking/out-for-delivery",
-
-  // Status "Tiba di Tujuan" (DELIVERED)
-  "10003840104345": "/delivered",
-  "10004246059658": "/delivered",
-  "10003561557300": "/delivered",
-  "10002193448329": "/delivered",
-  "10004272602734": "/delivered",
-  "10007280359794": "/delivered",
-  "10003962958940": "/delivered",
-  "10002525876051": "/delivered",
-  "10008378385615": "/delivered",
-  "10008128575500": "/delivered",
-  "10008173347748": "/delivered",
-  "10007980611182": "/delivered",
-  "10007801222128": "/delivered",
-  "10003119634399": "/delivered",
-  "10004673561638": "/delivered",
-  "10007110082321": "/delivered",
-  "10003098545541": "/delivered",
-  "10002554762903": "/delivered",
-  "10008574149614": "/delivered",
-  "10008217611860": "/delivered",
-  "11111111111111111111111111111111": "/delivered",
-  "10002847192847192837461928374622": "/delivered",
-  "11111111111111": "/delivered",
-
-  // Status "Tidak Ditemukan" / Dibatalkan
-  "10005908596099": "/not-found",
-  "10008438486479": "/not-found",
-  "22222222222222222222222222222222": "/not-found",
-  "22222222222222": "/not-found",
-  "1000998877665544332211": "/not-found",
-};
-
+/**
+ * Daftar sampel resi resmi dari database PostgreSQL untuk quick test di UI.
+ * Semua nomor resi di bawah ini 100% terdaftar dan valid di database.
+ */
 export const sampleResiList = [
   {
-    resi: "1000849201994",
+    resi: "10003410529190",
     label: "In-Transit",
     path: "/tracking/in-transit",
     badgeClass: "bg-emerald-50 text-emerald-700",
   },
   {
-    resi: "1000921477821",
+    resi: "10001284277889",
     label: "Live GPS Telemetry",
     path: "/tracking/in-transit",
     badgeClass: "bg-purple-50 text-purple-700",
   },
   {
-    resi: "1000781293812",
+    resi: "10001540137296",
     label: "Peringatan Jalur",
     path: "/tracking/in-transit",
     badgeClass: "bg-amber-50 text-amber-700",
   },
   {
-    resi: "11111111111111",
+    resi: "10003840104345",
     label: "Telah Diterima",
     path: "/delivered",
     badgeClass: "bg-emerald-100 text-emerald-800",
   },
   {
-    resi: "22222222222222",
-    label: "Dibatalkan",
+    resi: "10005908596099",
+    label: "Resi Belum Tercatat",
     path: "/not-found",
     badgeClass: "bg-rose-50 text-rose-700",
   },
@@ -161,6 +80,11 @@ export function cleanResiInput(resi) {
   return String(resi).replace(/[^a-zA-Z0-9]/g, "").trim();
 }
 
+/**
+ * Mengembalikan rute pelacakan berdasarkan nomor resi.
+ * Resi anomali (> 14 digit atau format tidak sesuai standar 14 digit) langsung
+ * diarahkan ke status tidak tercatat / tidak ditemukan (/not-found).
+ */
 export function getRouteForResi(resi) {
   const cleanResi = cleanResiInput(resi);
   const query = `?waybill_number=${encodeURIComponent(cleanResi)}`;
@@ -169,7 +93,15 @@ export function getRouteForResi(resi) {
     return `/not-found${query}`;
   }
 
-  // 1. Cek langsung dari dataset database lengkap (70+ database shipments + demo resis) untuk routing 0ms
+  // Validasi format nomor resi standar Anteraja:
+  // Harus tepat 14 digit numerik yang diawali 1000 atau 1001.
+  // Resi dengan panjang > 14 digit atau anomali tidak terdaftar di database manapun.
+  const isStandardWaybill = /^100[01]\d{10}$/.test(cleanResi);
+  if (!isStandardWaybill) {
+    return `/not-found${query}`;
+  }
+
+  // 1. Cek langsung dari master dataset database resmi (70 database shipments) untuk routing 0ms
   if (allShipmentsData && allShipmentsData[cleanResi]) {
     const status = allShipmentsData[cleanResi].order_status;
     let path = "/not-found";
@@ -181,15 +113,6 @@ export function getRouteForResi(resi) {
     return `${path}${query}`;
   }
 
-  // 2. Cek kamus rute demo
-  if (demoResiRoutes[cleanResi]) {
-    return `${demoResiRoutes[cleanResi]}${query}`;
-  }
-
-  // 3. Nomor 13–14 digit atau AWB 32 karakter yang belum ada di local snapshot dialihkan ke resolver API
-  if (/^(?:\d{13,14}|[A-Za-z0-9]{32})$/.test(cleanResi)) {
-    return `/cek-resi${query}`;
-  }
-
-  return `/not-found${query}`;
+  // 2. Jika format 14 digit valid tapi belum ada di local snapshot, alihkan ke resolver API (/cek-resi)
+  return `/cek-resi${query}`;
 }

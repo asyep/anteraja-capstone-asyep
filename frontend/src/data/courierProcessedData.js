@@ -9,7 +9,7 @@
  * backend sudah mengembalikan status ini.
  */
 export const COURIER_PROCESSED_DATA = {
-  waybill: "10003920194827103948572910394857",
+  waybill: "10003727210979",
   service: "Reguler",
 
   sender: {
@@ -63,7 +63,7 @@ export const COURIER_PROCESSED_DATA = {
     message:
       "Halo Kak! Paket kamu sudah berhasil dijemput dan saat ini telah tiba di Hub Distribusi (Staging DC Semarang). Tim sortir kami sedang menyiapkan dan memverifikasi paket untuk diteruskan ke tahap perjalanan logistik utama. Pantau terus pergerakan paketmu ya!",
     whatsapp:
-      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%20100028471928",
+      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%2010003727210979",
     protocol: "Protokol Satria Sigap & Aman",
     aiBadge: true,
   },

@@ -9,7 +9,7 @@
  * waypoint rute (lihat features/tracking/data/transitRoutes.js).
  */
 export const IN_TRANSIT_DATA = {
-  waybill: "10002847192847192837461928374620",
+  waybill: "10001284277889",
   service: "Reguler",
 
   sender: {
@@ -73,7 +73,7 @@ export const IN_TRANSIT_DATA = {
     message:
       "Halo Kak! Paketmu saat ini sedang dalam perjalanan logistik antarkota dari Staging DC Semarang menuju Jakarta. Saat ini armada Linehaul kami sedang transit sejenak di Transit Hub Cirebon untuk proses konsolidasi muatan kargo sebelum melanjutkan perjalanan ke Sorting Gateway Jakarta. Paketmu aman dan terpantau 24/7!",
     whatsapp:
-      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%20100028471928",
+      "https://wa.me/6281119603333?text=Halo%20Satria%20AI,%20saya%20penerima%20paket%2010001284277889",
     protocol: "Protokol Satria Sigap & Aman",
     aiBadge: true,
   },
