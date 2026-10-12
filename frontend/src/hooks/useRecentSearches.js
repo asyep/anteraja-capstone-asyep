@@ -4,13 +4,22 @@ const STORAGE_KEY = "anteraja_recent_searches";
 const EVENT_NAME = "anteraja_recent_searches_updated";
 const MAX_ITEMS = 5;
 
+// Bersihkan peninggalan riwayat lama di localStorage agar tidak membekas dari sesi sebelumnya
+if (typeof window !== "undefined") {
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
 /**
- * Membaca riwayat nomor resi dari localStorage.
+ * Membaca riwayat nomor resi dari sessionStorage (reset otomatis saat tab/browser ditutup).
  */
 export function getStoredRecentSearches() {
   if (typeof window === "undefined") return [];
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
+    const raw = sessionStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     return Array.isArray(parsed)
@@ -23,6 +32,7 @@ export function getStoredRecentSearches() {
 
 /**
  * Menyimpan nomor resi ke riwayat pencarian (ditaruh di paling awal).
+ * Menggunakan sessionStorage sehingga riwayat hanya bertahan selama sesi aktif web belum ditutup.
  * Hanya menyimpan nomor resi yang tepat 14 digit numerik.
  */
 export function saveRecentSearch(waybill) {
@@ -35,7 +45,7 @@ export function saveRecentSearch(waybill) {
     // Hilangkan duplikat nomor resi yang sama
     const filtered = current.filter((item) => item !== clean);
     const updated = [clean, ...filtered].slice(0, MAX_ITEMS);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
     window.dispatchEvent(new Event(EVENT_NAME));
   } catch (error) {
     console.error("Gagal menyimpan riwayat pencarian:", error);
@@ -43,12 +53,12 @@ export function saveRecentSearch(waybill) {
 }
 
 /**
- * Menghapus seluruh riwayat pencarian.
+ * Menghapus seluruh riwayat pencarian dalam sesi aktif.
  */
 export function clearStoredRecentSearches() {
   if (typeof window === "undefined") return;
   try {
-    localStorage.removeItem(STORAGE_KEY);
+    sessionStorage.removeItem(STORAGE_KEY);
     window.dispatchEvent(new Event(EVENT_NAME));
   } catch (error) {
     console.error("Gagal menghapus riwayat pencarian:", error);
