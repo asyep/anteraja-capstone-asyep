@@ -10,7 +10,7 @@
  * 4. FAQ & Dukungan Pelanggan Cepat.
  */
 
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
@@ -20,13 +20,28 @@ export default function HomePage() {
 
   const navigate = useNavigate();
   const [waybill, setWaybill] = useState("");
+  const [maxLimitWarning, setMaxLimitWarning] = useState(false);
+  const warningTimerRef = useRef(null);
   const { recentSearches, addSearch } = useRecentSearches();
+
+  const triggerLimitWarning = () => {
+    setMaxLimitWarning(true);
+    if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+    warningTimerRef.current = setTimeout(() => {
+      setMaxLimitWarning(false);
+    }, 2800);
+  };
 
   const handleSearch = (event) => {
     event.preventDefault();
     const cleanWaybill = cleanResiInput(waybill);
     if (!cleanWaybill) return;
     addSearch(cleanWaybill);
+    window.dispatchEvent(
+      new CustomEvent("anteraja_refresh_tracking", {
+        detail: { waybill: cleanWaybill, timestamp: Date.now() },
+      })
+    );
     navigate(getRouteForResi(cleanWaybill));
   };
 
@@ -34,7 +49,11 @@ export default function HomePage() {
     try {
       const text = await navigator.clipboard.readText();
       if (text) {
-        setWaybill(text.replace(/\D/g, "").slice(0, 14));
+        const digits = text.replace(/\D/g, "");
+        if (digits.length > 14) {
+          triggerLimitWarning();
+        }
+        setWaybill(digits.slice(0, 14));
       }
     } catch (err) {
       /* clipboard context */
@@ -80,7 +99,9 @@ export default function HomePage() {
             {/* Input Form Row */}
             <form className="flex flex-col gap-2.5" onSubmit={handleSearch}>
               <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <div className="relative flex-1 w-full flex items-center bg-surface-container-low border border-border-subtle rounded-xl px-3.5 h-12 focus-within:bg-white focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(228,0,125,0.12)] transition-all group">
+                <div className={`relative flex-1 w-full flex items-center bg-surface-container-low border ${
+                  maxLimitWarning ? "border-rose-500 ring-2 ring-rose-500/20" : "border-border-subtle focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(228,0,125,0.12)]"
+                } rounded-xl px-3.5 h-12 focus-within:bg-white transition-all group`}>
                   <span className="material-symbols-outlined text-text-muted text-[20px] mr-2 select-none flex-shrink-0">search</span>
                   <input 
                     aria-label="Nomor resi 14 digit Anteraja"
@@ -90,26 +111,61 @@ export default function HomePage() {
                     placeholder="Masukkan 14 digit nomor resi (contoh: 10001284277889)" 
                     type="text" 
                     value={waybill}
-                    onChange={(e) => setWaybill(e.target.value.replace(/\D/g, "").slice(0, 14))}
+                    onKeyDown={(e) => {
+                      if (
+                        waybill.length >= 14 &&
+                        !e.ctrlKey &&
+                        !e.metaKey &&
+                        !e.altKey &&
+                        e.key.length === 1 &&
+                        e.target.selectionStart === e.target.selectionEnd
+                      ) {
+                        triggerLimitWarning();
+                      } else if (e.key === "Backspace" || e.key === "Delete") {
+                        setMaxLimitWarning(false);
+                      }
+                    }}
+                    onChange={(e) => {
+                      const raw = e.target.value.replace(/\D/g, "");
+                      if (raw.length > 14) {
+                        triggerLimitWarning();
+                      }
+                      setWaybill(raw.slice(0, 14));
+                    }}
                     onPaste={(e) => {
                       e.preventDefault();
                       const pasted = e.clipboardData.getData("text");
-                      setWaybill(pasted.replace(/\D/g, "").slice(0, 14));
+                      const digits = pasted.replace(/\D/g, "");
+                      if (digits.length > 14) {
+                        triggerLimitWarning();
+                      }
+                      setWaybill(digits.slice(0, 14));
                     }}
                   />
                   <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
-                    <span
-                      className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md border transition-all select-none ${
-                        waybill.length === 14
-                          ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
-                          : waybill.length > 0
-                          ? "bg-primary/10 text-primary border-primary/20"
-                          : "bg-white text-text-muted border-border-subtle"
-                      }`}
-                      title="Nomor resi resmi Anteraja terdiri dari 14 digit angka"
-                    >
-                      {waybill.length > 0 ? `${waybill.length}/14 Digit` : "14 Digit"}
-                    </span>
+                    {maxLimitWarning ? (
+                      <span
+                        className="flex items-center gap-1 text-[11px] font-sans font-bold px-2 py-0.5 rounded-md border bg-rose-50 text-rose-700 border-rose-300 shadow-xs animate-pulse select-none"
+                        role="alert"
+                        title="Batas maksimal 14 digit nomor resi telah tercapai"
+                      >
+                        <span className="material-symbols-outlined text-[13px]">warning</span>
+                        Maksimal 14 Digit!
+                      </span>
+                    ) : (
+                      <span
+                        className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md border transition-all select-none ${
+                          waybill.length === 14
+                            ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
+                            : waybill.length > 0
+                            ? "bg-primary/10 text-primary border-primary/20"
+                            : "bg-white text-text-muted border-border-subtle"
+                        }`}
+                        title="Nomor resi resmi Anteraja terdiri dari 14 digit angka"
+                      >
+                        {waybill.length > 0 ? `${waybill.length}/14 Digit` : "14 Digit"}
+                      </span>
+                    )}
                     <button 
                       className="px-2.5 py-1 rounded-lg bg-white hover:bg-surface-container text-xs font-semibold text-text-muted hover:text-primary transition-all flex items-center gap-1 border border-border-subtle shadow-xs" 
                       onClick={handlePaste} 
@@ -126,10 +182,17 @@ export default function HomePage() {
                   <span className="">Lacak Paket</span>
                 </button>
               </div>
-              <p className="text-[11px] text-text-muted flex items-center gap-1.5 pl-1">
-                <span className="material-symbols-outlined text-[14px] text-primary">info</span>
-                <span>Format resmi nomor resi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
-              </p>
+              {maxLimitWarning ? (
+                <p className="text-[11px] text-rose-600 font-medium flex items-center gap-1.5 pl-1 animate-fade-in">
+                  <span className="material-symbols-outlined text-[14px] text-rose-600">error</span>
+                  <span>Nomor resi sudah mencapai batas maksimal <strong>14 digit</strong>. Tidak dapat menambahkan digit angka lagi.</span>
+                </p>
+              ) : (
+                <p className="text-[11px] text-text-muted flex items-center gap-1.5 pl-1">
+                  <span className="material-symbols-outlined text-[14px] text-primary">info</span>
+                  <span>Format resmi nomor resi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
+                </p>
+              )}
             </form>
 
             {/* Single Clean Quick Search / Recent Chips Row */}

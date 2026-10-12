@@ -17,7 +17,7 @@
  */
 
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { API_BASE } from "@/lib/api";
 import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
 import { regenerateAiNarrative } from "@/lib/geminiClient";
@@ -56,7 +56,7 @@ export default function AssistantNarrative({
     setIsLiveGemini(false);
   }, [waybill, assistant?.message, statusLabel, isNotFound]);
 
-  async function handleRegenerateAi() {
+  const handleRegenerateAi = useCallback(async () => {
     if (!waybill || isRegenerating) return;
     setIsRegenerating(true);
 
@@ -64,6 +64,7 @@ export default function AssistantNarrative({
       const result = await regenerateAiNarrative(waybill, {
         statusLabel,
         courierName: assistant?.courierName,
+        customerCity: assistant?.customerCity,
         isNotFound,
       });
 
@@ -76,7 +77,19 @@ export default function AssistantNarrative({
     } finally {
       setIsRegenerating(false);
     }
-  }
+  }, [waybill, isRegenerating, statusLabel, assistant?.courierName, assistant?.customerCity, isNotFound]);
+
+  // Dengarkan sinyal klik 'Lacak Paket' dari search bar
+  useEffect(() => {
+    function handleRefreshSignal(event) {
+      const targetResi = event?.detail?.waybill;
+      if (!targetResi || targetResi === waybill) {
+        handleRegenerateAi();
+      }
+    }
+    window.addEventListener("anteraja_refresh_tracking", handleRefreshSignal);
+    return () => window.removeEventListener("anteraja_refresh_tracking", handleRefreshSignal);
+  }, [waybill, handleRegenerateAi]);
 
   async function handleFeedback(membantu) {
     if (!waybill || feedbackStatus === "loading" || feedbackStatus === "success") return;
@@ -179,25 +192,13 @@ export default function AssistantNarrative({
                 </span>
                 Satria AI
               </span>
-              <button
-                type="button"
-                onClick={handleRegenerateAi}
-                disabled={isRegenerating}
-                className="group flex items-center gap-1 rounded-full border border-ai-accent/30 bg-ai-surface/60 px-2 py-0.5 font-label-sm text-[11px] font-semibold text-ai-accent transition-all hover:border-ai-accent hover:bg-ai-surface active:scale-95 disabled:opacity-60 cursor-pointer"
-                title="Panggil Live Gemini AI untuk memperbarui narasi status ini"
-              >
-                <span className={`material-symbols-outlined text-[13px] ${isRegenerating ? "animate-spin" : "transition-transform group-hover:rotate-180"}`}>
-                  {isRegenerating ? "progress_activity" : "refresh"}
+              <span className="flex items-center gap-1 rounded-full border border-purple-500/20 bg-purple-500/10 px-2.5 py-0.5 font-label-sm text-label-sm font-bold text-purple-700">
+                <span className="material-symbols-outlined text-[13px]">
+                  psychology
                 </span>
-                <span>{isRegenerating ? "Memanggil Gemini..." : "Live Gemini"}</span>
-              </button>
-              {isLiveGemini && (
-                <span className="hidden items-center gap-1 text-[11px] font-medium text-emerald-600 sm:flex">
-                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Gemini Live
-                </span>
-              )}
-              <span className="rounded-full bg-tertiary-fixed px-2 py-0.5 font-label-sm text-label-sm font-bold text-on-tertiary-fixed">
+                Live Gemini
+              </span>
+              <span className="rounded-full bg-tertiary-fixed px-2.5 py-0.5 font-label-sm text-label-sm font-bold text-on-tertiary-fixed">
                 Terverifikasi
               </span>
             </div>
@@ -208,9 +209,16 @@ export default function AssistantNarrative({
             </span>
           </div>
 
-          <p className="mt-1 rounded-xl bg-surface-container-low/70 p-space-md font-body-lg text-body-lg leading-relaxed text-on-surface">
-            &ldquo;{liveNarrative || assistant.message}&rdquo;
-          </p>
+          <div className="mt-1 rounded-xl bg-surface-container-low/70 p-space-md font-body-lg text-body-lg leading-relaxed text-on-surface">
+            {isRegenerating ? (
+              <div className="flex items-center gap-2 py-0.5 text-primary">
+                <span className="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+                <span className="text-sm font-semibold animate-pulse">Satria AI Gemini sedang memproses pesan status terkini...</span>
+              </div>
+            ) : (
+              <p>&ldquo;{liveNarrative || assistant.message}&rdquo;</p>
+            )}
+          </div>
 
           {waybill && (
             <div className="mt-1 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border-subtle bg-surface-container-lowest p-3 shadow-sm sm:flex-nowrap">

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
@@ -44,7 +44,17 @@ export default function SearchPod() {
   const navigate = useNavigate();
   const [resi, setResi] = useState("");
   const [toast, setToast] = useState("");
+  const [maxLimitWarning, setMaxLimitWarning] = useState(false);
+  const warningTimerRef = useRef(null);
   const { recentSearches, addSearch } = useRecentSearches();
+
+  const triggerLimitWarning = () => {
+    setMaxLimitWarning(true);
+    if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+    warningTimerRef.current = setTimeout(() => {
+      setMaxLimitWarning(false);
+    }, 2800);
+  };
 
   function lacak(nilai) {
     const bersih = cleanResiInput(nilai);
@@ -55,6 +65,11 @@ export default function SearchPod() {
     }
 
     addSearch(bersih);
+    window.dispatchEvent(
+      new CustomEvent("anteraja_refresh_tracking", {
+        detail: { waybill: bersih, timestamp: Date.now() },
+      })
+    );
     navigate(getRouteForResi(bersih));
   }
 
@@ -94,7 +109,9 @@ export default function SearchPod() {
         onSubmit={handleSubmit}
       >
         <div className="flex flex-col items-center gap-3 md:flex-row">
-          <div className="relative flex w-full flex-1 items-center rounded-xl border border-gray-200/80 bg-gray-50/90 px-4 py-3.5 transition-all focus-within:border-[#ec008c] focus-within:bg-white focus-within:shadow-sm">
+          <div className={`relative flex w-full flex-1 items-center rounded-xl border ${
+            maxLimitWarning ? "border-rose-500 ring-2 ring-rose-500/20" : "border-gray-200/80 focus-within:border-[#ec008c] focus-within:shadow-sm"
+          } bg-gray-50/90 px-4 py-3.5 transition-all focus-within:bg-white`}>
             <div className="mr-3 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-pink-50 text-[#ec008c]">
               <span className="material-symbols-outlined text-[18px]">
                 qr_code_2
@@ -106,29 +123,64 @@ export default function SearchPod() {
               className="w-full bg-transparent font-mono-code text-mono-code font-medium tracking-wide text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm"
               id="tracking-resi-input"
               maxLength={14}
-              onChange={(event) => setResi(event.target.value.replace(/\D/g, "").slice(0, 14))}
+              onKeyDown={(e) => {
+                if (
+                  resi.length >= 14 &&
+                  !e.ctrlKey &&
+                  !e.metaKey &&
+                  !e.altKey &&
+                  e.key.length === 1 &&
+                  e.target.selectionStart === e.target.selectionEnd
+                ) {
+                  triggerLimitWarning();
+                } else if (e.key === "Backspace" || e.key === "Delete") {
+                  setMaxLimitWarning(false);
+                }
+              }}
+              onChange={(event) => {
+                const raw = event.target.value.replace(/\D/g, "");
+                if (raw.length > 14) {
+                  triggerLimitWarning();
+                }
+                setResi(raw.slice(0, 14));
+              }}
               onPaste={(event) => {
                 event.preventDefault();
                 const pasted = event.clipboardData.getData("text");
-                setResi(pasted.replace(/\D/g, "").slice(0, 14));
+                const digits = pasted.replace(/\D/g, "");
+                if (digits.length > 14) {
+                  triggerLimitWarning();
+                }
+                setResi(digits.slice(0, 14));
               }}
               placeholder="Masukkan 14 digit nomor resi (contoh: 10001284277889)"
               type="text"
               value={resi}
             />
             <div className="ml-2 flex items-center gap-1.5 shrink-0">
-              <span
-                className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md border transition-all select-none ${
-                  resi.length === 14
-                    ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
-                    : resi.length > 0
-                    ? "bg-pink-50 text-[#ec008c] border-pink-200"
-                    : "bg-white text-gray-500 border-gray-200"
-                }`}
-                title="Nomor resi resmi Anteraja terdiri dari 14 digit angka"
-              >
-                {resi.length > 0 ? `${resi.length}/14 Digit` : "14 Digit"}
-              </span>
+              {maxLimitWarning ? (
+                <span
+                  className="flex items-center gap-1 text-[11px] font-sans font-bold px-2 py-0.5 rounded-md border bg-rose-50 text-rose-700 border-rose-300 shadow-xs animate-pulse select-none"
+                  role="alert"
+                  title="Batas maksimal 14 digit nomor resi telah tercapai"
+                >
+                  <span className="material-symbols-outlined text-[13px]">warning</span>
+                  Maksimal 14 Digit!
+                </span>
+              ) : (
+                <span
+                  className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md border transition-all select-none ${
+                    resi.length === 14
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
+                      : resi.length > 0
+                      ? "bg-pink-50 text-[#ec008c] border-pink-200"
+                      : "bg-white text-gray-500 border-gray-200"
+                  }`}
+                  title="Nomor resi resmi Anteraja terdiri dari 14 digit angka"
+                >
+                  {resi.length > 0 ? `${resi.length}/14 Digit` : "14 Digit"}
+                </span>
+              )}
               <button
                 className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-gray-500 transition-colors hover:bg-pink-50 hover:text-[#ec008c]"
                 onClick={handleSalin}
@@ -153,10 +205,17 @@ export default function SearchPod() {
           </button>
         </div>
 
-        <p className="mt-2 text-[11px] text-gray-500 flex items-center gap-1 pl-1">
-          <span className="material-symbols-outlined text-[14px] text-[#ec008c]">info</span>
-          <span>Nomor resi resmi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
-        </p>
+        {maxLimitWarning ? (
+          <p className="mt-2 text-[11px] text-rose-600 font-medium flex items-center gap-1 pl-1 animate-fade-in">
+            <span className="material-symbols-outlined text-[14px] text-rose-600">error</span>
+            <span>Nomor resi sudah mencapai batas maksimal <strong>14 digit</strong>. Tidak dapat menambahkan digit angka lagi.</span>
+          </p>
+        ) : (
+          <p className="mt-2 text-[11px] text-gray-500 flex items-center gap-1 pl-1">
+            <span className="material-symbols-outlined text-[14px] text-[#ec008c]">info</span>
+            <span>Nomor resi resmi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
+          </p>
+        )}
 
 
 

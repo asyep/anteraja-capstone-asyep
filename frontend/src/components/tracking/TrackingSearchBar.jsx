@@ -9,7 +9,7 @@
  * 4. Integrasi Riwayat: Menyimpan nomor resi ke recent search history.
  */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRouteForResi, cleanResiInput } from "@/data/shipmentsData";
 import { useRecentSearches } from "@/hooks/useRecentSearches";
@@ -24,7 +24,17 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
     initialWaybill ? String(initialWaybill).replace(/\D/g, "").slice(0, 14) : ""
   );
   const [copied, setCopied] = useState(false);
+  const [maxLimitWarning, setMaxLimitWarning] = useState(false);
+  const warningTimerRef = useRef(null);
   const { recentSearches, addSearch } = useRecentSearches();
+
+  const triggerLimitWarning = () => {
+    setMaxLimitWarning(true);
+    if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+    warningTimerRef.current = setTimeout(() => {
+      setMaxLimitWarning(false);
+    }, 2800);
+  };
 
   useEffect(() => {
     if (initialWaybill) {
@@ -41,6 +51,14 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
     const bersih = cleanResiInput(waybill);
     if (!bersih) return;
     addSearch(bersih);
+
+    // Memicu regenerasi narasi Satria AI Gemini jika nomor resi yang sama dicari ulang
+    window.dispatchEvent(
+      new CustomEvent("anteraja_refresh_tracking", {
+        detail: { waybill: bersih, timestamp: Date.now() },
+      })
+    );
+
     navigate(getRouteForResi(bersih));
   }
 
@@ -67,36 +85,69 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
             <input
               aria-label="Nomor resi 14 digit Anteraja"
               autoComplete="off"
-              className="h-14 w-full rounded-xl bg-surface-card pl-12 pr-36 sm:pr-40 font-mono-code text-mono-code tracking-wide text-text-primary shadow-inner transition-all placeholder:text-text-placeholder focus:bg-surface-container-lowest focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+              className={`h-14 w-full rounded-xl bg-surface-card pl-12 pr-44 sm:pr-48 font-mono-code text-mono-code tracking-wide text-text-primary shadow-inner transition-all placeholder:text-text-placeholder focus:bg-surface-container-lowest focus:outline-none focus:ring-2 ${
+                maxLimitWarning ? "ring-2 ring-rose-500 border-rose-500" : "focus:ring-primary"
+              } text-sm sm:text-base`}
               id="resi-input"
               maxLength={14}
+              onKeyDown={(e) => {
+                if (
+                  waybill.length >= 14 &&
+                  !e.ctrlKey &&
+                  !e.metaKey &&
+                  !e.altKey &&
+                  e.key.length === 1 &&
+                  e.target.selectionStart === e.target.selectionEnd
+                ) {
+                  triggerLimitWarning();
+                } else if (e.key === "Backspace" || e.key === "Delete") {
+                  setMaxLimitWarning(false);
+                }
+              }}
               onChange={(event) => {
-                const sanitized = event.target.value.replace(/\D/g, "").slice(0, 14);
-                setWaybill(sanitized);
+                const rawDigits = event.target.value.replace(/\D/g, "");
+                if (rawDigits.length > 14) {
+                  triggerLimitWarning();
+                }
+                setWaybill(rawDigits.slice(0, 14));
               }}
               onPaste={(event) => {
                 event.preventDefault();
                 const pasted = event.clipboardData.getData("text");
-                const sanitized = pasted.replace(/\D/g, "").slice(0, 14);
-                setWaybill(sanitized);
+                const digits = pasted.replace(/\D/g, "");
+                if (digits.length > 14) {
+                  triggerLimitWarning();
+                }
+                setWaybill(digits.slice(0, 14));
               }}
               placeholder="Masukkan 14 digit nomor resi (contoh: 10001284277889)"
               type="text"
               value={waybill}
             />
             <div className="absolute right-3 flex items-center gap-1.5 sm:gap-2">
-              <span
-                className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg border transition-all select-none ${
-                  waybill.length === 14
-                    ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
-                    : waybill.length > 0
-                    ? "bg-primary/10 text-primary border-primary/20"
-                    : "bg-surface-container-high/60 text-text-muted border-border-subtle"
-                }`}
-                title="Nomor resi resmi Anteraja terdiri dari tepat 14 digit angka"
-              >
-                {waybill.length > 0 ? `${waybill.length}/14 Digit` : "14 Digit"}
-              </span>
+              {maxLimitWarning ? (
+                <span
+                  className="flex items-center gap-1 text-[11px] font-sans font-bold px-2.5 py-1 rounded-lg border bg-rose-50 text-rose-700 border-rose-300 shadow-sm animate-pulse"
+                  role="alert"
+                  title="Batas maksimal 14 digit nomor resi telah tercapai"
+                >
+                  <span className="material-symbols-outlined text-[13px]">warning</span>
+                  Maksimal 14 Digit!
+                </span>
+              ) : (
+                <span
+                  className={`text-[11px] font-mono font-bold px-2.5 py-1 rounded-lg border transition-all select-none ${
+                    waybill.length === 14
+                      ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
+                      : waybill.length > 0
+                      ? "bg-primary/10 text-primary border-primary/20"
+                      : "bg-surface-container-high/60 text-text-muted border-border-subtle"
+                  }`}
+                  title="Nomor resi resmi Anteraja terdiri dari tepat 14 digit angka"
+                >
+                  {waybill.length > 0 ? `${waybill.length}/14 Digit` : "14 Digit"}
+                </span>
+              )}
               <button
                 aria-label="Salin nomor resi"
                 className="inline-flex h-8 w-8 items-center justify-center rounded-lg text-text-muted transition-colors hover:bg-primary-fixed/40 hover:text-primary"
@@ -118,6 +169,13 @@ export default function TrackingSearchBar({ initialWaybill = "" }) {
             Lacak Paket
           </button>
         </div>
+
+        {maxLimitWarning && (
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-50 border border-rose-200 text-rose-700 text-xs font-medium animate-fade-in">
+            <span className="material-symbols-outlined text-[16px] text-rose-600">error</span>
+            <span>Nomor resi sudah mencapai batas maksimal <strong>14 digit</strong>. Tidak dapat menambahkan digit angka lagi.</span>
+          </div>
+        )}
 
         <div className="flex flex-wrap items-center gap-2 text-on-surface-variant">
           <span className="font-label-sm text-label-sm font-bold uppercase tracking-wider text-text-muted">

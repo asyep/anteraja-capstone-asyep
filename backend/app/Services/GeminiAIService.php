@@ -206,18 +206,43 @@ PROMPT;
         $delayReason = $telemetry?->logistics_delay_reason;
 
         if ($shipment->shipment_status === Shipment::STATUS_DELIVERED) {
-            return "Kabar gembira Kak! Paketmu dari {$sellerCity} telah berhasil diantar dengan aman ke alamat tujuan di {$customerCity}. Terima kasih telah menggunakan Anteraja!";
+            $pool = [
+                "Kabar gembira Kak! Paketmu dari {$sellerCity} telah berhasil diantar dengan aman ke alamat tujuan di {$customerCity}. Terima kasih telah menggunakan Anteraja!",
+                "Halo Kak! Pengiriman paketmu dari {$sellerCity} sudah selesai dan diterima dengan baik di {$customerCity}. Senang bisa melayani kirimanmu bersama Satria Anteraja!",
+                "Alhamdulillah, paketmu telah sampai dengan selamat di {$customerCity}. Tim Satria mengucapkan terima kasih atas kepercayaan Kakak!",
+                "Paket sukses mendarat di alamat tujuan {$customerCity}! Semoga isinya memuaskan ya Kak. Sampai jumpa di pengiriman Anteraja berikutnya!",
+            ];
+            return $pool[array_rand($pool)];
         }
 
         if ($shipment->shipment_status === Shipment::STATUS_OUT_FOR_DELIVERY) {
-            return "Paketmu sedang dibawa oleh Kurir Satria menuju alamat tujuan di {$customerCity}. Pastikan ada penerima di lokasi ya Kak!";
+            $pool = [
+                "Paketmu sedang dibawa oleh Kurir Satria menuju alamat tujuan di {$customerCity}. Pastikan ada penerima di lokasi ya Kak!",
+                "Halo Kak! Kurir Satria sudah membawa paketmu dan bergerak mendekati alamat di {$customerCity}. Siapkan nomor HP aktif agar mudah dihubungi saat tiba!",
+                "Saat ini kurir Satria kami sedang dalam putaran pengantaran akhir menuju rumahmu di {$customerCity}. Paketmu diproyeksikan segera sampai!",
+                "Update Satria: Paketmu telah keluar dari hub pengantaran dan sedang menuju titik tujuanmu di {$customerCity}. Mohon bersiap menyambut kurir ya Kak!",
+            ];
+            return $pool[array_rand($pool)];
         }
 
         if (filled($delayReason) || $telemetry?->traffic_status === 'Heavy') {
             $reason = filled($delayReason) ? $delayReason : 'kepadatan lalu lintas';
-            return "Paketmu dalam perjalanan dari {$sellerCity} ke {$customerCity}. Ada sedikit hambatan {$reason} di rute transit, namun kurir Satria terus mengupayakan paket tiba secepatnya.";
+            $pool = [
+                "Paketmu dalam perjalanan dari {$sellerCity} ke {$customerCity}. Ada sedikit hambatan {$reason} di rute transit, namun kurir Satria terus mengupayakan paket tiba secepatnya.",
+                "Pemberitahuan Satria: Rute logistik sedang mengalami kendala {$reason}. Tim armada kami sedang menyesuaikan laju kendaraan agar paket tetap aman menuju {$customerCity}.",
+                "Halo Kak, terdapat penyesuaian waktu sekitar jalur transit akibat {$reason}. Kendaraan Satria bergerak hati-hati demi keselamatan paketmu ke {$customerCity}.",
+                "Info terkini dari Satria Assistant: Tim mendeteksi {$reason} di perlintasan. Satria terus memprioritaskan paketmu agar deviasi waktu seminimal mungkin.",
+            ];
+            return $pool[array_rand($pool)];
         }
 
-        return "Halo Kak! Paketmu saat ini sedang dalam perjalanan lancar dari {$sellerCity} menuju {$customerCity} dan diproyeksikan tiba tepat waktu.";
+        $pool = [
+            "Halo Kak! Paketmu saat ini sedang dalam perjalanan lancar dari {$sellerCity} menuju {$customerCity} dan diproyeksikan tiba tepat waktu.",
+            "Update dari Satria Assistant: Armada logistik sedang melaju stabil menuju {$customerCity}. Cuaca dan kondisi jalan mendukung perjalanan yang lancar.",
+            "Kabar baik Kak! Paketmu bergerak mulus di koridor ekspedisi antarkota menuju {$customerCity}. Seluruh parameter pengantaran dalam kendali aman.",
+            "Halo Kak! Tim Satria mengawal perjalanan paketmu dari {$sellerCity} menuju {$customerCity}. Estimasi tiba tetap sesuai dengan jadwal pengiriman terbaik.",
+            "Pemberitahuan Satria AI: Paketmu sudah melintasi checkpoint utama dan melaju lancar ke {$customerCity}. Kami pastikan paketmu sampai dengan selamat!",
+        ];
+        return $pool[array_rand($pool)];
     }
 }
