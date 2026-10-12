@@ -174,177 +174,181 @@ export default function AssistantNarrative({
   }
 
   return (
-    <div className="relative w-full overflow-hidden rounded-2xl bg-surface-container-lowest p-space-lg shadow-lg">
-      <div className="flex items-start gap-space-md">
-        <div className="relative shrink-0">
-          <div className="h-14 w-14 overflow-hidden rounded-full bg-surface-container shadow-md ring-2 ring-primary-fixed">
-            <img
-              alt="Satria Assistant — asisten AI pengiriman"
-              className="h-full w-full object-cover"
-              src={assistant.avatar}
-            />
+    <div className="relative w-full overflow-hidden rounded-2xl bg-surface-container-lowest p-3.5 sm:p-space-lg shadow-lg">
+      <div className="flex flex-col gap-3 w-full min-w-0">
+        {/* Header: Avatar, Name, Badges & Courier Subtitle */}
+        <div className="flex items-center gap-3 w-full min-w-0">
+          <div className="relative shrink-0">
+            <div className="h-12 w-12 sm:h-14 sm:w-14 overflow-hidden rounded-full bg-surface-container shadow-md ring-2 ring-primary-fixed">
+              <img
+                alt="Satria Assistant — asisten AI pengiriman"
+                className="h-full w-full object-cover"
+                src={assistant.avatar}
+              />
+            </div>
+            <span
+              className="absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 sm:h-4 sm:w-4 items-center justify-center rounded-full bg-success-base ring-2 ring-surface-container-lowest"
+              title="Online"
+            >
+              <span className="h-1.5 w-1.5 rounded-full bg-white" />
+            </span>
           </div>
-          <span
-            className="absolute -bottom-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-success-base ring-2 ring-surface-container-lowest"
-            title="Online"
-          >
-            <span className="h-1.5 w-1.5 rounded-full bg-white" />
-          </span>
-        </div>
 
-        <div className="flex flex-1 flex-col gap-space-xs">
-          <div className="flex flex-wrap items-center justify-between gap-space-xs">
-            <div className="flex items-center gap-2">
-              <span className="font-headline-sm text-headline-sm font-bold text-on-surface">
+          <div className="flex flex-col min-w-0 flex-1">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <span className="font-headline-sm text-sm sm:text-headline-sm font-bold text-on-surface">
                 {assistant.name}
               </span>
-              <span className="flex items-center gap-1 rounded-full bg-ai-surface px-2.5 py-0.5 font-label-sm text-label-sm font-bold text-ai-accent">
-                <span className="material-symbols-outlined text-[13px]">
+              <span className="inline-flex items-center gap-1 rounded-full bg-ai-surface px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-label-sm font-bold text-ai-accent whitespace-nowrap">
+                <span className="material-symbols-outlined text-[12px] sm:text-[13px]">
                   auto_awesome
                 </span>
                 Satria AI
               </span>
-              <span className="flex items-center gap-1 rounded-full border border-purple-500/20 bg-purple-500/10 px-2.5 py-0.5 font-label-sm text-label-sm font-bold text-purple-700">
-                <span className="material-symbols-outlined text-[13px]">
+              <span className="inline-flex items-center gap-1 rounded-full border border-purple-500/20 bg-purple-500/10 px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-label-sm font-bold text-purple-700 whitespace-nowrap">
+                <span className="material-symbols-outlined text-[12px] sm:text-[13px]">
                   psychology
                 </span>
                 Live Gemini
               </span>
-              <span className="rounded-full bg-tertiary-fixed px-2.5 py-0.5 font-label-sm text-label-sm font-bold text-on-tertiary-fixed">
+              <span className="inline-flex items-center rounded-full bg-tertiary-fixed px-2 sm:px-2.5 py-0.5 text-[10px] sm:text-label-sm font-bold text-on-tertiary-fixed whitespace-nowrap">
                 Terverifikasi
               </span>
             </div>
-            <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
+            <span className="font-label-sm text-[11px] sm:text-label-sm font-medium text-on-surface-variant truncate mt-0.5">
               {assistant.courierId
                 ? `${assistant.courierName} (ID: ${assistant.courierId})`
                 : assistant.courierName}
             </span>
           </div>
+        </div>
 
-          <div className="mt-1 rounded-xl bg-surface-container-low/70 p-space-md font-body-lg text-body-lg leading-relaxed text-on-surface">
-            {isRegenerating ? (
-              <div className="flex items-center gap-2 py-0.5 text-primary">
-                <span className="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
-                <span className="text-sm font-semibold animate-pulse">Satria AI Gemini sedang memproses pesan status terkini...</span>
-              </div>
-            ) : (
-              <p>&ldquo;{liveNarrative || assistant.message}&rdquo;</p>
-            )}
-          </div>
-
-          {waybill && (
-            <div className="mt-1 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-border-subtle bg-surface-container-lowest p-3 shadow-sm sm:flex-nowrap">
-              <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
-                Apakah informasi dari AI ini membantu Anda?
-              </span>
-              <div className="flex gap-2">
-                {feedbackStatus === "success" ? (
-                  <span className="flex items-center gap-1.5 font-label-sm text-label-sm font-semibold text-success-base transition-opacity duration-200">
-                    <span className="material-symbols-outlined text-[17px]">check_circle</span>
-                    Terima kasih atas masukannya!
-                  </span>
-                ) : feedbackStatus === "error" ? (
-                  <span className="font-label-sm text-label-sm text-error">Gagal mengirim</span>
-                ) : (
-                  <>
-                    <button
-                      onClick={() => handleFeedback(true)}
-                      disabled={feedbackStatus === "loading"}
-                      className="group flex h-8 items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-container-low px-3 font-label-sm text-label-sm font-semibold text-on-surface transition-all duration-150 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-sm active:scale-95 disabled:opacity-75 cursor-pointer"
-                      title="Membantu"
-                    >
-                      {feedbackStatus === "loading" && activeChoice === true ? (
-                        <span className="material-symbols-outlined animate-spin text-[16px] text-emerald-600">
-                          progress_activity
-                        </span>
-                      ) : (
-                        <span className="material-symbols-outlined text-[16px] text-text-muted transition-colors group-hover:text-emerald-600">
-                          thumb_up
-                        </span>
-                      )}
-                      <span>Ya</span>
-                    </button>
-                    <button
-                      onClick={() => handleFeedback(false)}
-                      disabled={feedbackStatus === "loading"}
-                      className="group flex h-8 items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-container-low px-3 font-label-sm text-label-sm font-semibold text-on-surface transition-all duration-150 hover:border-rose-400 hover:bg-rose-50 hover:text-rose-700 hover:shadow-sm active:scale-95 disabled:opacity-75 cursor-pointer"
-                      title="Kurang membantu"
-                    >
-                      {feedbackStatus === "loading" && activeChoice === false ? (
-                        <span className="material-symbols-outlined animate-spin text-[16px] text-rose-600">
-                          progress_activity
-                        </span>
-                      ) : (
-                        <span className="material-symbols-outlined text-[16px] text-text-muted transition-colors group-hover:text-rose-600">
-                          thumb_down
-                        </span>
-                      )}
-                      <span>Tidak</span>
-                    </button>
-                  </>
-                )}
-              </div>
+        {/* Narrative Quote Bubble */}
+        <div className="w-full min-w-0 rounded-xl bg-surface-container-low/70 p-3 sm:p-space-md text-xs sm:text-sm md:text-base leading-relaxed text-on-surface break-words">
+          {isRegenerating ? (
+            <div className="flex items-center gap-2 py-0.5 text-primary">
+              <span className="material-symbols-outlined animate-spin text-[18px]">progress_activity</span>
+              <span className="text-xs sm:text-sm font-semibold animate-pulse">Satria AI Gemini sedang memproses pesan status terkini...</span>
             </div>
+          ) : (
+            <p className="break-words font-normal leading-relaxed">&ldquo;{liveNarrative || assistant.message}&rdquo;</p>
+          )}
+        </div>
+
+        {/* Feedback Row */}
+        {waybill && (
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-xl border border-border-subtle bg-surface-container-lowest p-2.5 sm:p-3 shadow-xs">
+            <span className="text-xs sm:text-sm font-medium text-on-surface-variant">
+              Apakah informasi dari AI ini membantu Anda?
+            </span>
+            <div className="flex items-center gap-2">
+              {feedbackStatus === "success" ? (
+                <span className="flex items-center gap-1.5 font-label-sm text-xs sm:text-label-sm font-semibold text-success-base transition-opacity duration-200">
+                  <span className="material-symbols-outlined text-[17px]">check_circle</span>
+                  Terima kasih atas masukannya!
+                </span>
+              ) : feedbackStatus === "error" ? (
+                <span className="font-label-sm text-xs sm:text-label-sm text-error">Gagal mengirim</span>
+              ) : (
+                <>
+                  <button
+                    onClick={() => handleFeedback(true)}
+                    disabled={feedbackStatus === "loading"}
+                    className="group flex h-8 items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-container-low px-3 font-label-sm text-xs sm:text-label-sm font-semibold text-on-surface transition-all duration-150 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-700 hover:shadow-sm active:scale-95 disabled:opacity-75 cursor-pointer"
+                    title="Membantu"
+                  >
+                    {feedbackStatus === "loading" && activeChoice === true ? (
+                      <span className="material-symbols-outlined animate-spin text-[16px] text-emerald-600">
+                        progress_activity
+                      </span>
+                    ) : (
+                      <span className="material-symbols-outlined text-[16px] text-text-muted transition-colors group-hover:text-emerald-600">
+                        thumb_up
+                      </span>
+                    )}
+                    <span>Ya</span>
+                  </button>
+                  <button
+                    onClick={() => handleFeedback(false)}
+                    disabled={feedbackStatus === "loading"}
+                    className="group flex h-8 items-center gap-1.5 rounded-lg border border-border-subtle/80 bg-surface-container-low px-3 font-label-sm text-xs sm:text-label-sm font-semibold text-on-surface transition-all duration-150 hover:border-rose-400 hover:bg-rose-50 hover:text-rose-700 hover:shadow-sm active:scale-95 disabled:opacity-75 cursor-pointer"
+                    title="Kurang membantu"
+                  >
+                    {feedbackStatus === "loading" && activeChoice === false ? (
+                      <span className="material-symbols-outlined animate-spin text-[16px] text-rose-600">
+                        progress_activity
+                      </span>
+                    ) : (
+                      <span className="material-symbols-outlined text-[16px] text-text-muted transition-colors group-hover:text-rose-600">
+                        thumb_down
+                      </span>
+                    )}
+                    <span>Tidak</span>
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+        )}
+
+        {/* Action Buttons Row */}
+        <div className="flex flex-col sm:flex-row sm:flex-wrap items-stretch sm:items-center gap-2 sm:gap-space-sm pt-0.5">
+          <a
+            className="flex h-11 items-center justify-center gap-2 rounded-xl bg-secondary-container px-4 font-label-md text-xs sm:text-label-md font-bold text-on-secondary-container shadow-xs transition-all hover:bg-secondary-fixed active:scale-[0.98] w-full sm:w-auto"
+            href={assistant.whatsapp}
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <span className="material-symbols-outlined text-[18px]">chat</span>
+            Hubungi Satria via WhatsApp
+          </a>
+
+          {secondaryAction ? (
+            <button
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-surface-container-low px-4 font-label-md text-xs sm:text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98] w-full sm:w-auto"
+              onClick={secondaryAction.onClick}
+              type="button"
+            >
+              {secondaryAction.icon && (
+                <span className="material-symbols-outlined text-[18px]">
+                  {secondaryAction.icon}
+                </span>
+              )}
+              {secondaryAction.label}
+            </button>
+          ) : (
+            <button
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-surface-container-low px-4 font-label-md text-xs sm:text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98] w-full sm:w-auto"
+              onClick={bagikanStatus}
+              type="button"
+            >
+              <span className="material-symbols-outlined text-[18px]">
+                share
+              </span>
+              {shareLabel}
+            </button>
           )}
 
-          <div className="flex flex-wrap items-center gap-space-sm pt-space-xs">
-            <a
-              className="flex h-11 items-center gap-2 rounded-xl bg-secondary-container px-space-md font-label-md text-label-md font-bold text-on-secondary-container shadow-sm transition-all hover:bg-secondary-fixed active:scale-[0.98]"
-              href={assistant.whatsapp}
-              rel="noopener noreferrer"
-              target="_blank"
+          {tertiaryAction && (
+            <button
+              className="flex h-11 items-center justify-center gap-2 rounded-xl bg-surface-container-low px-4 font-label-md text-xs sm:text-label-md font-bold text-error transition-all hover:bg-error-surface active:scale-[0.98] w-full sm:w-auto"
+              onClick={tertiaryAction.onClick}
+              type="button"
             >
-              <span className="material-symbols-outlined text-[18px]">chat</span>
-              Hubungi Satria via WhatsApp
-            </a>
-
-            {secondaryAction ? (
-              <button
-                className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98]"
-                onClick={secondaryAction.onClick}
-                type="button"
-              >
-                {secondaryAction.icon && (
-                  <span className="material-symbols-outlined text-[18px]">
-                    {secondaryAction.icon}
-                  </span>
-                )}
-                {secondaryAction.label}
-              </button>
-            ) : (
-              <button
-                className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98]"
-                onClick={bagikanStatus}
-                type="button"
-              >
+              {tertiaryAction.icon && (
                 <span className="material-symbols-outlined text-[18px]">
-                  share
+                  {tertiaryAction.icon}
                 </span>
-                {shareLabel}
-              </button>
-            )}
+              )}
+              {tertiaryAction.label}
+            </button>
+          )}
 
-            {tertiaryAction && (
-              <button
-                className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-error transition-all hover:bg-error-surface active:scale-[0.98]"
-                onClick={tertiaryAction.onClick}
-                type="button"
-              >
-                {tertiaryAction.icon && (
-                  <span className="material-symbols-outlined text-[18px]">
-                    {tertiaryAction.icon}
-                  </span>
-                )}
-                {tertiaryAction.label}
-              </button>
-            )}
-
-            <div className="ml-auto hidden items-center gap-1.5 font-body-sm text-body-sm text-text-muted sm:flex">
-              <span className="material-symbols-outlined text-[16px] text-success-base">
-                verified
-              </span>
-              {assistant.protocol}
-            </div>
+          <div className="hidden sm:flex ml-auto items-center gap-1.5 font-body-sm text-body-sm text-text-muted">
+            <span className="material-symbols-outlined text-[16px] text-success-base">
+              verified
+            </span>
+            {assistant.protocol}
           </div>
         </div>
       </div>
