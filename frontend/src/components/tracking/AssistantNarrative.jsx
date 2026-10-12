@@ -22,7 +22,13 @@ import { API_BASE } from "@/lib/api";
 import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
 import { regenerateAiNarrative } from "@/lib/geminiClient";
 
-export default function AssistantNarrative({ assistant, statusLabel, waybill }) {
+export default function AssistantNarrative({
+  assistant,
+  statusLabel,
+  waybill,
+  secondaryAction = null,
+  tertiaryAction = null,
+}) {
 
   const [shareLabel, setShareLabel] = useState("Bagikan Status");
   const storageKey = waybill ? `anteraja_feedback_${waybill}` : null;
@@ -264,16 +270,46 @@ export default function AssistantNarrative({ assistant, statusLabel, waybill }) 
               Hubungi Satria via WhatsApp
             </a>
 
-            <button
-              className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98]"
-              onClick={bagikanStatus}
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[18px]">
-                share
-              </span>
-              {shareLabel}
-            </button>
+            {secondaryAction ? (
+              <button
+                className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98]"
+                onClick={secondaryAction.onClick}
+                type="button"
+              >
+                {secondaryAction.icon && (
+                  <span className="material-symbols-outlined text-[18px]">
+                    {secondaryAction.icon}
+                  </span>
+                )}
+                {secondaryAction.label}
+              </button>
+            ) : (
+              <button
+                className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-on-surface transition-all hover:bg-surface-container-high active:scale-[0.98]"
+                onClick={bagikanStatus}
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[18px]">
+                  share
+                </span>
+                {shareLabel}
+              </button>
+            )}
+
+            {tertiaryAction && (
+              <button
+                className="flex h-11 items-center gap-2 rounded-xl bg-surface-container-low px-space-md font-label-md text-label-md font-bold text-error transition-all hover:bg-error-surface active:scale-[0.98]"
+                onClick={tertiaryAction.onClick}
+                type="button"
+              >
+                {tertiaryAction.icon && (
+                  <span className="material-symbols-outlined text-[18px]">
+                    {tertiaryAction.icon}
+                  </span>
+                )}
+                {tertiaryAction.label}
+              </button>
+            )}
 
             <div className="ml-auto hidden items-center gap-1.5 font-body-sm text-body-sm text-text-muted sm:flex">
               <span className="material-symbols-outlined text-[16px] text-success-base">
