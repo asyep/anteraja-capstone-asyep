@@ -17,7 +17,7 @@
  */
 
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { API_BASE } from "@/lib/api";
 import { sendFeedbackToSupabase } from "@/lib/supabaseTracking";
 import { regenerateAiNarrative } from "@/lib/geminiClient";
@@ -26,6 +26,7 @@ export default function AssistantNarrative({
   assistant,
   statusLabel,
   waybill,
+  isNotFound = false,
   secondaryAction = null,
   tertiaryAction = null,
 }) {
@@ -49,6 +50,12 @@ export default function AssistantNarrative({
   const [isRegenerating, setIsRegenerating] = useState(false);
   const [isLiveGemini, setIsLiveGemini] = useState(false);
 
+  // Reset live narrative jika nomor resi, pesan default, atau status berganti
+  useEffect(() => {
+    setLiveNarrative(null);
+    setIsLiveGemini(false);
+  }, [waybill, assistant?.message, statusLabel, isNotFound]);
+
   async function handleRegenerateAi() {
     if (!waybill || isRegenerating) return;
     setIsRegenerating(true);
@@ -57,6 +64,7 @@ export default function AssistantNarrative({
       const result = await regenerateAiNarrative(waybill, {
         statusLabel,
         courierName: assistant?.courierName,
+        isNotFound,
       });
 
       if (result && result.text) {

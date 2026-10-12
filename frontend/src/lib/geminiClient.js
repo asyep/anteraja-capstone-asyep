@@ -22,53 +22,81 @@ const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-3.5-flash-lite
  * @returns {Promise<{ ok: boolean, text: string, provider: string, is_fallback: boolean }>}
  */
 export async function regenerateAiNarrative(waybill, context = {}) {
-  // 1. Coba panggil Laravel Backend API
-  try {
-    const controller = new AbortController();
-    const timer = setTimeout(() => controller.abort(), 4000);
+  const statusUpper = (context.statusLabel || "").toUpperCase();
+  const isNotFound = Boolean(
+    context.isNotFound ||
+    statusUpper.includes("TIDAK DITEMUKAN") ||
+    statusUpper.includes("BELUM TERCATAT") ||
+    statusUpper.includes("404") ||
+    statusUpper.includes("DIBATALKAN")
+  );
+  const isDelivered = statusUpper.includes("DITERIMA") || statusUpper.includes("TIBA DI TUJUAN") || statusUpper.includes("DELIVERED");
+  const isOutForDelivery = statusUpper.includes("DIANTAR") || statusUpper.includes("PENGANTARAN") || statusUpper.includes("OUT_FOR_DELIVERY");
+  const isOrderCreated = statusUpper.includes("DIBUAT") || statusUpper.includes("ORDER_CREATED") || statusUpper.includes("MENUNGGU PENJEMPUTAN") || statusUpper.includes("MENUNGGU PICKUP");
+  const isCourierProcessed = statusUpper.includes("DIPROSES") || statusUpper.includes("STAGING") || statusUpper.includes("DC") || statusUpper.includes("COURIER_PROCESSED");
 
-    const response = await fetch(`${API_BASE}/tracking/${waybill}/regenerate-ai`, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      signal: controller.signal,
-    });
-    clearTimeout(timer);
+  // 1. Coba panggil Laravel Backend API (hanya jika bukan state resi belum tercatat / not found)
+  if (!isNotFound) {
+    try {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 4000);
 
-    if (response.ok) {
-      const json = await response.json();
-      if (json?.ok && json?.data?.text) {
-        return {
-          ok: true,
-          text: json.data.text,
-          title: json.data.title || "Satria Assistant",
-          subtitle: json.data.subtitle || "Satria AI Live Assistant",
-          provider: json.data.provider || "gemini",
-          is_fallback: Boolean(json.data.is_fallback),
-        };
+      const response = await fetch(`${API_BASE}/tracking/${waybill}/regenerate-ai`, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        signal: controller.signal,
+      });
+      clearTimeout(timer);
+
+      if (response.ok) {
+        const json = await response.json();
+        if (json?.ok && json?.data?.text) {
+          return {
+            ok: true,
+            text: json.data.text,
+            title: json.data.title || "Satria Assistant",
+            subtitle: json.data.subtitle || "Satria AI Live Assistant",
+            provider: json.data.provider || "gemini",
+            is_fallback: Boolean(json.data.is_fallback),
+          };
+        }
       }
+    } catch {
+      /* Backend offline atau timeout; lanjutkan ke direct client fallback */
     }
-  } catch {
-    /* Backend offline atau timeout; lanjutkan ke direct client fallback */
   }
 
   // 2. Direct Call ke Google Gemini API (jika VITE_GEMINI_API_KEY tersedia di frontend)
   if (GEMINI_API_KEY) {
     try {
+      let stateGuideline = "Paket sedang dalam perjalanan logistik antarkota menuju kota tujuan.";
+      if (isNotFound) {
+        stateGuideline = "Nomor resi BELUM TERCATAT / belum ter-scan di staging store fisik kami (404). Jelaskan dengan tenang dan ramah bahwa seller mungkin baru mencetak label pengiriman atau paket fisik sedang diserahterimakan ke kurir Satria, dan sarankan untuk mengecek berkala atau memeriksa kembali kebenaran digit resi.";
+      } else if (isDelivered) {
+        stateGuideline = "Paket sudah TELAH DITERIMA dengan sukses di alamat tujuan. Sampaikan ucapan selamat dan terima kasih karena telah mempercayakan pengiriman ke Anteraja.";
+      } else if (isOutForDelivery) {
+        stateGuideline = "Paket SEDANG DIANTAR oleh kurir Satria menuju rumah penerima. Ingatkan agar nomor handphone penerima aktif.";
+      } else if (isOrderCreated) {
+        stateGuideline = "Pesanan BARU SAJA DIBUAT oleh pengirim di sistem dan sedang menunggu penjemputan oleh kurir Satria.";
+      } else if (isCourierProcessed) {
+        stateGuideline = "Paket sudah dijemput dan SEDANG DIPROSES / disortir di Staging DC Hub sebelum diberangkatkan.";
+      }
+
       const prompt = `Anda adalah "Satria Assistant", asisten AI resmi dari ekspedisi Anteraja.
-Tugas Anda: Buat narasi status pengiriman paket yang ramah, sopan, dan menenangkan hati pelanggan.
+Tugas Anda: Buat narasi status pengiriman paket yang ramah, sopan, dan menenangkan hati pelanggan sesuai status saat ini.
 Data Pengiriman:
 - Resi: ${waybill}
-- Status: ${context.statusLabel || "Sedang Diproses"}
-- Kurir: ${context.courierName || "Satria Operasional"}
-- Asal ke Tujuan: ${context.sellerCity || "Kota Pengirim"} ke ${context.customerCity || "Kota Tujuan"}
+- Status: ${context.statusLabel || (isNotFound ? "Resi Belum Tercatat" : "Sedang Diproses")}
+- Kurir/Petugas: ${context.courierName || (isNotFound ? "Duta Layanan Pelanggan" : "Satria Operasional")}
+- Panduan Konteks Status: ${stateGuideline}
 
 Aturan:
 1. Gunakan Bahasa Indonesia santai dan ramah (sapaan: "Halo Kak!").
-2. Panjang teks 150 - 250 karakter.
-3. Jangan sebut kode internal teknis logistik.
+2. Panjang teks 150 - 250 karakter (2-3 kalimat).
+3. Jangan sebut kode internal teknis logistik (misal: MANIFESTED, HUB_01).
 4. Berikan HANYA teks narasi langsung tanpa tanda kutip.`;
 
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
@@ -101,13 +129,27 @@ Aturan:
     }
   }
 
-  // 3. Fallback jika kedua jalur di atas tidak dapat diakses
+  // 3. Fallback jika kedua jalur di atas tidak dapat diakses (Sesuai State Spesifik)
   const destCity = context.customerCity ? `ke ${context.customerCity}` : "ke alamat tujuan";
+  let fallbackText = `Halo Kak! Paketmu saat ini sedang dalam perjalanan aman ${destCity} bersama armada Satria Anteraja. Kami pastikan pengantaran tetap sesuai estimasi ya!`;
+
+  if (isNotFound) {
+    fallbackText = "Halo Kak! Nomor resi ini belum terbaca di sistem pelacakan Anteraja. Hal ini umumnya terjadi karena pihak pengirim baru membuat label dan paket fisik belum di-scan di hub kami, atau terdapat kekeliruan pengetikan digit resi. Silakan cek berkala ya!";
+  } else if (isDelivered) {
+    fallbackText = `Kabar gembira Kak! Paketmu telah berhasil diantar dan diterima dengan aman di alamat tujuan. Terima kasih telah mempercayakan pengiriman Anda kepada Anteraja!`;
+  } else if (isOutForDelivery) {
+    fallbackText = `Halo Kak! Paketmu saat ini sudah dibawa oleh kurir Satria dan sedang bergerak menuju alamat rumahmu. Pastikan nomor HP aktif ya agar kurir mudah menghubungi saat tiba!`;
+  } else if (isOrderCreated) {
+    fallbackText = `Halo Kak! Pesanan kamu baru saja dibuat oleh pengirim. Saat ini sistem kami sedang mengalokasikan Satria untuk segera menjemput paket ke lokasi pengirim. Pantau terus update terbarunya di sini ya!`;
+  } else if (isCourierProcessed) {
+    fallbackText = `Halo Kak! Paketmu sudah berhasil dijemput dan saat ini sedang disortir serta diverifikasi di Staging DC Hub sebelum diberangkatkan ke kota tujuan. Pantau terus ya!`;
+  }
+
   return {
     ok: true,
-    text: `Halo Kak! Paketmu saat ini sedang bergerak aman ${destCity} bersama armada Satria Anteraja. Kami pastikan pengantaran tetap sesuai estimasi ya!`,
+    text: fallbackText,
     title: "Satria Assistant",
-    subtitle: "Satria AI Assistant (Fallback)",
+    subtitle: isNotFound ? "Duta Layanan Pelanggan (Satria AI)" : "Satria AI Assistant",
     provider: "gemini",
     is_fallback: true,
   };

@@ -134,6 +134,7 @@ export default function NotFoundPage() {
                   assistant={notFoundAssistant}
                   statusLabel="Resi Belum Tercatat"
                   waybill={waybillParam}
+                  isNotFound={true}
                   secondaryAction={{
                     label: "Cek Ulang Digit Resi",
                     icon: "replay",
