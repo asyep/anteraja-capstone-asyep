@@ -24,7 +24,8 @@ export default function HomePage() {
 
   const handleSearch = (event) => {
     event.preventDefault();
-    const cleanWaybill = cleanResiInput(waybill) || "1000849201994";
+    const cleanWaybill = cleanResiInput(waybill);
+    if (!cleanWaybill) return;
     addSearch(cleanWaybill);
     navigate(getRouteForResi(cleanWaybill));
   };
@@ -33,10 +34,10 @@ export default function HomePage() {
     try {
       const text = await navigator.clipboard.readText();
       if (text) {
-        setWaybill(text);
+        setWaybill(text.replace(/\D/g, "").slice(0, 14));
       }
     } catch (err) {
-      setWaybill("1000849201994");
+      /* clipboard context */
     }
   };
 
@@ -77,31 +78,58 @@ export default function HomePage() {
             </div>
 
             {/* Input Form Row */}
-            <form className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3" onSubmit={handleSearch}>
-              <div className="relative flex-1 w-full flex items-center bg-surface-container-low border border-border-subtle rounded-xl px-3.5 h-12 focus-within:bg-white focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(228,0,125,0.12)] transition-all group">
-                <span className="material-symbols-outlined text-text-muted text-[20px] mr-2 select-none flex-shrink-0">search</span>
-                <input 
-                  className="w-full bg-transparent border-0 outline-none text-on-surface font-mono font-medium text-sm placeholder:text-text-placeholder placeholder:font-sans" 
-                  id="resi-input" 
-                  placeholder="10001284277889 (atau tempel 14 digit nomor resi)" 
-                  type="text" 
-                  value={waybill}
-                  onChange={(e) => setWaybill(e.target.value)}
-                />
-                <button 
-                  className="ml-2 px-2.5 py-1 rounded-lg bg-white hover:bg-surface-container text-xs font-semibold text-text-muted hover:text-primary transition-all flex items-center gap-1 border border-border-subtle shadow-xs flex-shrink-0" 
-                  onClick={handlePaste} 
-                  title="Tempel dari Clipboard" 
-                  type="button"
-                >
-                  <span className="material-symbols-outlined text-[15px] text-primary">content_paste</span>
-                  <span className="hidden sm:inline">Tempel</span>
+            <form className="flex flex-col gap-2.5" onSubmit={handleSearch}>
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div className="relative flex-1 w-full flex items-center bg-surface-container-low border border-border-subtle rounded-xl px-3.5 h-12 focus-within:bg-white focus-within:border-primary focus-within:shadow-[0_0_0_3px_rgba(228,0,125,0.12)] transition-all group">
+                  <span className="material-symbols-outlined text-text-muted text-[20px] mr-2 select-none flex-shrink-0">search</span>
+                  <input 
+                    aria-label="Nomor resi 14 digit Anteraja"
+                    className="w-full bg-transparent border-0 outline-none text-on-surface font-mono font-medium text-sm placeholder:text-text-placeholder placeholder:font-sans" 
+                    id="resi-input" 
+                    maxLength={14}
+                    placeholder="Masukkan 14 digit nomor resi (contoh: 10001284277889)" 
+                    type="text" 
+                    value={waybill}
+                    onChange={(e) => setWaybill(e.target.value.replace(/\D/g, "").slice(0, 14))}
+                    onPaste={(e) => {
+                      e.preventDefault();
+                      const pasted = e.clipboardData.getData("text");
+                      setWaybill(pasted.replace(/\D/g, "").slice(0, 14));
+                    }}
+                  />
+                  <div className="flex items-center gap-1.5 flex-shrink-0 ml-2">
+                    <span
+                      className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md border transition-all select-none ${
+                        waybill.length === 14
+                          ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
+                          : waybill.length > 0
+                          ? "bg-primary/10 text-primary border-primary/20"
+                          : "bg-white text-text-muted border-border-subtle"
+                      }`}
+                      title="Nomor resi resmi Anteraja terdiri dari 14 digit angka"
+                    >
+                      {waybill.length > 0 ? `${waybill.length}/14 Digit` : "14 Digit"}
+                    </span>
+                    <button 
+                      className="px-2.5 py-1 rounded-lg bg-white hover:bg-surface-container text-xs font-semibold text-text-muted hover:text-primary transition-all flex items-center gap-1 border border-border-subtle shadow-xs" 
+                      onClick={handlePaste} 
+                      title="Tempel dari Clipboard" 
+                      type="button"
+                    >
+                      <span className="material-symbols-outlined text-[15px] text-primary">content_paste</span>
+                      <span className="hidden sm:inline">Tempel</span>
+                    </button>
+                  </div>
+                </div>
+                <button className="w-full sm:w-auto px-6 h-12 rounded-xl bg-primary text-white hover:bg-primary-hover font-bold text-sm shadow-[0_4px_14px_rgba(228,0,125,0.25)] flex items-center justify-center gap-2 transition-all whitespace-nowrap flex-shrink-0" type="submit">
+                  <span className="material-symbols-outlined text-[18px]">search</span>
+                  <span className="">Lacak Paket</span>
                 </button>
               </div>
-              <button className="w-full sm:w-auto px-6 h-12 rounded-xl bg-primary text-white hover:bg-primary-hover font-bold text-sm shadow-[0_4px_14px_rgba(228,0,125,0.25)] flex items-center justify-center gap-2 transition-all whitespace-nowrap flex-shrink-0" type="submit">
-                <span className="material-symbols-outlined text-[18px]">search</span>
-                <span className="">Lacak Paket</span>
-              </button>
+              <p className="text-[11px] text-text-muted flex items-center gap-1.5 pl-1">
+                <span className="material-symbols-outlined text-[14px] text-primary">info</span>
+                <span>Format resmi nomor resi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
+              </p>
             </form>
 
             {/* Single Clean Quick Search / Recent Chips Row */}

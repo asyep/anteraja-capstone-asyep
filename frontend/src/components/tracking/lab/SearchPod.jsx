@@ -101,26 +101,46 @@ export default function SearchPod() {
               </span>
             </div>
             <input
-              aria-label="Nomor resi atau AWB"
+              aria-label="Nomor resi 14 digit Anteraja"
               autoComplete="off"
-              className="w-full bg-transparent font-mono-code text-mono-code font-medium tracking-wide text-gray-900 placeholder:text-gray-400 focus:outline-none"
+              className="w-full bg-transparent font-mono-code text-mono-code font-medium tracking-wide text-gray-900 placeholder:text-gray-400 focus:outline-none text-sm"
               id="tracking-resi-input"
-              onChange={(event) => setResi(event.target.value)}
-              placeholder="Masukkan Nomor Resi / AWB..."
+              maxLength={14}
+              onChange={(event) => setResi(event.target.value.replace(/\D/g, "").slice(0, 14))}
+              onPaste={(event) => {
+                event.preventDefault();
+                const pasted = event.clipboardData.getData("text");
+                setResi(pasted.replace(/\D/g, "").slice(0, 14));
+              }}
+              placeholder="Masukkan 14 digit nomor resi (contoh: 10001284277889)"
               type="text"
               value={resi}
             />
-            <button
-              className="ml-1 inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-gray-500 transition-colors hover:bg-pink-50 hover:text-[#ec008c]"
-              onClick={handleSalin}
-              title="Salin Resi"
-              type="button"
-            >
-              <span className="material-symbols-outlined text-[16px]">
-                content_copy
+            <div className="ml-2 flex items-center gap-1.5 shrink-0">
+              <span
+                className={`text-[11px] font-mono font-bold px-2 py-0.5 rounded-md border transition-all select-none ${
+                  resi.length === 14
+                    ? "bg-emerald-50 text-emerald-700 border-emerald-200 shadow-xs"
+                    : resi.length > 0
+                    ? "bg-pink-50 text-[#ec008c] border-pink-200"
+                    : "bg-white text-gray-500 border-gray-200"
+                }`}
+                title="Nomor resi resmi Anteraja terdiri dari 14 digit angka"
+              >
+                {resi.length > 0 ? `${resi.length}/14 Digit` : "14 Digit"}
               </span>
-              <span className="hidden sm:inline">Salin</span>
-            </button>
+              <button
+                className="inline-flex shrink-0 items-center gap-1 rounded-lg px-2.5 py-1 text-xs font-semibold text-gray-500 transition-colors hover:bg-pink-50 hover:text-[#ec008c]"
+                onClick={handleSalin}
+                title="Salin Resi"
+                type="button"
+              >
+                <span className="material-symbols-outlined text-[16px]">
+                  content_copy
+                </span>
+                <span className="hidden sm:inline">Salin</span>
+              </button>
+            </div>
           </div>
           <button
             className="flex w-full shrink-0 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#ec008c] to-[#c00067] px-8 py-3.5 text-sm font-bold text-white shadow-md transition-all hover:opacity-95 hover:shadow-lg active:scale-[0.98] md:w-auto md:text-base"
@@ -132,6 +152,11 @@ export default function SearchPod() {
             Lacak Paket
           </button>
         </div>
+
+        <p className="mt-2 text-[11px] text-gray-500 flex items-center gap-1 pl-1">
+          <span className="material-symbols-outlined text-[14px] text-[#ec008c]">info</span>
+          <span>Nomor resi resmi Anteraja wajib <strong>14 digit numerik</strong> (maksimal 14 angka).</span>
+        </p>
 
 
 

@@ -13,7 +13,9 @@ export function getStoredRecentSearches() {
     const raw = localStorage.getItem(STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+    return Array.isArray(parsed)
+      ? parsed.filter((item) => typeof item === "string" && /^\d{14}$/.test(item))
+      : [];
   } catch {
     return [];
   }
@@ -21,11 +23,12 @@ export function getStoredRecentSearches() {
 
 /**
  * Menyimpan nomor resi ke riwayat pencarian (ditaruh di paling awal).
+ * Hanya menyimpan nomor resi yang tepat 14 digit numerik.
  */
 export function saveRecentSearch(waybill) {
   if (!waybill || typeof window === "undefined") return;
-  const clean = String(waybill).trim();
-  if (!clean) return;
+  const clean = String(waybill).replace(/\D/g, "").slice(0, 14);
+  if (clean.length !== 14) return;
 
   try {
     const current = getStoredRecentSearches();
