@@ -362,6 +362,7 @@ Dokumentasi rancangan lengkap tersedia di folder [`docs/`](docs/):
 * 🗺️ **[Flow Map Perjalanan Paket](docs/flow map.md)**: Diagram transisi status operasional paket.
 * 💾 **[Dokumentasi Database](docs/database/)**: Kamus data dan diagram relasi tabel.
 * 🎨 **[Spesifikasi UI](docs/ui/)**: Desain komponen, layout 12-kolom, dan token warna.
+* 🧠 **[Panduan Teknis Backend & Fitur](docs/PANDUAN_PENJELASAN_BACKEND.md)**: Panduan komprehensif arsitektur backend, controller, model, AI telemetry, dan korelasi frontend-backend dengan analogi dunia nyata.
 
 ---
 
